@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-12-2019 a las 11:15:51
+-- Tiempo de generación: 03-12-2019 a las 12:48:39
 -- Versión del servidor: 10.4.6-MariaDB
 -- Versión de PHP: 7.1.32
 
@@ -21,6 +21,18 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `bbdd_grupo4`
 --
+
+DELIMITER $$
+--
+-- Procedimientos
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spAllCategorias` ()  NO SQL
+SELECT * FROM categoria$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spAllConsultas` ()  NO SQL
+SELECT * FROM consulta$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -60,6 +72,29 @@ CREATE TABLE `consulta` (
 
 INSERT INTO `consulta` (`idConsulta`, `consulta`, `idUsuario`) VALUES
 (1, 'eukene crack', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `entrenador`
+--
+
+CREATE TABLE `entrenador` (
+  `idEntrenador` int(11) NOT NULL,
+  `nombre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `imagen` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefono` varchar(9) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `idEquipo` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `entrenador`
+--
+
+INSERT INTO `entrenador` (`idEntrenador`, `nombre`, `imagen`, `telefono`, `idEquipo`) VALUES
+(1, 'Pepe', 'https://www.stickpng.com/assets/thumbs/585e4bf3cb11b227491c339a.png', '694958592', 1),
+(2, 'Ana', 'https://www.stickpng.com/assets/thumbs/585e4bf3cb11b227491c339a.png', '638475935', 2),
+(3, 'Ekaitz', 'https://www.stickpng.com/assets/thumbs/585e4bf3cb11b227491c339a.png', '695868949', 3);
 
 -- --------------------------------------------------------
 
@@ -181,6 +216,13 @@ ALTER TABLE `consulta`
   ADD KEY `idUsuario` (`idUsuario`);
 
 --
+-- Indices de la tabla `entrenador`
+--
+ALTER TABLE `entrenador`
+  ADD PRIMARY KEY (`idEntrenador`),
+  ADD KEY `idEquipo` (`idEquipo`);
+
+--
 -- Indices de la tabla `equipo`
 --
 ALTER TABLE `equipo`
@@ -217,6 +259,12 @@ ALTER TABLE `consulta`
   MODIFY `idConsulta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT de la tabla `entrenador`
+--
+ALTER TABLE `entrenador`
+  MODIFY `idEntrenador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT de la tabla `equipo`
 --
 ALTER TABLE `equipo`
@@ -243,6 +291,12 @@ ALTER TABLE `usuario`
 --
 ALTER TABLE `consulta`
   ADD CONSTRAINT `consulta_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`);
+
+--
+-- Filtros para la tabla `entrenador`
+--
+ALTER TABLE `entrenador`
+  ADD CONSTRAINT `entrenador_ibfk_1` FOREIGN KEY (`idEquipo`) REFERENCES `equipo` (`idEquipo`);
 
 --
 -- Filtros para la tabla `equipo`
