@@ -1,0 +1,24 @@
+body {
+	box-sizing: border-box;
+}
+
+header i {
+	font-size: 30px;
+}
+
+main .jumbotron {
+	margin: 0;
+}
+
+.footer p {
+	color: rgba(255, 255, 255, .75);
+}
+
+.footer i {
+	color: rgba(255,255,255,.75);
+	font-size: 20px;
+}
+
+.card:hover {
+	border: 1px solid black;
+}
