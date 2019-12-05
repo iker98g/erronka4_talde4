@@ -1,1 +1,144 @@
 <?php
+class EquiposModel extends EquiposClass {
+    
+    private $link;
+    private $list = array();
+    private $objectCategoria;
+    
+    function getList(){
+        return $this->list;
+    }
+    
+    public function getObjectCategoria(){
+        return $this->objectCategoria;
+    }
+    
+    public function OpenConnect() {
+        $konDat=new connect_data();
+        try {
+            $this->link=new mysqli($konDat->host,$konDat->userbbdd,$konDat->passbbdd,$konDat->ddbbname);
+            // mysqli klaseko link objetua sortzen da dagokion konexio datuekin
+            // se crea un nuevo objeto llamado link de la clase mysqli con los datos de conexión.
+        }
+        catch(Exception $e) {
+            echo $e->getMessage();
+        }
+        $this->link->set_charset("utf8"); // honek behartu egiten du aplikazio eta
+        //                  //databasearen artean UTF -8 erabiltzera datuak trukatzeko
+    }
+    
+    public function CloseConnect() {
+        mysqli_close ($this->link);
+    }
+    
+    public function setList() {
+        $this->OpenConnect();  // konexio zabaldu  - abrir conexión
+        
+        $sql = "CALL spAllEquipos()"; // SQL sententzia - sentencia SQL
+        
+        $result = $this->link->query($sql); // result-en ddbb-ari eskatutako informazio dena gordetzen da
+        // se guarda en result toda la información solicitada a la bbdd
+        
+        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+            
+            $new=new EquiposModel();
+            
+            $new->setIdEquipo($row['idEquipo']);
+            $new->setNombre($row['nombre']);
+            $new->setIdCategoria($row['idCategoria']);
+            $new->setLogo($row['logo']);
+       
+            $categoria=new CategoriasModel();
+            $categoria->setIdCategoria($row['idCategoria']);
+            $new->objectCategoria=$categoria->findCategoriaById();
+            
+            array_push($this->list, $new);
+        }
+        mysqli_free_result($result);
+        unset($categoria);
+        $this->CloseConnect();
+    }
+    
+    public function aniadirEquipo(){
+        $this->OpenConnect();  // konexio zabaldu  - abrir conexión
+        
+        $nombre=$this->getNombre();
+        $idCategoria=$this->getIdCategoria();
+        $logo=$this->getLogo();
+        
+        $sql="CALL spInsertarEquipo($nombre, $idCategoria, $logo)";
+        
+        $numFilas=$this->link->query($sql);
+        
+        if ($numFilas>=1) {
+            return "Equipo insertado";
+        } else {
+            return "Error al insertar el equipo";
+        }
+        
+        $this->CloseConnect();
+    }
+    
+    public function borrarEquipo() {
+        $this->OpenConnect();
+        
+        $idEquipo=$this->getIdEquipo();
+        
+        $sql = "CALL spBorrarEquipo('$idEquipo')";
+        
+        if ($this->link->query($sql)>=1) { // aldatu egiten da
+            return "El equipo se ha borrado con exito";
+        } else {
+            return "Fallo al borrar el equipo: (" . $this->link->errno . ") " . $this->link->error;
+        }
+        
+        $this->CloseConnect();
+    }
+    
+    public function editarEquipo() {
+        $this->OpenConnect();
+        
+        $idEquipo=$this->getIdEquipo();
+        $nombre=$this->getNombre();
+        $idCategoria=$this->getIdCategoria();
+        $logo=$this->getLogo();
+        
+        $sql = "CALL spModificarEquipo('$idEquipo','$nombre', '$idCategoria', '$logo')";
+        
+        if ($this->link->query($sql)>=1) { // aldatu egiten da
+            return "El jugador se ha modificado con exito";
+        } else {
+            return "Fallo al modificar el jugador: (" . $this->link->errno . ") " . $this->link->error;
+        }
+        
+        $this->CloseConnect();
+    }
+    
+    function getListJsonString() {
+        
+        $arr=array();
+        
+        foreach ($this->list as $object) {
+            $vars = get_object_vars($object);
+            
+            array_push($arr, $vars);
+        }
+        return json_encode($arr);
+    }
+    
+    function getListJsonStringObject() {
+        
+        // returns the list of objects in a srting with JSON format
+        $arr=array();
+        
+        foreach ($this->list as $object) {
+            $vars = $object->getObjectVars();
+            
+            $objCategoria=$object->getObjectCategoria()->getObjectVars();
+            $vars['objectCategoria']=$objCategoria;
+            
+            array_push($arr, $vars);
+        }
+        return json_encode($arr);
+    } 
+}

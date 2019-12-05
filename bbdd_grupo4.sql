@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-12-2019 a las 12:48:39
+-- Tiempo de generación: 05-12-2019 a las 14:28:53
 -- Versión del servidor: 10.4.6-MariaDB
 -- Versión de PHP: 7.1.32
 
@@ -31,6 +31,108 @@ SELECT * FROM categoria$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spAllConsultas` ()  NO SQL
 SELECT * FROM consulta$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spAllEntrenadores` ()  NO SQL
+SELECT * FROM entrenador$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spAllEquipos` ()  NO SQL
+SELECT * FROM equipo$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spAllJugadores` ()  NO SQL
+SELECT * FROM jugador$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spAllUsuarios` ()  NO SQL
+SELECT * FROM usuario$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spBorrarCategoria` (IN `pId` INT)  NO SQL
+DELETE FROM categoria
+WHERE categoria.idCategoria = pId$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spBorrarConsulta` (IN `pId` INT)  NO SQL
+DELETE FROM consulta
+WHERE consulta.idConsulta = pId$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spBorrarEntrenador` (IN `pId` INT)  NO SQL
+DELETE FROM entrenador
+WHERE entrenador.idEntrenador = pId$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spBorrarEquipo` (IN `pId` INT)  NO SQL
+DELETE FROM equipo
+WHERE equipo.idEquipo = pId$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spBorrarJugador` (IN `pId` INT)  NO SQL
+DELETE FROM jugador
+WHERE jugador.idJugador = pId$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spBorrarUsuario` (IN `pId` INT)  NO SQL
+DELETE FROM usuario
+WHERE usuario.idUsuario = pId$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarCategoria` (IN `pId` INT, IN `pNombre` VARCHAR(50))  NO SQL
+BEGIN
+INSERT INTO categoria (categoria.idCategoria, categoria.nombre)
+VALUES (pId, pNombre);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarConsulta` (IN `pIdConsulta` INT, IN `pNombre` VARCHAR(50), IN `pIdUsuario` INT)  NO SQL
+BEGIN
+INSERT INTO consulta (consulta.idConsulta, consulta.consulta, consulta.idUsuario)
+VALUES (pIdConsulta, pNombre, pIdUsuario);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarEntrenador` (IN `pIdEntrenador` INT, IN `pNombre` VARCHAR(50), IN `pImagen` VARCHAR(200), IN `pTelefono` VARCHAR(9), IN `pIdEquipo` INT)  NO SQL
+BEGIN
+INSERT INTO entrenador (entrenador.idEntrenador, entrenador.nombre, entrenador.imagen, entrenador.telefono, entrenador.idEquipo)
+VALUES (pIdEntrenador, pNombre, pImagen, pTelefono, pIdEquipo);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarEquipo` (IN `pIdEquipo` INT, IN `pNombre` VARCHAR(50), IN `pLogo` VARCHAR(200), IN `pIdCategoria` INT)  NO SQL
+BEGIN
+INSERT INTO equipo (equipo.idEquipo, equipo.nombre, equipo.logo, equipo.idCategoria)
+VALUES (pIdEquipo, pNombre, pLogo, pIdCategoria);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarJugador` (IN `pIdJugador` INT, IN `pNombre` VARCHAR(50), IN `pImagen` VARCHAR(200), IN `pRol` VARCHAR(50), IN `pTelefono` VARCHAR(9), IN `pIdEquipo` INT)  NO SQL
+BEGIN
+INSERT INTO jugador (jugador.idJugador, jugador.nombre, jugador.imagen, jugador.rol, jugador.telefono, jugador.idEquipo)
+VALUES (pIdJugador, pNombre, pImagen, pRol, pTelefono, pIdEquipo);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarUsuario` (IN `pId` INT, IN `pUsuario` VARCHAR(50), IN `pContrasena` VARCHAR(50), IN `pNombre` VARCHAR(50), IN `pCorreo` VARCHAR(50), IN `pTipo` TINYINT(1))  NO SQL
+BEGIN
+INSERT INTO usuario (usuario.idUsuario, usuario.usuario, usuario.contrasena, usuario.nombre, usuario.correo, usuario.tipo)
+VALUES (pId, pUsuario, pContrasena, pNombre, pCorreo, pTipo);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spModificarCategoria` (IN `pId` INT, IN `pNombre` VARCHAR(50))  NO SQL
+UPDATE categoria
+SET categoria.nombre = pNombre
+WHERE categoria.idCategoria = pId$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spModificarConsulta` (IN `pIdConsulta` INT, IN `pNombre` VARCHAR(50), IN `pIdUsuario` INT)  NO SQL
+UPDATE consulta
+SET consulta.consulta = pConsulta, consulta.idUsuario = pIdUsuario
+WHERE consulta.idConsulta = pIdConsulta$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spModificarEntrenador` (IN `pIdEntrenador` INT, IN `pNombre` VARCHAR(50), IN `pImagen` VARCHAR(200), IN `pTelefono` VARCHAR(9), IN `pIdEquipo` INT)  NO SQL
+UPDATE entrenador
+SET entrenador.nombre = pNombre, entrenador.imagen = pImagen, entrenador.telefono = pTelefono, entrenador.idEquipo = pIdEquipo
+WHERE entrenador.idEntrenador = pIdEntrenador$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spModificarEquipo` (IN `pIdEquipo` INT, IN `pNombre` VARCHAR(50), IN `pLogo` VARCHAR(200), IN `pIdCategoria` INT)  NO SQL
+UPDATE equipo
+SET equipo.nombre = pNombre, equipo.logo = pLogo, equipo.idCategoria = pIdCategoria
+WHERE equipo.idEquipo = pIdEquipo$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spModificarJugador` (IN `pIdJugador` INT, IN `pNombre` VARCHAR(50), IN `pImagen` VARCHAR(200), IN `pRol` VARCHAR(50), IN `pTelefono` VARCHAR(9), IN `pIdEquipo` INT)  NO SQL
+UPDATE jugador
+SET jugador.nombre = pNombre, jugador.imagen = pImagen, jugador.rol = pRol, jugador.telefono = pTelefono, jugador.idEquipo = pIdEquipo
+WHERE jugador.idJugador = pIdJugador$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spModificarUsuario` (IN `pId` INT, IN `pUsuario` VARCHAR(50), IN `pContrasena` VARCHAR(50), IN `pNombre` VARCHAR(50), IN `pCorreo` VARCHAR(50), IN `pTipo` TINYINT(1))  NO SQL
+UPDATE usuario
+SET usuario.usuario = pUsuario, usuario.contrasena = pContrasena, usuario.nombre = pNombre, usuario.correo = pCorreo, usuario.tipo = pTipo
+WHERE usuario.idUsuario = pId$$
 
 DELIMITER ;
 
