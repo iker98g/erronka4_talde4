@@ -7,7 +7,7 @@ $tipo = filter_input(INPUT_POST, 'tipo');
 $usuario = filter_input(INPUT_POST, 'usuario');
 $correo = filter_input(INPUT_POST, 'correo');
 
-$usuarios = new JugadoresModel();
+$usuarios = new UsuariosModel();
 
 $usuarios -> setNombre($nombre);
 $usuarios -> setContrasena($contrasena);

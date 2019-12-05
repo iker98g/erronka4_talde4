@@ -1,7 +1,7 @@
 <?php
 include_once ("../../model/ConsultasModel.php");
 
-$consultas = new EntrenadoresModel();
+$consultas = new ConsultasModel();
 
 $idConsulta = filter_input(INPUT_GET, "idConsulta");
 
