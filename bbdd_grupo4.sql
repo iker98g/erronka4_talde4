@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-12-2019 a las 10:37:57
+-- Tiempo de generación: 05-12-2019 a las 14:28:53
 -- Versión del servidor: 10.4.6-MariaDB
 -- Versión de PHP: 7.1.32
 
@@ -35,7 +35,7 @@ SELECT * FROM consulta$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spAllEntrenadores` ()  NO SQL
 SELECT * FROM entrenador$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spAllEquipo` ()  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spAllEquipos` ()  NO SQL
 SELECT * FROM equipo$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spAllJugadores` ()  NO SQL
