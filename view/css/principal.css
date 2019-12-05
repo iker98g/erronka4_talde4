@@ -4,3 +4,14 @@
 .card-title{
     text-align: center;
 }
+.botones{
+    margin-top: 10px;
+    text-align: center;
+}
+.footer p {
+	color: rgba(255, 255, 255, .75);
+}
+.footer i {
+	color: rgba(255,255,255,.75);
+	font-size: 20px;
+}
