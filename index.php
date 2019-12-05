@@ -29,7 +29,7 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarText">
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item"><a class="nav-link" href="#">Equipos</a></li>
+					<li class="nav-item"><a class="nav-link" href="view/vPrincipal.html">Equipos</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">Administración</a></li>
 				</ul>
 				<div class="btn-toolbar" role="toolbar"
