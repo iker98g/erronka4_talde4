@@ -1,5 +1,15 @@
 body {
+	margin: 0;
+	padding: 0;
 	box-sizing: border-box;
+	background-image: url(../imagenes/logo_snitch.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+
+body p {
+	text-align: justify;
 }
 
 header i {
@@ -7,11 +17,14 @@ header i {
 }
 
 main .jumbotron {
-	margin: 0;
+	background-color: rgba(248, 249, 250, .75);
 }
 
 .footer p {
 	color: rgba(255, 255, 255, .75);
+	text-align: center;
+	padding-left: 1rem;
+	padding-right: 1rem;
 }
 
 .footer i {
@@ -21,4 +34,5 @@ main .jumbotron {
 
 .card:hover {
 	border: 1px solid black;
+	cursor: pointer;
 }
