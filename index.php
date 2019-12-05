@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Zornotza Quidditch</title>
+  	<meta charset="UTF-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+  	<title>Zornotza Quidditch</title>
     
-    
-  <!--<link rel="icon" type="image/png" href="view/img/favicon.ico"> -->
-  <link href="view/css/index.css" rel="stylesheet" type="text/css" />
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="icon" type="image/png" href="view/imagenes/favicon.ico">
+  	<link href="view/css/index.css" rel="stylesheet" type="text/css" />
+  	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
-  <script src="https://kit.fontawesome.com/661afcc94b.js"></script>
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+  	<script src="https://kit.fontawesome.com/661afcc94b.js"></script>
+  	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-  <script src="view/js/index.js"></script>
+  	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  	
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  	<script src="view/js/index.js"></script>
 </head>
 <body>
 	<header>
 		<!-- NAV -->
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<a class="navbar-brand" href="#"><i class="fas fa-quidditch"></i></a>
+			<a class="navbar-brand" href="#"><img src="view/imagenes/logo_snitch.png"></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarText" aria-controls="navbarText"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -38,12 +39,45 @@
 						<button type="button" class="btn btn-outline-light">Regístrate</button>
 					</div>
 					<div class="btn-group mr-2" role="group" aria-label="Second group">
-						<button type="button" class="btn btn-light">Iniciar Sesión</button>
+					  <button type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModal">Iniciar Sesión</button> <!-- Button trigger modal -->
 					</div>
 				</div>
 			</div>
 		</nav>
-		<!-- FIN NAV -->
+    <!-- FIN NAV -->
+
+    <!-- MODAL -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title" id="exampleModalLabel">Zornotza Quidditch</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <form class="cardLogin">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="username" placeholder="Usuario" name="loginInput" required> 
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control" id="password" aria-describedby="passHelp" placeholder="Contraseña" name="loginInput" required>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="form-group text-center w-100">
+              <button type="button" class="btn btn-secondary w-100" id="btnLogin" disabled>Iniciar Sesión</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- FIN MODAL -->
+
 	</header>
 	<main> 
     <!-- JUMBOTRÓN -->
