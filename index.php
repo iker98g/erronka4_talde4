@@ -49,7 +49,7 @@
     <!-- JUMBOTRÓN -->
     <section class="jumbotron jumbotron-fluid">
       <div class="container">
-        <h1 class="display-4">¿QUIENES SOMOS?</h1>
+        <h1 class="display-4">¿QUIÉNES SOMOS?</h1>
         <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing
           elit. Esse corporis maxime inventore quam optio impedit ex mollitia
           temporibus labore porro voluptates fuga incidunt similique vero
@@ -68,7 +68,7 @@
           <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
             <div class="card mb-4 shadow-sm">
               <div class="card-body">
-                <h5 class="card-title">¿Quiénes somos?</h5>
+                <h5 class="card-title">¿QUIÉNES SOMOS?</h5>
                 <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing
                   elit. Esse corporis maxime inventore quam optio impedit ex mollitia
                   temporibus labore porro voluptates fuga incidunt similique vero
@@ -82,7 +82,7 @@
           <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
             <div class="card mb-4 shadow-sm">
               <div class="card-body">
-                <h5 class="card-title">¿Qué es el Quidditch?</h5>
+                <h5 class="card-title">¿QUÉ ES EL QUIDDITCH?</h5>
                 <p class="card-text">Some quick example text to build on the card
                   title and make up the bulk of the card's content. Some quick example 
                   text to build on the card title and make up the bulk of the card's content.
@@ -93,7 +93,7 @@
           <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
             <div class="card mb-4 shadow-sm">
               <div class="card-body">
-                <h5 class="card-title">¿Cómo se juega?</h5>
+                <h5 class="card-title">¿CÓMO SE JUEGA?</h5>
                 <p class="card-text">Some quick example text to build on the card
                   title and make up the bulk of the card's content. Some quick example 
                   text to build on the card title and make up the bulk of the card's content.
