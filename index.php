@@ -84,12 +84,13 @@
     <section class="jumbotron jumbotron-fluid">
       <div class="container">
         <h1 class="display-4">Â¿QUIÃ‰NES SOMOS?</h1>
-        <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing
-          elit. Esse corporis maxime inventore quam optio impedit ex mollitia
-          temporibus labore porro voluptates fuga incidunt similique vero
-          dicta minima id, officiis, saepe commodi ducimus modi est obcaecati!
-          Nulla, tenetur soluta voluptatum laboriosam illo fuga iste quo?
-          Quidem, fuga!
+        <p class="lead">Somos Zornotza Quidditch, primer club de Quidditch formado en
+        Vizcaya. El club se formo en noviembre de 2015, y desde entonces, todos los equipos 
+        del club compiten en las mejores categorias de la provincia. Para nosotros, lo mas 
+        importante es que nuestros jugadores se desarrollen tanto como personas como 
+        deportistas, aprendiendo ante todo valores como el companerismo y el respeto hacia 
+        los demas, ya sean companeros o contrincantes. Todo ello basado en el trabajo diario 
+        y el convencimiento de que mejorar dia a dia es el camino a seguir.
         </p>
       </div>
     </section>
@@ -105,11 +106,11 @@
                 <h5 class="card-title">Â¿QUIÃ‰NES SOMOS?</h5>
                 <p class="card-text">Somos Zornotza Quidditch, primer club de Quidditch formado en
                 Vizcaya. El club se formo en noviembre de 2015, y desde entonces, todos los equipos 
-                del club compiten en las mejores categorias de la provincia. Para nosotros, lo más 
+                del club compiten en las mejores categorias de la provincia. Para nosotros, lo mas 
                 importante es que nuestros jugadores se desarrollen tanto como personas como 
-                deportistas, aprendiendo ante todo valores como el compañerismo y el respeto hacia 
-                los demás, ya sean compañeros o contrincantes. Todo ello basado en el trabajo diario 
-                y el convencimiento de que mejorar día a día es el camino a seguir.
+                deportistas, aprendiendo ante todo valores como el companerismo y el respeto hacia 
+                los demas, ya sean companeros o contrincantes. Todo ello basado en el trabajo diario 
+                y el convencimiento de que mejorar dia a dia es el camino a seguir.
                 </p>
               </div>
             </div>
