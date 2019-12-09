@@ -36,7 +36,7 @@
 				<div class="btn-toolbar" role="toolbar"
 					aria-label="Toolbar with button groups">
 					<div class="btn-group mr-2" role="group" aria-label="First group">
-						<button type="button" class="btn btn-outline-light">Regístrate</button>
+						<button type="button" class="btn btn-outline-light">Registrate</button>
 					</div>
 					<div class="btn-group mr-2" role="group" aria-label="Second group">
 					  <button type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModal">Iniciar Sesión</button> <!-- Button trigger modal -->
@@ -63,14 +63,14 @@
                   <input type="text" class="form-control" id="username" placeholder="Usuario" name="loginInput" required> 
                 </div>
                 <div class="form-group">
-                  <input type="password" class="form-control" id="password" aria-describedby="passHelp" placeholder="Contraseña" name="loginInput" required>
+                  <input type="password" class="form-control" id="password" aria-describedby="passHelp" placeholder="ContraseÃ±a" name="loginInput" required>
                 </div>
               </form>
             </div>
           </div>
           <div class="modal-footer">
             <div class="form-group text-center w-100">
-              <button type="button" class="btn btn-secondary w-100" id="btnLogin" disabled>Iniciar Sesión</button>
+              <button type="button" class="btn btn-secondary w-100" id="btnLogin" disabled>Iniciar SesiÃ³n</button>
             </div>
           </div>
         </div>
@@ -80,21 +80,21 @@
 
 	</header>
 	<main> 
-    <!-- JUMBOTRÓN -->
+    <!-- JUMBOTRON -->
     <section class="jumbotron jumbotron-fluid">
       <div class="container">
         <h1 class="display-4">¿QUIÉNES SOMOS?</h1>
         <p class="lead">Somos Zornotza Quidditch, primer club de Quidditch formado en
-        Vizcaya. El club se formo en noviembre de 2015, y desde entonces, todos los equipos 
-        del club compiten en las mejores categorias de la provincia. Para nosotros, lo mas 
+        Vizcaya. El club se formó en noviembre de 2015, y desde entonces, todos los equipos 
+        del club compiten en las mejores categorias de la provincia. Para nosotros, lo más 
         importante es que nuestros jugadores se desarrollen tanto como personas como 
-        deportistas, aprendiendo ante todo valores como el companerismo y el respeto hacia 
-        los demas, ya sean companeros o contrincantes. Todo ello basado en el trabajo diario 
-        y el convencimiento de que mejorar dia a dia es el camino a seguir.
+        deportistas, aprendiendo ante todo valores como el compañerismo y el respeto hacia 
+        los demás, ya sean compañeros o contrincantes. Todo ello basado en el trabajo diario 
+        y el convencimiento de que mejorar día a día es el camino a seguir.
         </p>
       </div>
     </section>
-    <!-- FIN JUMBOTRÓN -->
+    <!-- FIN JUMBOTRON -->
 
     <!-- CARDS -->
     <div class="album py-5">
@@ -105,12 +105,12 @@
               <div class="card-body">
                 <h5 class="card-title">¿QUIÉNES SOMOS?</h5>
                 <p class="card-text">Somos Zornotza Quidditch, primer club de Quidditch formado en
-                Vizcaya. El club se formo en noviembre de 2015, y desde entonces, todos los equipos 
-                del club compiten en las mejores categorias de la provincia. Para nosotros, lo mas 
-                importante es que nuestros jugadores se desarrollen tanto como personas como 
-                deportistas, aprendiendo ante todo valores como el companerismo y el respeto hacia 
-                los demas, ya sean companeros o contrincantes. Todo ello basado en el trabajo diario 
-                y el convencimiento de que mejorar dia a dia es el camino a seguir.
+        		Vizcaya. El club se formó en noviembre de 2015, y desde entonces, todos los equipos 
+        		del club compiten en las mejores categorias de la provincia. Para nosotros, lo más 
+        		importante es que nuestros jugadores se desarrollen tanto como personas como 
+        		deportistas, aprendiendo ante todo valores como el compañerismo y el respeto hacia 
+        		los demás, ya sean compañeros o contrincantes. Todo ello basado en el trabajo diario 
+        		y el convencimiento de que mejorar día a día es el camino a seguir.
                 </p>
               </div>
             </div>
@@ -133,12 +133,16 @@
             <div class="card mb-4 shadow-sm">
               <div class="card-body">
                 <h5 class="card-title">¿CÓMO SE JUEGA?</h5>
-                <p class="card-text">Some quick example text to build on the card
-                  title and make up the bulk of the card's content. Some quick example 
-                  text to build on the card title and make up the bulk of the card's content.
-                  Some quick example text to build on the card
-                  title and make up the bulk of the card's content. Some quick example 
-                  text to build on the card title and make up the bulk of the card's content.
+                <p class="card-text">Cada partido empieza con siete jugadores titulares de cada equipo 
+                alineados dentro de su área de guardián, con las escobas en el suelo y con los balones 
+                alineados en el centro del campo. Una vez se anota un gol, la 
+                quaffle debe ser entregada al guardián y la acción se reanuda. Los 
+                partidos suelen durar entre 20 y 50 minutos, dependiendo de la habilidad y la resistencia 
+                de los buscadores y la snitch.
+                El partido se termina después de que cualquiera de los buscadores logre una captura limpia de 
+                la snitch, y el equipo que la captura recibe 150 puntos. El ganador se determina por la suma 
+                total de puntos, no por quien atrapa la snitch. En caso de empate, se juega una prórroga de 5 
+                minutos o hasta que se atrape la snitch.
                 </p>
               </div>
             </div>

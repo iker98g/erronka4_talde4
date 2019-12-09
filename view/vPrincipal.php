@@ -14,7 +14,7 @@
     	<header>
         	<!-- NAV -->
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-              <a class="navbar-brand" href="#">Zornotza Quidditch</a>
+              <a class="navbar-brand" href="#"><img src="imagenes/logo_snitch.png" width="50px"></a>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -70,7 +70,7 @@
           <!-- FIN CAROUSEL -->
           <!-- CARDS -->
             <div class="row">
-              <div class="col-sm-4">
+              <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="card">
                   <div class="card-body">
                     <h5 class="card-title">Junior</h5>
@@ -112,7 +112,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-4">
+              <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="card">
                   <div class="card-body">
                     <h5 class="card-title">Senior</h5>
@@ -154,7 +154,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-4">
+              <div class="col-lg-4 col-md-6 col-sm-12">
                   <div class="card">
                     <div class="card-body">
                       <h5 class="card-title">Master</h5>
