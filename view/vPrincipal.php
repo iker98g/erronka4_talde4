@@ -55,7 +55,7 @@
                   <img src="imagenes/quidditch_2.jpg" class="d-block w-100" alt="...">
                 </div>
                 <div class="carousel-item">
-                  <img src="imageness/quidditch_3.jpg" class="d-block w-100" alt="...">
+                  <img src="imagenes/quidditch_3.jpg" class="d-block w-100" alt="...">
                 </div>
               </div>
               <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
