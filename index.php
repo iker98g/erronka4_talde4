@@ -104,8 +104,12 @@
               <div class="card-body">
                 <h5 class="card-title">Â¿QUIÃ‰NES SOMOS?</h5>
                 <p class="card-text">Somos Zornotza Quidditch, primer club de Quidditch formado en
-                el País Vasco. El club se formó en noviembre de 2015, y desde entonces, todos los
-                equipos del club compiten en las mejores categorias de la provincia.
+                Vizcaya. El club se formo en noviembre de 2015, y desde entonces, todos los equipos 
+                del club compiten en las mejores categorias de la provincia. Para nosotros, lo más 
+                importante es que nuestros jugadores se desarrollen tanto como personas como 
+                deportistas, aprendiendo ante todo valores como el compañerismo y el respeto hacia 
+                los demás, ya sean compañeros o contrincantes. Todo ello basado en el trabajo diario 
+                y el convencimiento de que mejorar día a día es el camino a seguir.
                 </p>
               </div>
             </div>
