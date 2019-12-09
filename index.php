@@ -30,8 +30,8 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarText">
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item"><a class="nav-link" href="view/vPrincipal.html">Equipos</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Administración</a></li>
+					<li class="nav-item"><a class="nav-link" href="view/vPrincipal.php">Equipos</a></li>
+					<li class="nav-item"><a class="nav-link" href="view/vAdmin.php">Administración</a></li>
 				</ul>
 				<div class="btn-toolbar" role="toolbar"
 					aria-label="Toolbar with button groups">

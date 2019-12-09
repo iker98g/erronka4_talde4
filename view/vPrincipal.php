@@ -49,13 +49,13 @@
               </ol>
               <div class="carousel-inner">
                 <div class="carousel-item active">
-                  <img src="images/quidditch.jpg" class="d-block w-100" alt="...">
+                  <img src="imagenes/quidditch.jpg" class="d-block w-100" alt="...">
                 </div>
                 <div class="carousel-item">
-                  <img src="images/quidditch_2.jpg" class="d-block w-100" alt="...">
+                  <img src="imagenes/quidditch_2.jpg" class="d-block w-100" alt="...">
                 </div>
                 <div class="carousel-item">
-                  <img src="images/quidditch_3.jpg" class="d-block w-100" alt="...">
+                  <img src="imageness/quidditch_3.jpg" class="d-block w-100" alt="...">
                 </div>
               </div>
               <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -74,7 +74,7 @@
                 <div class="card">
                   <div class="card-body">
                     <h5 class="card-title">Junior</h5>
-                    <img src="images/plantilla.jpg" class="card-img-top" alt="...">
+                    <img src="imagenes/plantilla.jpg" class="card-img-top" alt="...">
                     <button type="button" class="btn btn-primary botones" data-toggle="modal" data-target="#exampleModal">
                         Ver jugadores
                     </button>
@@ -116,7 +116,7 @@
                 <div class="card">
                   <div class="card-body">
                     <h5 class="card-title">Senior</h5>
-                    <img src="images/plantilla_2.jpg" class="card-img-top" alt="...">
+                    <img src="imagenes/plantilla_2.jpg" class="card-img-top" alt="...">
                     <button type="button" class="btn btn-primary botones" data-toggle="modal" data-target="#exampleModal">
                         Ver jugadores
                     </button>
@@ -158,7 +158,7 @@
                   <div class="card">
                     <div class="card-body">
                       <h5 class="card-title">Master</h5>
-                      <img src="images/plantilla_3.jpg" class="card-img-top" alt="...">
+                      <img src="imagenes/plantilla_3.jpg" class="card-img-top" alt="...">
                       <button type="button" class="btn btn-primary botones" data-toggle="modal" data-target="#exampleModal">
                           Ver jugadores
                       </button>
