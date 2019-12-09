@@ -103,12 +103,9 @@
             <div class="card mb-4 shadow-sm">
               <div class="card-body">
                 <h5 class="card-title">Â¿QUIÃ‰NES SOMOS?</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing
-                  elit. Esse corporis maxime inventore quam optio impedit ex mollitia
-                  temporibus labore porro voluptates fuga incidunt similique vero
-                  dicta minima id, officiis, saepe commodi ducimus modi est obcaecati!
-                  Nulla, tenetur soluta voluptatum laboriosam illo fuga iste quo?
-                  Quidem, fuga!
+                <p class="card-text">Somos Zornotza Quidditch, primer club de Quidditch formado en
+                el País Vasco. El club se formó en noviembre de 2015, y desde entonces, todos los
+                equipos del club compiten en las mejores categorias de la provincia.
                 </p>
               </div>
             </div>
