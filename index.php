@@ -119,9 +119,12 @@
             <div class="card mb-4 shadow-sm">
               <div class="card-body">
                 <h5 class="card-title">¿QUÉ ES EL QUIDDITCH?</h5>
-                <p class="card-text">Some quick example text to build on the card
-                  title and make up the bulk of the card's content. Some quick example 
-                  text to build on the card title and make up the bulk of the card's content.
+                <p class="card-text">El Quidditch es un deporte no tradicional, creado en 2005, donde 
+                dos equipos de siete jugadores montados en escobas juegan en un campo del tama�o de una 
+                pista de hockey. El campo es rectangular, mide 60 metros por 44 metros y tiene 3 aros 
+                de diferentes alturas a cada lado del campo. El deporte es bastante joven, pero tiene 
+                un crecimiento muy activo y se juega en todo el mundo. El objetivo final es tener mas 
+                puntos que el equipo rival cuando la snitch es capturada.
                 </p>
               </div>
             </div>
