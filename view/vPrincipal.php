@@ -26,6 +26,50 @@
                   <li class="nav-item">
                     <a class="nav-link" href="vAdmin.php">Administración</a>
                   </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#examModal">Contáctanos</a>
+                  </li>
+  
+                <!-- Modal -->
+				<div class="modal fade" id="examModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  					<div class="modal-dialog" role="document">
+    					<div class="modal-content">
+      						<div class="modal-header">
+        						<h5 class="modal-title" id="exampleModalLabel">Contáctanos</h5>
+        						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          							<span aria-hidden="true">&times;</span>
+        						</button>
+      						</div>
+      						<div class="modal-body">
+        						<form>
+  									<div class="form-group">
+    									<h6>Consulta</h1>
+    									<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  									</div>
+  									<div class="form-group">
+    									<h6>Valoración</h6>
+    									<p class="clasificacion">
+    										<input id="radio1" type="radio" name="estrellas" value="5">
+                                            <label for="radio1">★</label>
+                                            <input id="radio2" type="radio" name="estrellas" value="4">
+                                            <label for="radio2">★</label>
+                                            <input id="radio3" type="radio" name="estrellas" value="3">
+                                            <label for="radio3">★</label>
+                                            <input id="radio4" type="radio" name="estrellas" value="2">
+                                            <label for="radio4">★</label>
+                                            <input id="radio5" type="radio" name="estrellas" value="1">
+                                            <label for="radio5">★</label>
+  										</p>
+  									</div>
+								</form>
+      						</div>
+      						<div class="modal-footer">
+        						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        						<button type="button" class="btn btn-primary" data-dismiss="modal">Enviar consulta</button>
+      						</div>
+    					</div>
+  					</div>
+				</div>
                 </ul>
                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                   <div class="btn-group mr-2" role="group" aria-label="First group">
@@ -75,16 +119,17 @@
                   <div class="card-body">
                     <h5 class="card-title">Junior</h5>
                     <img src="imagenes/plantilla.jpg" class="card-img-top" alt="...">
-                    <button type="button" class="btn btn-primary botones" data-toggle="modal" data-target="#exampleModal">
-                        Ver jugadores
+                    <h6>Equipos</h6>
+                    <button type="button" class="btn btn-primary botones" data-toggle="modal" data-target="#juniorModal">
+                        Zornotza Quidditch Junior
                     </button>
                       
                     <!-- MODAL -->
-                      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal fade" id="juniorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Jugadores Junior</h5>
+                              <h5 class="modal-title" id="exampleModalLabel">Zornotza Quidditch Junior</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
@@ -117,16 +162,17 @@
                   <div class="card-body">
                     <h5 class="card-title">Senior</h5>
                     <img src="imagenes/plantilla_2.jpg" class="card-img-top" alt="...">
-                    <button type="button" class="btn btn-primary botones" data-toggle="modal" data-target="#exampleModal">
-                        Ver jugadores
+                    <h6>Equipos</h6>
+                    <button type="button" class="btn btn-primary botones" data-toggle="modal" data-target="#seniorModal">
+                        Zornotza Quidditch Senior
                     </button>
                       
                     <!-- MODAL -->
-                      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal fade" id="seniorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Jugadores Senior</h5>
+                              <h5 class="modal-title" id="exampleModalLabel">Zornotza Quidditch Senior</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
@@ -138,7 +184,7 @@
                                     <div class="card">
                                       <div class="card-body">
                                         <img src="https://www.stickpng.com/assets/thumbs/585e4bf3cb11b227491c339a.png" class="card-img-top" alt="...">
-                                        <h5 class="card-title">Eukene</h5>
+                                        <h5 class="card-title">Oihane</h5>
                                       </div>
                                     </div>
                                   </div>
@@ -159,16 +205,17 @@
                     <div class="card-body">
                       <h5 class="card-title">Master</h5>
                       <img src="imagenes/plantilla_3.jpg" class="card-img-top" alt="...">
-                      <button type="button" class="btn btn-primary botones" data-toggle="modal" data-target="#exampleModal">
-                          Ver jugadores
+                      <h6>Equipos</h6>
+                      <button type="button" class="btn btn-primary botones" data-toggle="modal" data-target="#masterModal">
+                          Zornotza Quidditch Master
                       </button>
                         
                       <!-- MODAL -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="masterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                           <div class="modal-dialog" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Jugadores Junior</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Zornotza Quidditch Master</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
@@ -180,7 +227,7 @@
                                       <div class="card">
                                         <div class="card-body">
                                           <img src="https://www.stickpng.com/assets/thumbs/585e4bf3cb11b227491c339a.png" class="card-img-top" alt="...">
-                                          <h5 class="card-title">Eukene</h5>
+                                          <h5 class="card-title">Paula</h5>
                                         </div>
                                       </div>
                                     </div>
@@ -198,6 +245,7 @@
                 </div>
             </div>
           <!-- FIN CARDS -->
+          
         </main> 
         <!-- FOOTER -->
         <footer class="footer text-muted text-center bg-secondary">
