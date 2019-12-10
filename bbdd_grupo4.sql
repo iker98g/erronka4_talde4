@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-12-2019 a las 14:28:53
--- Versión del servidor: 10.4.6-MariaDB
--- Versión de PHP: 7.1.32
+-- Tiempo de generación: 10-12-2019 a las 12:45:07
+-- Versión del servidor: 10.4.10-MariaDB
+-- Versión de PHP: 7.2.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -133,6 +133,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spModificarUsuario` (IN `pId` INT, 
 UPDATE usuario
 SET usuario.usuario = pUsuario, usuario.contrasena = pContrasena, usuario.nombre = pNombre, usuario.correo = pCorreo, usuario.tipo = pTipo
 WHERE usuario.idUsuario = pId$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spSeleccionarEquipoPorId` (IN `pIdEquipo` INT)  NO SQL
+select * from equipo where equipo.idEquipo=pIdEquipo$$
 
 DELIMITER ;
 
