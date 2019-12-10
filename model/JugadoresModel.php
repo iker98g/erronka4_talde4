@@ -1,10 +1,22 @@
 <?php
+require_once 'JugadoresClass.php';
+require_once 'EquiposModel.php';
+require_once 'connect_data.php';
+
 class JugadoresModel extends JugadoresClass {
     
     private $link;
     private $list = array();
     private $objectEquipo;
     
+    /**
+     * @param mixed $objectEquipo
+     */
+    public function setObjectEquipo($objectEquipo)
+    {
+        $this->objectEquipo = $objectEquipo;
+    }
+
     function getList(){
         return $this->list;
     }
@@ -52,9 +64,12 @@ class JugadoresModel extends JugadoresClass {
             
             $equipo=new EquiposModel();
             $equipo->setIdEquipo($row['idEquipo']);
-            $new->objectEquipo=$equipo->findEquipoById();
+            $equipo->findEquipoById();
+            
+            $new->setObjectEquipo($equipo);
             
             array_push($this->list, $new);
+            
         }
         mysqli_free_result($result);
         unset($equipo);

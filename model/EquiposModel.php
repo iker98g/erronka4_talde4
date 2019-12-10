@@ -1,4 +1,7 @@
 <?php
+require_once 'EquiposClass.php';
+require_once 'connect_data.php';
+
 class EquiposModel extends EquiposClass {
     
     private $link;
@@ -112,6 +115,32 @@ class EquiposModel extends EquiposClass {
         }
         
         $this->CloseConnect();
+    }
+    
+    
+    public function findEquipoById() {
+
+        $this->OpenConnect();
+        $idEquipo=$this->idEquipo;
+        $sql = "CALL spSeleccionarEquipoPorId($idEquipo)";
+        $result= $this->link->query($sql);
+        
+        if ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+        {
+            $this->setIdCategoria($row['idCategoria']);
+            $this->setIdEquipo($row['idEquipo']);
+            $this->setNombre($row['nombre']);
+            $this->setLogo($row['logo']);
+            
+            
+            array_push($this->list, $this);
+            
+        }
+        mysqli_free_result($result);
+        $this->CloseConnect();
+        
+        
+        
     }
     
     function getListJsonString() {
