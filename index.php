@@ -63,14 +63,14 @@
                   <input type="text" class="form-control" id="username" placeholder="Usuario" name="loginInput" required> 
                 </div>
                 <div class="form-group">
-                  <input type="password" class="form-control" id="password" aria-describedby="passHelp" placeholder="ContraseÃ±a" name="loginInput" required>
+                  <input type="password" class="form-control" id="password" aria-describedby="passHelp" placeholder="Contraseña" name="loginInput" required>
                 </div>
               </form>
             </div>
           </div>
           <div class="modal-footer">
             <div class="form-group text-center w-100">
-              <button type="button" class="btn btn-secondary w-100" id="btnLogin" disabled>Iniciar SesiÃ³n</button>
+              <button type="button" class="btn btn-secondary w-100" id="btnLogin" disabled>Iniciar Sesión</button>
             </div>
           </div>
         </div>
