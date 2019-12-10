@@ -26,6 +26,35 @@
                   <li class="nav-item">
                     <a class="nav-link" href="vAdmin.php">Administración</a>
                   </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal">Contáctanos</a>
+                  </li>
+  
+                <!-- Modal -->
+				<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  					<div class="modal-dialog" role="document">
+    					<div class="modal-content">
+      						<div class="modal-header">
+        						<h5 class="modal-title" id="exampleModalLabel">Contáctanos</h5>
+        						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          							<span aria-hidden="true">&times;</span>
+        						</button>
+      						</div>
+      						<div class="modal-body">
+        						<form>
+  									<div class="form-group">
+    									<label for="exampleFormControlTextarea1">Consulta</label>
+    									<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  									</div>
+								</form>
+      						</div>
+      						<div class="modal-footer">
+        						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        						<button type="button" class="btn btn-primary" data-dismiss="modal">Enviar consulta</button>
+      						</div>
+    					</div>
+  					</div>
+				</div>
                 </ul>
                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                   <div class="btn-group mr-2" role="group" aria-label="First group">
@@ -198,6 +227,7 @@
                 </div>
             </div>
           <!-- FIN CARDS -->
+          
         </main> 
         <!-- FOOTER -->
         <footer class="footer text-muted text-center bg-secondary">
