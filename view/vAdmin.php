@@ -25,7 +25,7 @@
             <div class="titulo_boton">
                 <div class="tituloJAdmin" data-tipo="Jugador"><h2>Jugadores</h2></div>
               </div>
-		<div id="JugadoresPorEquipos"></div>
+		<div id="JugadoresPorEquipos" ></div>
         </div> 
 <div class="panelEq paneles" id="panelEq" >
 			<div class="titulo_boton">

@@ -151,26 +151,31 @@ function iniciarJAdmin(){
 				var equipoClass=datosJugadores.objectEquipo.nombre.replace(/ /g, "");
 				if(!equipos.includes(equipoClass)){
  				console.log(equipoClass);
- 				$("#JugadoresPorEquipos").append(`<div class="panelEq paneles `+equipoClass+` " >
-							<div class="titulo_boton">
-							<div class="tituloEqAdmin"><h2>`+datosJugadores.objectEquipo.nombre+`</h2></div>
-							</div>
-					        <div class="divTablaAdmin">
-								<div class="insertButton" ><button type="button" >+NUEVO JUGADOR</button></div>
-								<table class="rellenoAdminJugadoresEquipos">
-							        <tr>
-							        
-							            <th>IDJUGADOR</th> 
-							            <th>NOMBRE</th>
-							            <th>IMAGEN</th>
-							            <th>ROL</th>
-							            <th>TELEFONO</th>
-							            <th>IDEQUIPO</th>
-							            <th>ACCION</th>
-							        </tr>
-							    </table>
-							</div>
+ 				$("#JugadoresPorEquipos").append(`
+ 				<div class="JugadoresEquiposTitulo paneles `+equipoClass+` " >
+ 				
+					<div class="titulo_boton">
+						<div class="">
+							<h2>`+datosJugadores.objectEquipo.nombre+`</h2>
 						</div>
+					</div>
+					
+			        <div class="divTablaAdmin">
+						<div class="insertButton" ><button type="button" >+NUEVO JUGADOR</button></div>
+						<table class="rellenoAdminJugadoresEquipos">
+					        <tr>
+					        
+					            <th>IDJUGADOR</th> 
+					            <th>NOMBRE</th>
+					            <th>IMAGEN</th>
+					            <th>ROL</th>
+					            <th>TELEFONO</th>
+					            <th>IDEQUIPO</th>
+					            <th>ACCION</th>
+					        </tr>
+					    </table>
+					</div>
+				</div>
  				`);
  				
  				equipos.push(equipoClass);
@@ -198,6 +203,8 @@ function iniciarJAdmin(){
  					console.log(equipoJugador+" // "+EquipoN);
  					
  		    		if(equipoJugador==EquipoN){
+ 		    			$(".JugadoresEquipos").css("background-color","white!important");
+ 		    			
  		    			$("."+EquipoN+" .rellenoAdminJugadoresEquipos").append(`<tr>
  		           		<td>`+datosJugadores.idJugador+`</td>            		
  		           		<td>`+datosJugadores.nombre+`</td>
@@ -205,8 +212,8 @@ function iniciarJAdmin(){
  		           		<td>`+datosJugadores.rol+`</td>
  		           		<td>`+datosJugadores.telefono+`</td>
  		           		<td>`+datosJugadores.objectEquipo.nombre+`</td>
- 		           		<td><button class="deleteV delete_paneles" value="`+datosJugadores.idJugador+`">DELETE</button>
- 		           		<button class="updateV update_paneles" value="`+datosJugadores.idJugador+`||`+datosJugadores.nombre+`||`+datosJugadores.img+`||`+datosJugadores.rol+`||`+datosJugadores.telefono+`||`+datosJugadores.objectEquipo+`">UPDATE</button></td>
+ 		           		<td><i class="fas fa-edit" value="`+datosJugadores.idJugador+`"></i>
+ 		           		<i class="fas fa-trash-alt" value="`+datosJugadores.idJugador+`"></i></td>
  		       		</tr>`);
  		    		}
  		    		});
