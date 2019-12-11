@@ -3,7 +3,7 @@
 class CategoriasClass {
     protected $idCategoria;
     protected $nombre;
-    
+    protected $imagen;
     
     /**
      * @return mixed
@@ -20,7 +20,11 @@ class CategoriasClass {
     {
         return $this->nombre;
     }
-
+    public function getImagen()
+    {
+        return $this->imagen;
+    }
+    
     /**
      * @param mixed $idCategoria
      */
@@ -36,7 +40,11 @@ class CategoriasClass {
     {
         $this->nombre = $nombre;
     }
-
+    public function setImagen($imagen)
+    {
+        $this->imagen = $imagen;
+    }
+    
     function getObjectVars()
     {
         $vars = get_object_vars($this);

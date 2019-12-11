@@ -1,6 +1,7 @@
 <?php
     require_once 'connect_data.php';
     require_once 'ConsultasClass.php';
+    require_once 'UsuariosModel.php';
     
     class ConsultasModel extends ConsultasClass {
         
@@ -15,7 +16,10 @@
         public function getObjectUsuario(){
             return $this->objectUsuario;
         }
-        
+        public function setObjectUsuario($objectUsuario)
+        {
+            $this->objectUsuario = $objectUsuario;
+        }
         public function OpenConnect() {
             $konDat=new connect_data();
             try {
@@ -52,7 +56,8 @@
                 
                 $usuarios=new UsuariosModel();
                 $usuarios->setIdUsuario($row['idUsuario']);
-                $new->objectUsuario=$usuarios->findUsuarioById();
+                $usuarios->findUsuarioById();
+                $new->setObjectUsuario($usuarios);
                 
                 array_push($this->list, $new);
             }

@@ -4,7 +4,7 @@ include_once("../../model/ConsultasModel.php");
 $consultas = new ConsultasModel();
 $consultas -> setList();
 
-$listaConsultasJSON = $consultas -> getListJsonString();
+$listaConsultasJSON = $consultas -> getListJsonStringObject();
 
 echo $listaConsultasJSON;
 

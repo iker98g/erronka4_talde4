@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-12-2019 a las 12:45:07
+-- Tiempo de generación: 11-12-2019 a las 11:14:07
 -- Versión del servidor: 10.4.10-MariaDB
 -- Versión de PHP: 7.2.25
 
@@ -134,8 +134,14 @@ UPDATE usuario
 SET usuario.usuario = pUsuario, usuario.contrasena = pContrasena, usuario.nombre = pNombre, usuario.correo = pCorreo, usuario.tipo = pTipo
 WHERE usuario.idUsuario = pId$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spSeleccionarCategoriaPorId` (IN `pIdCategoria` INT)  NO SQL
+select * from categoria where categoria.idCategoria=pIdCategoria$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spSeleccionarEquipoPorId` (IN `pIdEquipo` INT)  NO SQL
 select * from equipo where equipo.idEquipo=pIdEquipo$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spSeleccionarUsuarioPorId` (IN `pIdUsuario` INT)  NO SQL
+select * from usuario where usuario.idUsuario=pIdUsuario$$
 
 DELIMITER ;
 
@@ -147,17 +153,18 @@ DELIMITER ;
 
 CREATE TABLE `categoria` (
   `idCategoria` int(11) NOT NULL,
-  `nombre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL
+  `nombre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `imagen` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `categoria`
 --
 
-INSERT INTO `categoria` (`idCategoria`, `nombre`) VALUES
-(1, 'junior'),
-(2, 'senior'),
-(3, 'master');
+INSERT INTO `categoria` (`idCategoria`, `nombre`, `imagen`) VALUES
+(1, 'junior', ''),
+(2, 'senior', ''),
+(3, 'master', '');
 
 -- --------------------------------------------------------
 
@@ -176,7 +183,8 @@ CREATE TABLE `consulta` (
 --
 
 INSERT INTO `consulta` (`idConsulta`, `consulta`, `idUsuario`) VALUES
-(1, 'eukene crack', 1);
+(1, 'eukene crack', 1),
+(2, 'gwivubcaifjq', 2);
 
 -- --------------------------------------------------------
 
@@ -361,7 +369,7 @@ ALTER TABLE `categoria`
 -- AUTO_INCREMENT de la tabla `consulta`
 --
 ALTER TABLE `consulta`
-  MODIFY `idConsulta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idConsulta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `entrenador`

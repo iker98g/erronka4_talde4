@@ -1,4 +1,7 @@
 <?php
+require_once 'EntrenadoresClass.php';
+require_once 'EquiposModel.php';
+require_once 'connect_data.php';
 class EntrenadoresModel extends EntrenadoresClass {
     
     private $link;
@@ -12,7 +15,10 @@ class EntrenadoresModel extends EntrenadoresClass {
     public function getObjectEquipo(){
         return $this->objectEquipo;
     }
-    
+    public function setObjectEquipo($objectEquipo)
+    {
+        $this->objectEquipo = $objectEquipo;
+    }
     public function OpenConnect() {
         $konDat=new connect_data();
         try {
@@ -51,8 +57,8 @@ class EntrenadoresModel extends EntrenadoresClass {
             
             $equipo=new EquiposModel();
             $equipo->setIdEquipo($row['idEquipo']);
-            $new->objectEquipo=$equipo->findEquipoById();
-            
+            $equipo->findEquipoById();
+            $new->setObjectEquipo($equipo);
             array_push($this->list, $new);
         }
         mysqli_free_result($result);

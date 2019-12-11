@@ -43,7 +43,7 @@
          			<th>IDEQUIPO</th>
          			<th>NOMBRE</th> 
          			<th>LOGO</th> 
-         			<th>IDCATEGORIA</th>
+         			<th>CATEGORIA</th>
                      <th>ACCION</th>
                 </tr>
         	</table>
@@ -64,7 +64,7 @@
                          <th>NOMBRE</th>
                          <th>IMAGEN</th>
                          <th>TELEFONO</th>
-                         <th>IDEQUIPO</th>
+                         <th>EQUIPO</th>
                          <th>ACCION</th>
                     </tr>
                 </table>
@@ -82,6 +82,7 @@
                         
                              <th>IDCATEGORIA</th> 
                              <th>NOMBRE</th>
+                             <th>IMAGEN</th>
                              <th>ACCION</th>
                         </tr>
                     </table>

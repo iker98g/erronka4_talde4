@@ -44,6 +44,7 @@ class CategoriasModel extends CategoriasClass {
             
             $new->setIdCategoria($row['idCategoria']);
             $new->setNombre($row['nombre']);
+            $new->setImagen($row['imagen']);
             
             array_push($this->list, $new);
         }

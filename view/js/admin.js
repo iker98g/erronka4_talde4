@@ -52,6 +52,8 @@ $(document).ready(function(){
 		}
     });
     
+    iniciarEnAdmin();
+    
     $(".tituloEnAdmin").click(function(){
 		if(comprobarEn==0){
             $(".divTablaAdmin").hide(800);
@@ -70,6 +72,7 @@ $(document).ready(function(){
 		}
     });	
 
+    iniciarCaAdmin();
 
     $(".tituloCaAdmin").click(function(){
 		if(comprobarCa==0){
@@ -88,6 +91,7 @@ $(document).ready(function(){
 			comprobarCa=0;
 		}
     });	
+    iniciarCoAdmin();
 
     $(".tituloCoAdmin").click(function(){
 		if(comprobarCo==0){
@@ -107,6 +111,8 @@ $(document).ready(function(){
 		}
     });	
 
+    iniciarUAdmin();
+    
     $(".tituloUAdmin").click(function(){
 		if(comprobarU==0){
 			$(".divTablaAdmin").hide(800);
@@ -145,7 +151,7 @@ function iniciarJAdmin(){
         success: function(datosJugadores){
         	
         	miDatosJugadores=JSON.parse(datosJugadores);
-        	console.log(miDatosJugadores);
+//        	console.log(miDatosJugadores);
         	
  		$.each(miDatosJugadores,function(i,datosJugadores){
 				var equipoClass=datosJugadores.objectEquipo.nombre.replace(/ /g, "");
@@ -170,7 +176,7 @@ function iniciarJAdmin(){
 					            <th>IMAGEN</th>
 					            <th>ROL</th>
 					            <th>TELEFONO</th>
-					            <th>IDEQUIPO</th>
+					            <th>EQUIPO</th>
 					            <th>ACCION</th>
 					        </tr>
 					    </table>
@@ -186,7 +192,6 @@ function iniciarJAdmin(){
  			var equipo=equipos[i];
  		    $("."+equipos[i]).click(function(){
  		    	var NombreEquipo=this.className.split(" ");
- 		    	console.log(NombreEquipo[2]);
  		    	EquipoN =NombreEquipo[2];
  		    	
  		    	$(".divTablaAdmin").hide(800);
@@ -198,9 +203,7 @@ function iniciarJAdmin(){
  		    	//AQUI FALTAN COSASSS
  		    	$.each(miDatosJugadores,function(i,datosJugadores){
  					var equipoJugador=datosJugadores.objectEquipo.nombre.replace(/ /g, "");
- 					
- 					console.log(equipoJugador+" // "+EquipoN);
- 					
+ 					 					
  		    		if(equipoJugador==EquipoN){
  		    			$(".JugadoresEquipos").css("background-color","white!important");
  		    			
@@ -341,7 +344,7 @@ function iniciarEqAdmin(){
         success: function(datosEquipos){
         	
         	miDatosEquipos=JSON.parse(datosEquipos);
-        	console.log(miDatosEquipos);
+//        	console.log(miDatosEquipos);
         	
  		$.each(miDatosEquipos,function(i,datosEquipo){
 				
@@ -364,5 +367,125 @@ function iniciarEqAdmin(){
     });
 	}
 
+function iniciarEnAdmin(){
+	$.ajax({
+        type:"JSON",
+        url:"../controller/entrenadores/cSeleccionarEntrenadores.php",
+        success: function(datosEntrenadores){
+        	
+        	miDatosEntrenadores=JSON.parse(datosEntrenadores);
+//        	console.log(miDatosEntrenadores);
+        	
+ 		$.each(miDatosEntrenadores,function(i,datosEntrenador){
+				
+ 				$(".panelEn .divTablaAdmin table").append(`<tr>
+ 		           		<td>`+datosEntrenador.idEntrenador+`</td>            		
+ 		           		<td>`+datosEntrenador.nombre+`</td>
+ 		           		<td><img src="`+datosEntrenador.imagen+`" style="width:100px; height:auto;"></td>
+ 		           		<td>`+datosEntrenador.telefono+`</td>
+ 		           		<td>`+datosEntrenador.objectEquipo.nombre+`</td>
+ 		           		<td><i class="fas fa-edit" value="`+datosEntrenador.idEntrenador+`"></i>
+ 		           		<i class="fas fa-trash-alt" value="`+datosEntrenador.idEntrenador+`"></i></td>
+ 		       		</tr>`);
+ 				
+ 			});
+ 		
+	 		
+        },
+        error: function(xhr){
+            alert("An error occured: "+xhr.status+" "+xhr.statusText);
+        }
+    });
+	}
 
+function iniciarCaAdmin(){
+	$.ajax({
+        type:"JSON",
+        url:"../controller/categorias/cSeleccionarCategorias.php",
+        success: function(datosCategorias){
+        	
+        	miDatosCategorias=JSON.parse(datosCategorias);
+        	console.log(miDatosCategorias);
+        	
+ 		$.each(miDatosCategorias,function(i,datosCategoria){
+				
+ 				$(".panelCa .divTablaAdmin table").append(`<tr>
+ 		           		<td>`+datosCategoria.idCategoria+`</td>            		
+ 		           		<td>`+datosCategoria.nombre+`</td>
+ 		           		<td><img src="`+datosCategoria.imagen+`" style="width:100px; height:auto;"></td>
+ 		           		<td><i class="fas fa-edit" value="`+datosCategoria.idCategoria+`"></i>
+ 		           		<i class="fas fa-trash-alt" value="`+datosCategoria.idCategoria+`"></i></td>
+ 		       		</tr>`);
+ 				
+ 			});
+ 		
+	 		
+        },
+        error: function(xhr){
+            alert("An error occured: "+xhr.status+" "+xhr.statusText);
+        }
+    });
+	}
+
+
+function iniciarCoAdmin(){
+	$.ajax({
+        type:"JSON",
+        url:"../controller/consultas/cSeleccionarConsultas.php",
+        success: function(datosConsultas){
+        	
+        	miDatosConsultas=JSON.parse(datosConsultas);
+//        	console.log(miDatosConsultas);
+        	
+ 		$.each(miDatosConsultas,function(i,datosConsultas){
+
+ 			$(".panelCo .divTablaAdmin table").append(`<tr>
+ 		           		<td>`+datosConsultas.idConsulta+`</td>            		
+ 		           		<td>`+datosConsultas.consulta+`</td>
+ 		           		<td>`+datosConsultas.objectUsuario.usuario+`</td>
+ 		           		<td><i class="fas fa-edit" value="`+datosConsultas.idConsulta+`"></i>
+ 		           		<i class="fas fa-trash-alt" value="`+datosConsultas.idConsulta+`"></i></td>
+ 		       		</tr>`);
+ 				
+ 			});
+ 		
+	 		
+        },
+        error: function(xhr){
+            alert("An error occured: "+xhr.status+" "+xhr.statusText);
+        }
+    });
+	}
+
+
+function iniciarUAdmin(){
+	$.ajax({
+        type:"JSON",
+        url:"../controller/usuarios/cSeleccionarUsuarios.php",
+        success: function(datosUsuarios){
+        	
+        	miDatosUsuarios=JSON.parse(datosUsuarios);
+        	console.log(miDatosUsuarios);
+        	
+ 		$.each(miDatosUsuarios,function(i,datosUsuarios){
+ 				$(".panelU .divTablaAdmin table").append(`<tr>
+ 		           		<td>`+datosUsuarios.idUsuario+`</td>            		
+ 		           		<td>`+datosUsuarios.usuario+`</td>
+ 		           		<td>`+datosUsuarios.contrasena+`</td>
+ 		           		<td>`+datosUsuarios.nombre+`</td>
+ 		           		<td>`+datosUsuarios.correo+`</td>
+ 		           		<td>`+datosUsuarios.tipo+`</td>
+ 		           		<td><i class="fas fa-edit" value="`+datosUsuarios.idUsuario+`"></i>
+ 		           		<i class="fas fa-trash-alt" value="`+datosUsuarios.idUsuario+`"></i></td>
+ 		       		</tr>`);
+ 				
+ 			});
+ 		
+	 		
+        },
+        error: function(xhr){
+            alert("An error occured: "+xhr.status+" "+xhr.statusText);
+        }
+    });
+	}
 /*FIN DE INSERTAR DATOS EN LAS TABLAS DESDE VADMIN */
