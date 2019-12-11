@@ -206,14 +206,14 @@ function iniciarJAdmin(){
  		    	$("."+EquipoN+" .divTablaAdmin").show(1200);
  				$(".panelJ .divTablaAdmin .rellenoAdminJugadoresEquipos").css({"margin-top":"50px", "margin-bottom": "50px"});
  				$(".panelJ .titulo_boton").css({"border-bottom":"1px solid black", "background-color":"gray"});
- 		    	
+	    		$(".JugadoresE ").html(``);
+
  		    	$.each(miDatosJugadores,function(i,datosJugadores){
  					var equipoJugador=datosJugadores.objectEquipo.nombre.replace(/ /g, "");
  					 					
  		    		if(equipoJugador==EquipoN){
  		    			$(".JugadoresEquipos").css("background-color","white!important");
- 		    			
- 		    			$("."+EquipoN+" .rellenoAdminJugadoresEquipos").append(`<tr>
+ 		    			$("."+EquipoN+" .rellenoAdminJugadoresEquipos").append(`<tr class="JugadoresE">
  		           		<td>`+datosJugadores.idJugador+`</td>            		
  		           		<td>`+datosJugadores.nombre+`</td>
  		           		<td><img src="`+datosJugadores.imagen+`" style="width:100px; height:auto;"></td>
