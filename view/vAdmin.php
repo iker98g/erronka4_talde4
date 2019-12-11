@@ -27,9 +27,12 @@
               </div>
 		<div id="JugadoresPorEquipos" ></div>
         </div> 
-<div class="panelEq paneles" id="panelEq" >
+        
+		<div class="panelEq paneles" id="panelEq" >
 			<div class="titulo_boton">
-    		<div class="tituloEqAdmin" data-tipo="Equipo"><h2>Equipos</h2></div>
+        		<div class="tituloEqAdmin" data-tipo="Equipo">
+        			<h2>Equipos</h2>
+        		</div>
     		<!-- <button class="insertEq insert_paneles">INSERT</button> -->
     		</div>
             <div class="divTablaAdmin" >

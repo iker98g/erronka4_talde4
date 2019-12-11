@@ -1,4 +1,8 @@
 <?php
+
+require_once 'CategoriasClass.php';
+require_once 'connect_data.php';
+
 class CategoriasModel extends CategoriasClass {
     
     private $link;
@@ -97,7 +101,28 @@ class CategoriasModel extends CategoriasClass {
         
         $this->CloseConnect();
     }
-    
+    public function findCategoriaById() {
+        
+        $this->OpenConnect();
+        $idCategoria=$this->idCategoria;
+        $sql = "CALL spSeleccionarCategoriaPorId($idCategoria)";
+        $result= $this->link->query($sql);
+        
+        if ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+        {
+            $this->setIdCategoria($row['idCategoria']);
+            $this->setNombre($row['nombre']);
+            
+            
+            array_push($this->list, $this);
+            
+        }
+        mysqli_free_result($result);
+        $this->CloseConnect();
+        
+        
+        
+    }
     function getListJsonString() {
         
         $arr=array();

@@ -1,5 +1,6 @@
 <?php
 require_once 'EquiposClass.php';
+require_once 'CategoriasModel.php';
 require_once 'connect_data.php';
 
 class EquiposModel extends EquiposClass {
@@ -15,7 +16,10 @@ class EquiposModel extends EquiposClass {
     public function getObjectCategoria(){
         return $this->objectCategoria;
     }
-    
+    public function setObjectCategoria($objectCategoria)
+    {
+        $this->objectCategoria = $objectCategoria;
+    }
     public function OpenConnect() {
         $konDat=new connect_data();
         try {
@@ -53,8 +57,8 @@ class EquiposModel extends EquiposClass {
        
             $categoria=new CategoriasModel();
             $categoria->setIdCategoria($row['idCategoria']);
-            $new->objectCategoria=$categoria->findCategoriaById();
-            
+            $categoria->findCategoriaById();
+            $new->setObjectCategoria($categoria);
             array_push($this->list, $new);
         }
         mysqli_free_result($result);

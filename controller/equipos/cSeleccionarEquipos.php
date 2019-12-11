@@ -4,7 +4,7 @@ include_once("../../model/EquiposModel.php");
 $equipos = new EquiposModel();
 $equipos -> setList();
 
-$listaEquiposJSON = $equipos -> getListJsonString();
+$listaEquiposJSON = $equipos ->getListJsonStringObject();
 
 echo $listaEquiposJSON;
 
