@@ -36,7 +36,7 @@
     		<!-- <button class="insertEq insert_paneles">INSERT</button> -->
     		</div>
             <div class="divTablaAdmin" >
-                <div class="insertButton" ><button type="button" >+NUEVO EQUIPO</button></div>
+                <div class="insertButton" ><button type="button" >+NUEVO EQUIPOS</button></div>
                 <table class="rellenoAdminEquipo">
     			<tr>
     			
@@ -56,7 +56,7 @@
                 <!-- <button class="insertEn insert_paneles" >INSERT</button> -->
             </div>
             <div class="divTablaAdmin" >
-                <div class="insertButton"><button type="button">+NUEVO ENTRENADOR</button></div>
+                <div class="insertButton"><button type="button">+NUEVO ENTRENADORES</button></div>
                 <table class="rellenoAdminEntrenador">
                     <tr>
                     
@@ -76,7 +76,7 @@
                     <!-- <button class="insertCa insert_paneles" >INSERT</button> -->
                 </div>
                 <div class="divTablaAdmin" >
-                    <div class="insertButton" ><button type="button" >+NUEVA CATEGORIA</button></div>
+                    <div class="insertButton" ><button type="button" >+NUEVA CATEGORIAS</button></div>
                     <table class="rellenoAdminCategoria">
                         <tr>
                         
@@ -96,7 +96,7 @@
                         <!-- <button class="insertCo insert_paneles" >INSERT</button> -->
                     </div>
                     <div class="divTablaAdmin" >
-                        <div class="insertButton" ><button type="button" >+NUEVA CONSULTA</button></div>
+                        <div class="insertButton" ><button type="button" >+NUEVA CONSULTAS</button></div>
                         <table class="rellenoAdminConsulta">
                             <tr>
                             
@@ -114,7 +114,7 @@
     		<!-- <button class="insertU insert_paneles">INSERT</button> -->
     		</div>
             <div class="divTablaAdmin">
-                <div class="insertButton" ><button type="button" >+NUEVO USUARIO</button></div>
+                <div class="insertButton" ><button type="button" >+NUEVO USUARIOS</button></div>
                 <table class="rellenoAdminUsuario">
     			<tr>
     			

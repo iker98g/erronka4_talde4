@@ -132,10 +132,7 @@ $(document).ready(function(){
 		}
 	});	
 	
-	$(".insertButton button").click(function(){
-		alert("ESTO ES EL INSERT BUTTON");
-
-	});
+	
 	});
 	
 	
@@ -171,7 +168,7 @@ function iniciarJAdmin(){
 					</div>
 					
 			        <div class="divTablaAdmin">
-						<div class="insertButton" ><button type="button" >+NUEVO JUGADOR</button></div>
+						<div class="insertButton" ><button type="button" >+NUEVOS JUGADORES</button></div>
 						<table class="rellenoAdminJugadoresEquipos">
 					        <tr>
 					        
@@ -191,7 +188,10 @@ function iniciarJAdmin(){
  				equipos.push(equipoClass);
  			}
  		});
-
+ 		
+ 		botonInsertAdmin();//boton para insertar Nuevas lineas en cualquiera de las tablas
+ 		
+ 		
  		for(var i=0;i<equipos.length;i++){
  			var equipo=equipos[i];
 
@@ -499,7 +499,50 @@ function iniciarUAdmin(){
 
 /*INICIO DE INSERTAR NUEVOS DATOS EN LAS TABLAS EN LA VISTA ADMIN
 */
+function botonInsertAdmin(){
+$(".insertButton button").click(function(){
+	var TablaInsert=$(this).text();
+	var TablaInsert1=TablaInsert.split(" ",2);//RECOGEMOS EN UN ARRAY LO QUE ESTA ESCRITO EN EL BOTON
+	TablaInsert =TablaInsert1[1]; 	//SELECCIONAMOS LA SEGUNDA POSICION del array Y LA GUARDAMOS EN UNA VARIABLE
+	//alert(TablaInsert);
 
-
-
+	minusculas=TablaInsert.substring(1,TablaInsert.length); //COGEMOS EL TEXTO EXCEPTO LA PRIMERA LETRA
+	mayusculas=TablaInsert.substring(0,1); //COGEMOS LA PRIMERA LETRA
+	minusculas=minusculas.toLowerCase(); //CAMBIAMOS EL TEXTO A MINUSCULAS
+	var Tabla=mayusculas+minusculas;
+	alert(Tabla);
+	
+	$.ajax({
+        type:"JSON",
+        url:"../controller/usuarios/cSeleccionarUsuarios.php",
+        success: function(datosUsuarios){
+        	
+        	miDatosUsuarios=JSON.parse(datosUsuarios);
+//        	console.log(miDatosUsuarios);
+        	
+ 		$.each(miDatosUsuarios,function(i,datosUsuarios){
+ 				$(".panelU .divTablaAdmin table").append(`<tr>
+ 		           		<td>`+datosUsuarios.idUsuario+`</td>            		
+ 		           		<td>`+datosUsuarios.usuario+`</td>
+ 		           		<td>`+datosUsuarios.contrasena+`</td>
+ 		           		<td>`+datosUsuarios.nombre+`</td>
+ 		           		<td>`+datosUsuarios.correo+`</td>
+ 		           		<td>`+datosUsuarios.tipo+`</td>
+ 		           		<td><i class="fas fa-edit" value="`+datosUsuarios.idUsuario+`"></i>
+ 		           		<i class="fas fa-trash-alt" value="`+datosUsuarios.idUsuario+`"></i></td>
+ 		       		</tr>`);
+ 				
+ 			});
+ 		
+	 		
+        },
+        error: function(xhr){
+            alert("An error occured: "+xhr.status+" "+xhr.statusText);
+        }
+    });
+	
+	
+	
+});
+}
 /*FIN DE INSERTAR NUEVOS DATOS EN LAS TABLAS DESDE VADMIN */
