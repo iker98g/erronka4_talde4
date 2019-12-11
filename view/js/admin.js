@@ -18,6 +18,7 @@ $(document).ready(function(){
 	$(".tituloJAdmin").click(function(){
 		if(comprobarJ==0){
 			$("#JugadoresPorEquipos").hide(800);
+			$(".divTablaAdmin").hide(800);
 			$("#JugadoresPorEquipos").css("margin","0px");
 			$(".titulo_boton").css({"border-bottom":"0px","background-color":"white"});
 			$(".panelJ #JugadoresPorEquipos").show(1200);
@@ -131,7 +132,10 @@ $(document).ready(function(){
 		}
 	});	
 	
-	
+	$(".insertButton button").click(function(){
+		alert("ESTO ES EL INSERT BUTTON");
+
+	});
 	});
 	
 	
@@ -161,7 +165,7 @@ function iniciarJAdmin(){
  				<div class="JugadoresEquiposTitulo paneles `+equipoClass+` " >
  				
 					<div class="titulo_boton">
-						<div class="">
+						<div class="tituloEquipo">
 							<h2>`+datosJugadores.objectEquipo.nombre+`</h2>
 						</div>
 					</div>
@@ -190,8 +194,12 @@ function iniciarJAdmin(){
 
  		for(var i=0;i<equipos.length;i++){
  			var equipo=equipos[i];
- 		    $("."+equipos[i]).click(function(){
- 		    	var NombreEquipo=this.className.split(" ");
+
+ 			
+ 		    $("."+equipos[i]+" .titulo_boton").click(function(){
+ 		    	var NombreEquipo=$(this).parent().attr("class");
+ 		    	
+ 		    	NombreEquipo=NombreEquipo.split(" ");
  		    	EquipoN =NombreEquipo[2];
  		    	
  		    	$(".divTablaAdmin").hide(800);
@@ -199,8 +207,6 @@ function iniciarJAdmin(){
  				$(".panelJ .divTablaAdmin .rellenoAdminJugadoresEquipos").css({"margin-top":"50px", "margin-bottom": "50px"});
  				$(".panelJ .titulo_boton").css({"border-bottom":"1px solid black", "background-color":"gray"});
  		    	
- 		    	
- 		    	//AQUI FALTAN COSASSS
  		    	$.each(miDatosJugadores,function(i,datosJugadores){
  					var equipoJugador=datosJugadores.objectEquipo.nombre.replace(/ /g, "");
  					 					
@@ -405,7 +411,7 @@ function iniciarCaAdmin(){
         success: function(datosCategorias){
         	
         	miDatosCategorias=JSON.parse(datosCategorias);
-        	console.log(miDatosCategorias);
+//        	console.log(miDatosCategorias);
         	
  		$.each(miDatosCategorias,function(i,datosCategoria){
 				
@@ -465,7 +471,7 @@ function iniciarUAdmin(){
         success: function(datosUsuarios){
         	
         	miDatosUsuarios=JSON.parse(datosUsuarios);
-        	console.log(miDatosUsuarios);
+//        	console.log(miDatosUsuarios);
         	
  		$.each(miDatosUsuarios,function(i,datosUsuarios){
  				$(".panelU .divTablaAdmin table").append(`<tr>
@@ -489,3 +495,11 @@ function iniciarUAdmin(){
     });
 	}
 /*FIN DE INSERTAR DATOS EN LAS TABLAS DESDE VADMIN */
+
+
+/*INICIO DE INSERTAR NUEVOS DATOS EN LAS TABLAS EN LA VISTA ADMIN
+*/
+
+
+
+/*FIN DE INSERTAR NUEVOS DATOS EN LAS TABLAS DESDE VADMIN */

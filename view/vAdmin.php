@@ -56,7 +56,7 @@
                 <!-- <button class="insertEn insert_paneles" >INSERT</button> -->
             </div>
             <div class="divTablaAdmin" >
-                <div class="insertButton" ><button type="button" >+NUEVO ENTRENADOR</button></div>
+                <div class="insertButton"><button type="button">+NUEVO ENTRENADOR</button></div>
                 <table class="rellenoAdminEntrenador">
                     <tr>
                     
