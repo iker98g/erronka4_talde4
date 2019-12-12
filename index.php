@@ -34,6 +34,9 @@
           <li class="nav-item">
             <a class="nav-link text-light" href="view/vPrincipal.php">Equipos</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#examModal">Contáctanos</a>
+          </li>
         </ul>
         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
           <div class="btn-group mr-2 sesion" role="group" aria-label="First group">
@@ -57,8 +60,7 @@
                     <a class="dropdown-item" id="cerrarSesion" href="javascript:void(0);">
                         <i class="fas fa-sign-out-alt"></i>
                         Cerrar sesión
-                    </a>
-                      
+                    </a> 
                 </div>
             <?php ;}else{ ?>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -71,6 +73,47 @@
       </div>
     </nav>
     <!-- FIN NAV -->
+    
+    <!-- MODAL DE VALORACIÓN -->
+	<div class="modal fade" id="examModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Contáctanos</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<h6>Consulta</h6>
+							<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+						</div>
+						<div>
+							<h6>Valoración</h6>
+							<p class="clasificacion">
+								<input id="radio1" type="radio" name="estrellas" value="5">
+                                <label for="radio1" class="puntuacion">★</label>
+                                <input id="radio2" type="radio" name="estrellas" value="4">
+                                <label for="radio2" class="puntuacion">★</label>
+                                <input id="radio3" type="radio" name="estrellas" value="3">
+                                <label for="radio3" class="puntuacion">★</label>
+                                <input id="radio4" type="radio" name="estrellas" value="2">
+                                <label for="radio4" class="puntuacion">★</label>
+                                <input id="radio5" type="radio" name="estrellas" value="1">
+                                <label for="radio5" class="puntuacion">★</label>
+							</p>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" disabled>Enviar consulta</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- FIN MODAL VALORACIÓN -->
       
     <!-- MODAL REGISTRO -->
     <div class="modal fade" id="registroModal" tabindex="-1" role="dialog" aria-labelledby="modalInsertUserlabel" aria-hidden="true">

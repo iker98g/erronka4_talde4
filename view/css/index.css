@@ -21,6 +21,26 @@ body p {
 	height: 38px;
 }
 
+input[type="radio"] {
+  display: none;
+}
+.puntuacion {
+  color: grey;
+  font-size: 40px;
+}
+.clasificacion {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+  text-align: center;
+}
+.puntuacion:hover,
+.puntuacion:hover ~ .puntuacion {
+  color: orange;
+}
+input[type="radio"]:checked ~ .puntuacion {
+  color: orange;
+}
+
 body .hidden {
 	display: none;
 }
