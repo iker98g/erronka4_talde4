@@ -88,7 +88,7 @@
 					<form>
 						<div class="form-group">
 							<h6>Consulta</h6>
-							<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+							<textarea class="form-control" id="textoConsulta" rows="3"></textarea>
 						</div>
 						<div>
 							<h6>Valoración</h6>
@@ -108,7 +108,7 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal" disabled>Enviar consulta</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Enviar consulta</button>
 				</div>
 			</div>
 		</div>
