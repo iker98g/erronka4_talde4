@@ -14,7 +14,7 @@
             $_SESSION['usuario']=$username;
             $_SESSION['admin']=$user->getTipo();
             
-            echo 1;
+            echo $_SESSION['usuario'];
         }else {
             echo 0;
         }

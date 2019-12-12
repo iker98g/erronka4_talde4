@@ -117,5 +117,24 @@
             mysqli_free_result($result);
             $this->CloseConnect();
         }
+        
+        public function aniadirUsuario() {
+            $this->OpenConnect();
+            
+            $nombre=$this->nombre;
+            $correo=$this->correo;
+            $usuario=$this->usuario;
+            $contrasena=$this->contrasena;
+            
+            $sql="call spAniadirUsuario('$nombre', '$correo', '$usuario', '$contrasena')";
+            
+            if ($this->link->query($sql)>=1) {
+                return "El usuario se ha insertado con exito";
+            }else {
+                return "Fallo en la insercion del usuario: (" . $this->link->errno . ") " . $this->link->error;
+            }
+            
+            $this->CloseConnect();
+        }
     }
 ?>
