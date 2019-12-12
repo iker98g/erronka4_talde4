@@ -1,57 +1,123 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  	<meta charset="UTF-8">
-  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-  	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-  	<title>Zornotza Quidditch</title>
-    
-    <link rel="icon" type="image/png" href="view/imagenes/favicon.ico">
-  	<link href="view/css/index.css" rel="stylesheet" type="text/css" />
-  	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Zornotza Quidditch</title>
+  
+  <link rel="icon" type="image/png" href="view/imagenes/favicon.ico">
+  <link href="view/css/index.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
-  	<script src="https://kit.fontawesome.com/661afcc94b.js"></script>
-  	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-  	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-  	
-  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  	<script src="view/js/index.js"></script>
+  <script src="https://kit.fontawesome.com/661afcc94b.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="view/js/index.js"></script>
 </head>
 <body>
 	<header>
-		<!-- NAV -->
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<a class="navbar-brand" href="#"><img src="view/imagenes/logo_snitch.png"></a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarText" aria-controls="navbarText"
-				aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarText">
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item"><a class="nav-link" href="view/vPrincipal.php">Equipos</a></li>
-					<li class="nav-item"><a class="nav-link" href="view/vAdmin.php">Administración</a></li>
-				</ul>
-				<div class="btn-toolbar" role="toolbar"
-					aria-label="Toolbar with button groups">
-					<div class="btn-group mr-2" role="group" aria-label="First group">
-						<button type="button" class="btn btn-outline-light">Registrate</button>
-					</div>
-					<div class="btn-group mr-2" role="group" aria-label="Second group">
-					  <button type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModal">Iniciar Sesión</button> <!-- Button trigger modal -->
-					</div>
-				</div>
-			</div>
-		</nav>
+  <!-- NAV -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="index.php"><img src="view/imagenes/logo_snitch.png"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link text-light" href="view/vPrincipal.php">Equipos</a>
+          </li>
+        </ul>
+        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+          <div class="btn-group mr-2 sesion" role="group" aria-label="First group">
+            <button type="button" class="btn btn-outline-light" data-toggle="modal" data-target="#registroModal">Regístrate</button>
+          </div>
+          <div class="btn-group mr-2 sesion" role="group" aria-label="Second group">
+            <button type="button" class="btn btn-light" data-toggle="modal" data-target="#sesionModal">Iniciar Sesión</button>
+          </div>
+          <div id="nombreUsuario" class="btn-group mr-2 text-light dropdown dropleft" role="group" aria-label="Third group">
+          	<button id="dropdownMenuButton" class="btn btn-dark" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              	<a><?php echo $_SESSION['usuario'];?></a>
+                <i class="far fa-user-circle fa-lg"></i>
+            </button>
+            <?php if ($_SESSION['admin']==1) { ?>    
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="view/vAdmin.php">
+                    	<i class="fas fa-users-cog"></i>
+                    	Panel Admin
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" id="cerrarSesion" href="javascript:void(0);">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Cerrar sesión
+                    </a>
+                      
+                </div>
+            <?php ;}else{ ?>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" id="cerrarSesion" href="javascript:void(0);">Cerrar sesión</a>
+                    <i class="fas fa-sign-out-alt"></i>
+            	</div>    
+           <?php }?>
+          </div>
+        </div>
+      </div>
+    </nav>
     <!-- FIN NAV -->
-
-    <!-- MODAL -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      
+    <!-- MODAL REGISTRO -->
+    <div class="modal fade" id="registroModal" tabindex="-1" role="dialog" aria-labelledby="modalInsertUserlabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h3 class="modal-title" id="exampleModalLabel">Zornotza Quidditch</h3>
+            <h5 class="modal-title" id="modalInsertUserlabel">Regístrate</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="post">
+            	<div class="row form-group">
+                  <div class="col">
+                    <label for="nombreFormInsert">Nombre</label> 
+                    <input type="text" class="form-control" id="nombreFormInsert" aria-describedby="nombreInsert" required name="insertarUsu">
+                  </div>
+                  <div class="col">
+                  	<label for="apellidoFormInsert">Email</label>
+                    <input type="text" class="form-control" id="emailFormInsert" aria-describedby="apellidoInsert" required name="insertarUsu">
+                  </div>
+                </div>
+                <div class="form-group">
+                    <label for="usuarioFormInsert">Usuario</label>
+                    <input type="text" class="form-control" id="usuarioFormInsert" aria-describedby="usuarioInsert" required name="insertarUsu">
+                </div>
+                <div class="form-group">
+                    <label for="passwordFormInsert">Contraseña</label>
+                    <input type="text" class="form-control" id="passwordFormInsert" aria-describedby="passwordInsert" required name="insertarUsu">
+                </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="btnRegistro" class="btn btn-secondary botonExecuteInsertUsers" data-dismiss="modal" disabled>Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- FIN MODAL REGISTRO -->
+
+    <!-- MODAL INICIO SESIÓN -->
+    <div class="modal fade bd-example-modal-sm" id="sesionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="exampleModalLabel">Iniciar Sesión</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -59,29 +125,40 @@
           <div class="modal-body">
             <div class="container">
               <form class="cardLogin">
-                <div class="form-group">
-                  <input type="text" class="form-control" id="username" placeholder="Usuario" name="loginInput" required> 
+                <div class="form-group input-group">
+                	<div class="input-group-append">
+						<span class="iconoSesion input-group-text rounded-left"><i class="fas fa-user"></i></span>
+					</div>
+                  	<input type="text" class="form-control" id="username" placeholder="Usuario" name="loginInput" required> 
                 </div>
-                <div class="form-group">
-                  <input type="password" class="form-control" id="password" aria-describedby="passHelp" placeholder="Contraseña" name="loginInput" required>
+                <div class="form-group input-group">
+                	<div class="input-group-append">
+						<span class="iconoSesion input-group-text rounded-left"><i class="fas fa-key"></i></span>
+					</div>
+                  	<input type="password" class="form-control" id="password" aria-describedby="passHelp" placeholder="Contraseña" name="loginInput" required>
                 </div>
+                <div>
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input" id="customControlInline">
+						<label class="custom-control-label" for="customControlInline">No soy un Muggle</label>
+					</div>
+				</div>
               </form>
             </div>
           </div>
           <div class="modal-footer">
             <div class="form-group text-center w-100">
-              <button type="button" class="btn btn-secondary w-100" id="btnLogin" disabled>Iniciar Sesión</button>
+              <button type="button" class="btn btn-secondary w-100" id="btnLogin" data-dismiss="modal" disabled>Iniciar Sesión</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- FIN MODAL -->
-
+    <!-- FIN MODAL INICIO SESIÓN -->
 	</header>
 	<main> 
     <!-- JUMBOTRON -->
-    <section class="jumbotron jumbotron-fluid">
+    <section class="jumbotron jumbotron-fluid mb-0">
       <div class="container">
         <h1 class="display-4">¿QUIÉNES SOMOS?</h1>
         <p class="lead">Somos Zornotza Quidditch, primer club de Quidditch formado en
@@ -97,21 +174,22 @@
     <!-- FIN JUMBOTRON -->
 
     <!-- CARDS -->
-    <div class="album py-5">
+    <div class="album py-5 my-5">
       <div class="container">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
             <div class="card mb-4 shadow-sm">
               <div class="card-body">
                 <h5 class="card-title">¿QUIÉNES SOMOS?</h5>
+                <p class="hidden">Somos Zornotza Quidditch, primer club de Quidditch formado en
+                Vizcaya. El club se formó en noviembre de 2015, y desde entonces, todos los equipos 
+                del club compiten en las mejores categorias de la provincia. Para nosotros, lo más 
+                importante es que nuestros jugadores se desarrollen tanto como personas como 
+                deportistas, aprendiendo ante todo valores como el compañerismo y el respeto hacia 
+                los demás, ya sean compañeros o contrincantes. Todo ello basado en el trabajo diario 
+                y el convencimiento de que mejorar día a día es el camino a seguir.</p>
                 <p class="card-text">Somos Zornotza Quidditch, primer club de Quidditch formado en
-        		Vizcaya. El club se formó en noviembre de 2015, y desde entonces, todos los equipos 
-        		del club compiten en las mejores categorias de la provincia. Para nosotros, lo más 
-        		importante es que nuestros jugadores se desarrollen tanto como personas como 
-        		deportistas, aprendiendo ante todo valores como el compañerismo y el respeto hacia 
-        		los demás, ya sean compañeros o contrincantes. Todo ello basado en el trabajo diario 
-        		y el convencimiento de que mejorar día a día es el camino a seguir.
-                </p>
+                Vizcaya. El club se formó en...</p>
               </div>
             </div>
           </div>
@@ -119,13 +197,14 @@
             <div class="card mb-4 shadow-sm">
               <div class="card-body">
                 <h5 class="card-title">¿QUÉ ES EL QUIDDITCH?</h5>
-                <p class="card-text">El Quidditch es un deporte no tradicional, creado en 2005, donde 
+                <p class="hidden">El Quidditch es un deporte no tradicional, creado en 2005, donde 
                 dos equipos de siete jugadores montados en escobas juegan en un campo del tamano de una 
                 pista de hockey. El campo es rectangular, mide 60 metros por 44 metros y tiene 3 aros 
                 de diferentes alturas a cada lado del campo. El deporte es bastante joven, pero tiene 
                 un crecimiento muy activo y se juega en todo el mundo. El objetivo final es tener mas 
-                puntos que el equipo rival cuando la snitch es capturada.
-                </p>
+                puntos que el equipo rival cuando la snitch es capturada.</p>
+                <p class="card-text">El Quidditch es un deporte no tradicional, creado en 2005, donde 
+                dos equipos de siete jugadores...</p>
               </div>
             </div>
           </div>
@@ -133,7 +212,7 @@
             <div class="card mb-4 shadow-sm">
               <div class="card-body">
                 <h5 class="card-title">¿CÓMO SE JUEGA?</h5>
-                <p class="card-text">Cada partido empieza con siete jugadores titulares de cada equipo 
+                <p class="hidden">Cada partido empieza con siete jugadores titulares de cada equipo 
                 alineados dentro de su área de guardián, con las escobas en el suelo y con los balones 
                 alineados en el centro del campo. Una vez se anota un gol, la 
                 quaffle debe ser entregada al guardián y la acción se reanuda. Los 
@@ -142,8 +221,9 @@
                 El partido se termina después de que cualquiera de los buscadores logre una captura limpia de 
                 la snitch, y el equipo que la captura recibe 150 puntos. El ganador se determina por la suma 
                 total de puntos, no por quien atrapa la snitch. En caso de empate, se juega una prórroga de 5 
-                minutos o hasta que se atrape la snitch.
-                </p>
+                minutos o hasta que se atrape la snitch.</p>
+                <p class="card-text">Cada partido empieza con siete jugadores titulares de cada equipo 
+                alineados dentro de su área de...</p>
               </div>
             </div>
           </div>
@@ -154,16 +234,16 @@
 	</main>
 	
 	<!-- FOOTER -->
-    <footer class="footer text-muted text-center bg-secondary">
-    	<ul class="list-inline pt-3">
-    		<li class="list-inline-item"><a href="https://es-es.facebook.com/"><i class="fab fa-facebook-f"></i></a></li>
-          <li class="list-inline-item"><a href="https://twitter.com/?lang=es"><i class="fab fa-twitter"></i></a></li>
-          <li class="list-inline-item"><a href="https://www.instagram.com/?hl=es"><i class="fab fa-instagram"></i></a></li>
-          <li class="list-inline-item"><a href="https://www.youtube.com/?gl=ES&hl=es"><i class="fab fa-youtube"></i></a></li>
-          <li class="list-inline-item"><a href="https://support.google.com/plus/?hl=es-419#topic=9259565"><i class="fab fa-google-plus-g"></i></a></li>
-      </ul>
-      <p class="mb-1">&copy; Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla maiores ipsam in inventore voluptatibus. Labore, provident. Quos ratione accusantium facere? Rem assumenda, a adipisci possimus repudiandae ipsam mollitia debitis architecto.</p>
-    </footer>
-    <!-- FIN FOOTER --> 
+  <footer class="footer text-muted text-center bg-secondary">
+    <ul class="list-inline pt-3">
+      <li class="list-inline-item"><a href="https://es-es.facebook.com/"><i class="fab fa-facebook-f"></i></a></li>
+        <li class="list-inline-item"><a href="https://twitter.com/?lang=es"><i class="fab fa-twitter"></i></a></li>
+        <li class="list-inline-item"><a href="https://www.instagram.com/?hl=es"><i class="fab fa-instagram"></i></a></li>
+        <li class="list-inline-item"><a href="https://www.youtube.com/?gl=ES&hl=es"><i class="fab fa-youtube"></i></a></li>
+        <li class="list-inline-item"><a href="https://support.google.com/plus/?hl=es-419#topic=9259565"><i class="fab fa-google-plus-g"></i></a></li>
+    </ul>
+    <p class="px-1 pb-2 mb-0">&copy; Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla maiores ipsam in inventore voluptatibus. Labore, provident. Quos ratione accusantium facere? Rem assumenda, a adipisci possimus repudiandae ipsam mollitia debitis architecto.</p>
+  </footer>
+  <!-- FIN FOOTER --> 
 </body>
 </html>
