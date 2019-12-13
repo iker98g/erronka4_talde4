@@ -499,6 +499,7 @@ function iniciarUAdmin(){
 
 /*INICIO DE INSERTAR NUEVOS DATOS EN LAS TABLAS EN LA VISTA ADMIN
 */
+
 function botonInsertAdmin(){
 $(".insertButton button").click(function(){
 	var TablaInsert=$(this).text();
@@ -509,7 +510,8 @@ $(".insertButton button").click(function(){
 	minusculas=TablaInsert.substring(1,TablaInsert.length); //COGEMOS EL TEXTO EXCEPTO LA PRIMERA LETRA
 	mayusculas=TablaInsert.substring(0,1); //COGEMOS LA PRIMERA LETRA
 	minusculas=minusculas.toLowerCase(); //CAMBIAMOS EL TEXTO A MINUSCULAS
-	var Tabla=mayusculas+minusculas;
+	Tabla=mayusculas+minusculas;
+	minusculas=TablaInsert.toLowerCase();
 	//alert(Tabla);
 		
 	var datosInsert=[{}];
@@ -519,14 +521,14 @@ $(".insertButton button").click(function(){
 	if(Tabla==="Equipos"||Tabla==="Jugadores"||Tabla==="Categorias"||Tabla==="Entrenadores"||Tabla==="Usuarios"){
 		htmlCode+=`Nombre:<br><input type="text" id="nombre" name="`+Tabla+`"><br>`;		
 	}
-	if(Tabla==="Equipos"||Tabla==="Jugadores"||Tabla==="Categorias"||Tabla==="Entrenadores"){
+	if(Tabla==="Jugadores"||Tabla==="Categorias"||Tabla==="Entrenadores"){
 		htmlCode+=`Imagen:<br><select name="`+Tabla+`" id="imagen"><option></option></select><br>`;
 	}
 	if(Tabla==="Jugadores"||Tabla==="Entrenadores"){
 		htmlCode+=`Telefono:<br><input type="number" id="telefono" name="`+Tabla+`"><br>Equipo:<br><select id="equipo" name="`+Tabla+`"><option></option></select>`;
 	}
 	if(Tabla==="Equipos"){
-		htmlCode+=`Categoria:<br><select id="categoria" name="`+Tabla+`"><option></option></select>`;
+		htmlCode+=`Categoria:<br><select id="categoria" name="`+Tabla+`"><option></option></select>Logo:<br><select name="`+Tabla+`" id="logo"><option></option></select><br>`;
 	}
 	if(Tabla==="Jugadores"){
 		htmlCode+=`Rol:<br><select id="rol" name="`+Tabla+`"><option></option></select>`;
@@ -535,7 +537,7 @@ $(".insertButton button").click(function(){
 		htmlCode+=`Consulta:<br><input type="text" id="consulta" name="`+Tabla+`"><br>Usuario:<br><select id="usuario" name="`+Tabla+`"><option></option></select>`;
 	}
 	if(Tabla==="Usuarios"){
-		htmlCode+=`Contrasena:<br><input type="password" id="contrasena" name="`+Tabla+`"><i class="fas fa-eye"></i><i class="fas fa-eye-slash"></i><br>Tipo:<br><select id="tipo" name="`+Tabla+`"><option></option></select><br>Usuario:<br><input type="text" id="usuario" name="`+Tabla+`"><br>Correo:<br><input type="text" name="`+Tabla+`"><br>`;
+		htmlCode+=`Contrasena:<br><input type="password" id="contrasena" name="`+Tabla+`"><i class="fas fa-eye"></i><i class="fas fa-eye-slash"></i><br>Tipo:<br><select id="tipo" name="`+Tabla+`"><option></option></select><br>Usuario:<br><input type="text" id="usuario" name="`+Tabla+`"><br>Correo:<br><input type="text" id="correo" name="`+Tabla+`"><br>`;
 	}
 	htmlCode+=`  <input id="button" type="button" value="Submit">`;
 	htmlCode+=`</form>`;
@@ -544,62 +546,41 @@ $(".insertButton button").click(function(){
 	
 	$("#formularioInsert form #button").click(function(){
 		var elements = document.getElementsByName( Tabla );
-		var id = elements[0].getAttribute( 'id' );
-		alert(id);
-//		var nInput=$('#formularioInsert form :input').length-2;
-//		//alert(n);
-//		nombreInput=$("#formularioInsert form input");//array de todos los objetos tipo input
-//		
-//		//alert(nombre[0]);
-//		
-//		for(var i=0;i<nInput;i++){
-//			var id=$(nombreInput[i]).attr("id");
-//			//alert("id del input: "+id);
-//			var valor=$(nombreInput[i]).val();
-//			//alert("valor del input: "+valor);
-//
-//		}
-//		
-//		var nSelect=$('#formularioInsert form * :not(:input)').length;
-//		alert(nSelect);
-//		nombreSelect=$("#formularioInsert form * :not(:input)");//array de todos los objetos tipo input
-//		
-//		alert(nombreSelect[0]);
-//		
-//		for(var i=0;i<nSelect;i++){
-//			var id=$(nombreSelect[i]).attr("id");
-//			alert("id del select: "+id);
-//			var valor=$(nombreSelect[i]).val();
-//			alert("valor del select: "+valor);
-//
-//		}
-//		
-		datosInsert.push({nombre:$( "#nombre" ).val(),tamanio:n});
+		
+		for(var i=0;i<elements.length;i++){
+			var input=elements[i];
+			var id = elements[i].getAttribute( 'id' );
+			var contenido = $("#"+id).val();
+			datosInsert.push({id:contenido});
+			alert(id+" <-Id y Contenido->"+contenido);
+		}
+		datosInsert.splice(0,1);//aqui quitamos el campo vacio que aparece por defecto
+
 		console.log(datosInsert);
 	});
 
 	
 	$.ajax({
         type:"JSON",
-        url:"../controller/usuarios/cSeleccionarUsuarios.php",
+        url:"../controller/"+minusculas+"/cAniadir"+Tabla+".php",
         success: function(datosUsuarios){
         	
         	miDatosUsuarios=JSON.parse(datosUsuarios);
 //        	console.log(miDatosUsuarios);
         	
- 		$.each(miDatosUsuarios,function(i,datosUsuarios){
- 				$(".panelU .divTablaAdmin table").append(`<tr>
- 		           		<td>`+datosUsuarios.idUsuario+`</td>            		
- 		           		<td>`+datosUsuarios.usuario+`</td>
- 		           		<td>`+datosUsuarios.contrasena+`</td>
- 		           		<td>`+datosUsuarios.nombre+`</td>
- 		           		<td>`+datosUsuarios.correo+`</td>
- 		           		<td>`+datosUsuarios.tipo+`</td>
- 		           		<td><i class="fas fa-edit" value="`+datosUsuarios.idUsuario+`"></i>
- 		           		<i class="fas fa-trash-alt" value="`+datosUsuarios.idUsuario+`"></i></td>
- 		       		</tr>`);
- 				
- 			});
+// 		$.each(miDatosUsuarios,function(i,datosUsuarios){
+// 				$(".panelU .divTablaAdmin table").append(`<tr>
+// 		           		<td>`+datosUsuarios.idUsuario+`</td>            		
+// 		           		<td>`+datosUsuarios.usuario+`</td>
+// 		           		<td>`+datosUsuarios.contrasena+`</td>
+// 		           		<td>`+datosUsuarios.nombre+`</td>
+// 		           		<td>`+datosUsuarios.correo+`</td>
+// 		           		<td>`+datosUsuarios.tipo+`</td>
+// 		           		<td><i class="fas fa-edit" value="`+datosUsuarios.idUsuario+`"></i>
+// 		           		<i class="fas fa-trash-alt" value="`+datosUsuarios.idUsuario+`"></i></td>
+// 		       		</tr>`);
+// 				
+// 			});
  		
 	 		
         },
@@ -613,3 +594,32 @@ $(".insertButton button").click(function(){
 });
 }
 /*FIN DE INSERTAR NUEVOS DATOS EN LAS TABLAS DESDE VADMIN */
+
+//var nInput=$('#formularioInsert form :input').length-2;
+////alert(n);
+//nombreInput=$("#formularioInsert form input");//array de todos los objetos tipo input
+//
+////alert(nombre[0]);
+//
+//for(var i=0;i<nInput;i++){
+//	var id=$(nombreInput[i]).attr("id");
+//	//alert("id del input: "+id);
+//	var valor=$(nombreInput[i]).val();
+//	//alert("valor del input: "+valor);
+//
+//}
+//
+//var nSelect=$('#formularioInsert form * :not(:input)').length;
+//alert(nSelect);
+//nombreSelect=$("#formularioInsert form * :not(:input)");//array de todos los objetos tipo input
+//
+//alert(nombreSelect[0]);
+//
+//for(var i=0;i<nSelect;i++){
+//	var id=$(nombreSelect[i]).attr("id");
+//	alert("id del select: "+id);
+//	var valor=$(nombreSelect[i]).val();
+//	alert("valor del select: "+valor);
+//
+//}
+//
