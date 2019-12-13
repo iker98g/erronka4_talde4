@@ -36,7 +36,7 @@
     		<!-- <button class="insertEq insert_paneles">INSERT</button> -->
     		</div>
             <div class="divTablaAdmin" >
-                <div class="insertButton" ><button type="button" >+NUEVO EQUIPOS</button></div>
+                <div class="insertButton" ><button type="button" >+NUEVOS EQUIPOS</button></div>
                 <table class="rellenoAdminEquipo">
     			<tr>
     			
@@ -56,7 +56,7 @@
                 <!-- <button class="insertEn insert_paneles" >INSERT</button> -->
             </div>
             <div class="divTablaAdmin" >
-                <div class="insertButton"><button type="button">+NUEVO ENTRENADORES</button></div>
+                <div class="insertButton"><button type="button">+NUEVOS ENTRENADORES</button></div>
                 <table class="rellenoAdminEntrenador">
                     <tr>
                     
@@ -76,7 +76,7 @@
                     <!-- <button class="insertCa insert_paneles" >INSERT</button> -->
                 </div>
                 <div class="divTablaAdmin" >
-                    <div class="insertButton" ><button type="button" >+NUEVA CATEGORIAS</button></div>
+                    <div class="insertButton" ><button type="button" >+NUEVAS CATEGORIAS</button></div>
                     <table class="rellenoAdminCategoria">
                         <tr>
                         
@@ -96,7 +96,7 @@
                         <!-- <button class="insertCo insert_paneles" >INSERT</button> -->
                     </div>
                     <div class="divTablaAdmin" >
-                        <div class="insertButton" ><button type="button" >+NUEVA CONSULTAS</button></div>
+                        <div class="insertButton" ><button type="button" >+NUEVAS CONSULTAS</button></div>
                         <table class="rellenoAdminConsulta">
                             <tr>
                             
@@ -114,7 +114,7 @@
     		<!-- <button class="insertU insert_paneles">INSERT</button> -->
     		</div>
             <div class="divTablaAdmin">
-                <div class="insertButton" ><button type="button" >+NUEVO USUARIOS</button></div>
+                <div class="insertButton" ><button type="button" >+NUEVOS USUARIOS</button></div>
                 <table class="rellenoAdminUsuario">
     			<tr>
     			
@@ -132,6 +132,7 @@
     
     </div>
     <!-- <div  class="GOINDEXbtn" style="margin-top:20px;"><a href="../index.html"><button class="boton_atras_vAdminV ">GO INDEX</button></a></div> -->
+    <div id="formularioInsert"></div>
     <footer class="footer_vAdmin">
             <ul class="">
                 <li class=""><a href="https://es-es.facebook.com/"><i class="fab fa-facebook-f"></i></a></li>

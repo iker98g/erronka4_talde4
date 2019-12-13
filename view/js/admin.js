@@ -505,12 +505,76 @@ $(".insertButton button").click(function(){
 	var TablaInsert1=TablaInsert.split(" ",2);//RECOGEMOS EN UN ARRAY LO QUE ESTA ESCRITO EN EL BOTON
 	TablaInsert =TablaInsert1[1]; 	//SELECCIONAMOS LA SEGUNDA POSICION del array Y LA GUARDAMOS EN UNA VARIABLE
 	//alert(TablaInsert);
-
+	
 	minusculas=TablaInsert.substring(1,TablaInsert.length); //COGEMOS EL TEXTO EXCEPTO LA PRIMERA LETRA
 	mayusculas=TablaInsert.substring(0,1); //COGEMOS LA PRIMERA LETRA
 	minusculas=minusculas.toLowerCase(); //CAMBIAMOS EL TEXTO A MINUSCULAS
 	var Tabla=mayusculas+minusculas;
-	alert(Tabla);
+	//alert(Tabla);
+		
+	var datosInsert=[{}];
+	//[{firstName:"John", lastName:"Doe", age:46}]
+	 var htmlCode=`<form>`;
+	
+	if(Tabla==="Equipos"||Tabla==="Jugadores"||Tabla==="Categorias"||Tabla==="Entrenadores"||Tabla==="Usuarios"){
+		htmlCode+=`Nombre:<br><input type="text" id="nombre" name="nombre"><br>`;		
+	}
+	if(Tabla==="Equipos"||Tabla==="Jugadores"||Tabla==="Categorias"||Tabla==="Entrenadores"){
+		htmlCode+=`Imagen:<br><select id="imagen"><option></option></select><br>`;
+	}
+	if(Tabla==="Jugadores"||Tabla==="Entrenadores"){
+		htmlCode+=`Telefono:<br><input type="number" id="telefono" name="telefono"><br>Equipo:<br><select id="equipo"><option></option></select>`;
+	}
+	if(Tabla==="Equipos"){
+		htmlCode+=`Categoria:<br><select id="categoria"><option></option></select>`;
+	}
+	if(Tabla==="Jugadores"){
+		htmlCode+=`Rol:<br><select id="rol"><option></option></select>`;
+	}
+	if(Tabla==="Consultas"){
+		htmlCode+=`Consulta:<br><input type="text" id="consulta" name="consulta"><br>Usuario:<br><select id="usuario"><option></option></select>`;
+	}
+	if(Tabla==="Usuarios"){
+		htmlCode+=`Contrasena:<br><input type="password" id="contrasena" name="contrasena"><i class="fas fa-eye"></i><i class="fas fa-eye-slash"></i><br>Tipo:<br><select id="tipo"><option></option></select><br>Usuario:<br><input type="text" id="usuario" name="usuario"><br>Correo:<br><input type="text" name="correo"><br>`;
+	}
+	htmlCode+=`  <input id="button" type="button" value="Submit">`;
+	htmlCode+=`</form>`;
+
+	$("#formularioInsert").html(htmlCode);
+	
+	$("#formularioInsert form #button").click(function(){
+		var nInput=$('#formularioInsert form :input').length-2;
+		//alert(n);
+		nombreInput=$("#formularioInsert form input");//array de todos los objetos tipo input
+		
+		//alert(nombre[0]);
+		
+		for(var i=0;i<nInput;i++){
+			var id=$(nombreInput[i]).attr("id");
+			//alert("id del input: "+id);
+			var valor=$(nombreInput[i]).val();
+			//alert("valor del input: "+valor);
+
+		}
+		
+		var nSelect=$('#formularioInsert form * :not(:input)').length;
+		alert(nSelect);
+		nombreSelect=$("#formularioInsert form * :not(:input)");//array de todos los objetos tipo input
+		
+		alert(nombreSelect[0]);
+		
+		for(var i=0;i<nSelect;i++){
+			var id=$(nombreSelect[i]).attr("id");
+			alert("id del select: "+id);
+			var valor=$(nombreSelect[i]).val();
+			alert("valor del select: "+valor);
+
+		}
+		
+		datosInsert.push({nombre:$( "#nombre" ).val(),tamanio:n});
+		console.log(datosInsert);
+	});
+
 	
 	$.ajax({
         type:"JSON",

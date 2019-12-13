@@ -154,6 +154,14 @@ padding: 0;
 
 
 /* FIN MEDIA QUERY*/
+#formularioInsert{
+	    text-align: center;
+}
+
+#formularioInsert > form{
+    display: inline-block;
+}
+
 /* .delete_paneles{ */
 /* 		padding:5px; */
 /* 	background-color:red; */
