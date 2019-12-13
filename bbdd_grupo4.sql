@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-12-2019 a las 09:09:08
+-- Tiempo de generación: 13-12-2019 a las 09:17:14
 -- Versión del servidor: 10.4.6-MariaDB
--- Versión de PHP: 7.1.32
+-- Versión de PHP: 7.3.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -148,6 +148,9 @@ select * from equipo where equipo.idEquipo=pIdEquipo$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spSeleccionarUsuarioPorId` (IN `pIdUsuario` INT)  NO SQL
 select * from usuario where usuario.idUsuario=pIdUsuario$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spSeleccionarUsuarioPorUsername` (IN `pUsuario` VARCHAR(50))  NO SQL
+SELECT * FROM `usuario` WHERE usuario.usuario = pUsuario$$
 
 DELIMITER ;
 
