@@ -74,13 +74,9 @@
                 
             }
             mysqli_free_result($result);
-            $this->CloseConnect();
-            
-            
-            
+            $this->CloseConnect();   
         }
-        
-        
+ 
         function getListJsonString() {
             
             $arr=array();
@@ -98,7 +94,6 @@
             $this->OpenConnect();
             
             $username=$this->usuario;
-            $password=$this->contrasena;
             
             $sql="call spFindUserByUsername('$username')";
             $result= $this->link->query($sql);
@@ -106,8 +101,9 @@
             $userExists=false;
             
             if($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                $passwordEncripted=$row['contrasena'];
                 
-                if($password == $row['contrasena']) {
+                if(password_verify($this->getContrasena(), $passwordEncripted)) {
                     $this->setTipo($row['tipo']);
                     $userExists=true;
                 }
@@ -126,7 +122,10 @@
             $usuario=$this->usuario;
             $contrasena=$this->contrasena;
             
-            $sql="call spAniadirUsuario('$nombre', '$correo', '$usuario', '$contrasena')";
+            $options=['cost'=>10];
+            $encriptedPass=password_hash ($contrasena,PASSWORD_BCRYPT,$options) ;
+            
+            $sql="call spAniadirUsuario('$nombre', '$correo', '$usuario', '$encriptedPass')";
             
             if ($this->link->query($sql)>=1) {
                 return "El usuario se ha insertado con exito";
