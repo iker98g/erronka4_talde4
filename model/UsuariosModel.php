@@ -125,7 +125,7 @@
             $options=['cost'=>10];
             $encriptedPass=password_hash ($contrasena,PASSWORD_BCRYPT,$options) ;
             
-            $sql="call spInsertarUsuario('$nombre', '$correo', '$usuario', '$encriptedPass')";
+            $sql="call spInsertarUsuario('$usuario', '$encriptedPass', '$nombre', '$correo')";
             
             if ($this->link->query($sql)>=1) {
                 return "El usuario se ha insertado con exito";
