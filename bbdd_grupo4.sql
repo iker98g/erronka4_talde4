@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-12-2019 a las 11:14:07
--- Versión del servidor: 10.4.10-MariaDB
--- Versión de PHP: 7.2.25
+-- Tiempo de generación: 13-12-2019 a las 09:09:08
+-- Versión del servidor: 10.4.6-MariaDB
+-- Versión de PHP: 7.1.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -68,6 +68,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spBorrarUsuario` (IN `pId` INT)  NO
 DELETE FROM usuario
 WHERE usuario.idUsuario = pId$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spEquiposPorCategoria` (IN `p_idCategoria` INT)  NO SQL
+SELECT * FROM equipo WHERE equipo.idCategoria=p_idCategoria$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarCategoria` (IN `pId` INT, IN `pNombre` VARCHAR(50))  NO SQL
 BEGIN
 INSERT INTO categoria (categoria.idCategoria, categoria.nombre)
@@ -103,6 +106,9 @@ BEGIN
 INSERT INTO usuario (usuario.idUsuario, usuario.usuario, usuario.contrasena, usuario.nombre, usuario.correo, usuario.tipo)
 VALUES (pId, pUsuario, pContrasena, pNombre, pCorreo, pTipo);
 END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spJugadoresPorEquipo` (IN `pIdEquipo` INT)  NO SQL
+SELECT * FROM jugador WHERE jugador.idEquipo=pIdEquipo ORDER BY jugador.rol$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spModificarCategoria` (IN `pId` INT, IN `pNombre` VARCHAR(50))  NO SQL
 UPDATE categoria
@@ -162,9 +168,9 @@ CREATE TABLE `categoria` (
 --
 
 INSERT INTO `categoria` (`idCategoria`, `nombre`, `imagen`) VALUES
-(1, 'junior', ''),
-(2, 'senior', ''),
-(3, 'master', '');
+(1, 'junior', 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/quidditch-1551273794.jpg?crop=1.00xw:1.00xh;0,0&resize=480:*'),
+(2, 'senior', 'https://cflvdg.avoz.es/default/2017/07/23/00121500825122873578225/Foto/SL24C6F1_17512.jpg'),
+(3, 'master', 'https://media.quincemil.com/imagenes/2019/05/10165227/Formaci%C3%B3n1887-1440x1080.jpg');
 
 -- --------------------------------------------------------
 

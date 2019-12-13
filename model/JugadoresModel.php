@@ -135,6 +135,41 @@ class JugadoresModel extends JugadoresClass {
         $this->CloseConnect();
     }
     
+    public function findJugadoresByIdEquipo() {
+        
+        $this->OpenConnect();
+        $idEquipo=$this->idEquipo;
+        $sql = "CALL spJugadoresPorEquipo($idEquipo)";
+        $result= $this->link->query($sql);
+        
+        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+            $new=new JugadoresModel();
+            
+            $new->setIdJugador($row['idJugador']);
+            $new->setIdEquipo($row['idEquipo']);
+            $new->setNombre($row['nombre']);
+            $new->setRol($row['rol']);
+            $new->setImagen($row['imagen']);
+            $new->setTelefono($row['telefono']);
+            
+            $equipo=new EquiposModel();
+            $equipo->setIdEquipo($row['idEquipo']);
+            $equipo->findEquipoById();
+            
+            $new->setObjectEquipo($equipo);
+            
+            array_push($this->list, $new);
+        }
+        mysqli_free_result($result);
+        unset($equipo);
+        $this->CloseConnect();
+        
+        
+        
+        
+    }
+    
+    
     function getListJsonString() {
         
         $arr=array();

@@ -174,4 +174,47 @@ class EquiposModel extends EquiposClass {
         }
         return json_encode($arr);
     } 
+    
+    public function findEquiposByIdCategoria() {
+        
+        $this->OpenConnect();
+        $idCategoria=$this->idCategoria;
+        $sql = "CALL spEquiposPorCategoria($idCategoria)";
+        $result= $this->link->query($sql);
+        
+        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+            
+            $new=new EquiposModel();
+            
+            $new->setIdEquipo($row['idEquipo']);
+            $new->setNombre($row['nombre']);
+            $new->setIdCategoria($row['idCategoria']);
+            $new->setLogo($row['logo']);
+            
+            $categoria=new CategoriasModel();
+            $categoria->setIdCategoria($row['idCategoria']);
+            $categoria->findCategoriaById();
+            $new->setObjectCategoria($categoria);
+            array_push($this->list, $new);
+        }
+        mysqli_free_result($result);
+        unset($categoria);
+        $this->CloseConnect();
+        //         if ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+            //         {
+            //             $this->setNombre($row['nombre']);
+            //             $this->setIdEquipo($row['idEquipo']);
+            //             $this->setLogo($row['logo']);
+            //             $this->setIdCategoria($row['idCategoria']);
+        
+        
+            //             array_push($this->list, $this);
+        
+            //         }
+        //         mysqli_free_result($result);
+        //         $this->CloseConnect();
+        
+        
+        
+    }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app='miApp'>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,8 @@
         <script src="https://kit.fontawesome.com/661afcc94b.js"></script>
         <!--<link rel="icon" type="image/png" href="view/img/favicon.ico"> -->
         <link rel="stylesheet" href="css/principal.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script> 
+         <script src="js/principal.js" type="text/javascript"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     </head>
     <body>
@@ -43,7 +45,7 @@
       						<div class="modal-body">
         						<form>
   									<div class="form-group">
-    									<h6>Consulta</h6>
+    									<h6>Consulta</h1>
     									<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
   									</div>
   									<div class="form-group">
@@ -112,140 +114,59 @@
               </a>
             </div>
           <!-- FIN CAROUSEL -->
-          <!-- CARDS -->
-            <div class="row">
-              <div class="col-lg-4 col-md-6 col-sm-12">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Junior</h5>
-                    <img src="imagenes/plantilla.jpg" class="card-img-top" alt="...">
-                    <h6>Equipos</h6>
-                    <button type="button" class="btn btn-primary botones" data-toggle="modal" data-target="#juniorModal">
-                        Zornotza Quidditch Junior
-                    </button>
-                      
-                    <!-- MODAL -->
-                      <div class="modal fade" id="juniorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Zornotza Quidditch Junior</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <h6>Cazadores</h5>
-                                <div class="row">
-                                  <div class="col-sm-6">
-                                    <div class="card">
-                                      <div class="card-body">
-                                        <img src="https://www.stickpng.com/assets/thumbs/585e4bf3cb11b227491c339a.png" class="card-img-top" alt="...">
-                                        <h5 class="card-title">Eukene</h5>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    <!-- FIN MODAL -->
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-6 col-sm-12">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Senior</h5>
-                    <img src="imagenes/plantilla_2.jpg" class="card-img-top" alt="...">
-                    <h6>Equipos</h6>
-                    <button type="button" class="btn btn-primary botones" data-toggle="modal" data-target="#seniorModal">
-                        Zornotza Quidditch Senior
-                    </button>
-                      
-                    <!-- MODAL -->
-                      <div class="modal fade" id="seniorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Zornotza Quidditch Senior</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <h6>Cazadores</h5>
-                                <div class="row">
-                                  <div class="col-sm-6">
-                                    <div class="card">
-                                      <div class="card-body">
-                                        <img src="https://www.stickpng.com/assets/thumbs/585e4bf3cb11b227491c339a.png" class="card-img-top" alt="...">
-                                        <h5 class="card-title">Oihane</h5>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    <!-- FIN MODAL -->
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-6 col-sm-12">
-                  <div class="card">
-                    <div class="card-body">
-                      <h5 class="card-title">Master</h5>
-                      <img src="imagenes/plantilla_3.jpg" class="card-img-top" alt="...">
-                      <h6>Equipos</h6>
-                      <button type="button" class="btn btn-primary botones" data-toggle="modal" data-target="#masterModal">
-                          Zornotza Quidditch Master
-                      </button>
-                        
-                      <!-- MODAL -->
-                        <div class="modal fade" id="masterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Zornotza Quidditch Master</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              <div class="modal-body">
-                                <h6>Cazadores</h5>
-                                  <div class="row">
-                                    <div class="col-sm-6">
-                                      <div class="card">
-                                        <div class="card-body">
-                                          <img src="https://www.stickpng.com/assets/thumbs/585e4bf3cb11b227491c339a.png" class="card-img-top" alt="...">
-                                          <h5 class="card-title">Paula</h5>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      <!-- FIN MODAL -->
-                    </div>
-                  </div>
-                </div>
-            </div>
-          <!-- FIN CARDS -->
           
+          <div style="text-align: center" ng-controller="miControlador">
+<!--          		////MOSTRAR CATEGORIAS////// -->
+			
+			
+			 <div style="margin-top: 30px; color:black;text-align:center;margin-left:50p">
+         		<h1>CATEGORIAS</h1>
+          	</div>
+          
+          <div style="display:inline-block" ng-repeat="dato in misdatosJSON ">
+          <div class="row">
+       
+          
+            <div class="card" style="width: 28rem; margin: 20px;">
+              
+              <div class="card-body">
+              
+                <h5 class="card-title">{{dato.nombre}}</h5>
+                <img src="{{dato.imagen}}" class="card-img-top" height="270px" alt="..." >
+<!--                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+          
+                <a href="" style="margin-top:20px;" id="{{dato.idCategoria}}" ng-click="mostrarEquipos(dato.idCategoria)" class="btn btn-primary" >Ver equipos</a>
+                
+                	
+              </div>
+         
+            </div>
+			</div>
+          </div>
+          	<div ng-show="ver=='si'" ng-repeat="datos in misEquipos " style="text-align: center">
+                	<h1>{{datos.nombre}}</h1>
+                	<img src="{{datos.logo}}" width="200px" height="150px" alt="..." >
+                	<a href="" id="{{datos.idEquipo}}" ng-click="mostrarJugadores(datos.idEquipo)" class="btn btn-dark" >Ver jugadores</a>
+            </div>
+       
+			<div class="row">
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3"  ng-show="verJugadores=='si'"  ng-repeat="datos in misJugadores" style="text-align: center">
+					<div style="display:inline-block">
+						<img src="{{datos.imagen}}" width="200px" height="150px" alt="..." >
+						<h2>{{datos.nombre}}</h2>
+						<h3 style="color: blue">{{datos.rol}}</h3>
+					</div> 
+					
+			</div>
+			
+			</div>
+			
+			
+			
+			
+			
+			
+          </div>
         </main> 
         <!-- FOOTER -->
         <footer class="footer text-muted text-center bg-secondary">
