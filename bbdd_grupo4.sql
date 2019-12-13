@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-12-2019 a las 09:17:14
+-- Tiempo de generación: 13-12-2019 a las 09:24:29
 -- Versión del servidor: 10.4.6-MariaDB
 -- Versión de PHP: 7.3.9
 
@@ -306,10 +306,10 @@ INSERT INTO `jugador` (`idJugador`, `nombre`, `imagen`, `rol`, `telefono`, `idEq
 CREATE TABLE `usuario` (
   `idUsuario` int(11) NOT NULL,
   `usuario` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `contrasena` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `contrasena` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nombre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `correo` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tipo` tinyint(1) NOT NULL
+  `tipo` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
