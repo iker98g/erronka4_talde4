@@ -1,17 +1,15 @@
 <?php
     include_once ("../../model/UsuariosModel.php");
     
-    $nombre = filter_input(INPUT_POST, 'nombre');
-    $correo = filter_input(INPUT_POST, 'correo');
-    $usuario = filter_input(INPUT_POST, 'usuario');
-    $contrasena = filter_input(INPUT_POST, 'contrasena');
+    print_r($_POST["datosInsert"][0]["id"]);
     
-    $usuarios = new UsuariosModel();
     
-    $usuarios -> setNombre($nombre);
-    $usuarios -> setCorreo($correo);
-    $usuarios -> setContrasena($contrasena);
-    $usuarios -> setUsuario($usuario);
+//     $usuarios = new UsuariosModel();
     
-    $usuarios -> aniadirUsuario();
+//     $usuarios -> setNombre($nombre);
+//     $usuarios -> setCorreo($correo);
+//     $usuarios -> setContrasena($contrasena);
+//     $usuarios -> setUsuario($usuario);
+    
+//     $usuarios -> aniadirUsuario();
 ?>

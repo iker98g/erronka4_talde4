@@ -546,50 +546,54 @@ $(".insertButton button").click(function(){
 	
 	$("#formularioInsert form #button").click(function(){
 		var elements = document.getElementsByName( Tabla );
-		
+		datosInsert = [{}];
 		for(var i=0;i<elements.length;i++){
 			var input=elements[i];
 			var id = elements[i].getAttribute( 'id' );
 			var contenido = $("#"+id).val();
 			datosInsert.push({id:contenido});
-			alert(id+" <-Id y Contenido->"+contenido);
+			//alert(id+" <-Id y Contenido->"+contenido);
 		}
 		datosInsert.splice(0,1);//aqui quitamos el campo vacio que aparece por defecto
 
-		console.log(datosInsert);
+		//console.log(datosInsert);
+		//alert(minusculas+"<-carpeta Tabla->"+Tabla);
+		
+		$.ajax({
+	        type:"POST",
+	        data:{"datosInsert":datosInsert},
+	        url:"../controller/"+minusculas+"/cAniadir"+Tabla+".php",
+	        success: function(datosUsuarios){
+	        	console.log(datosUsuarios);
+	        	//miDatosUsuarios=JSON.parse(datosUsuarios);
+//	        	console.log(miDatosUsuarios);
+	        	
+//	 		$.each(miDatosUsuarios,function(i,datosUsuarios){
+//	 				$(".panelU .divTablaAdmin table").append(`<tr>
+//	 		           		<td>`+datosUsuarios.idUsuario+`</td>            		
+//	 		           		<td>`+datosUsuarios.usuario+`</td>
+//	 		           		<td>`+datosUsuarios.contrasena+`</td>
+//	 		           		<td>`+datosUsuarios.nombre+`</td>
+//	 		           		<td>`+datosUsuarios.correo+`</td>
+//	 		           		<td>`+datosUsuarios.tipo+`</td>
+//	 		           		<td><i class="fas fa-edit" value="`+datosUsuarios.idUsuario+`"></i>
+//	 		           		<i class="fas fa-trash-alt" value="`+datosUsuarios.idUsuario+`"></i></td>
+//	 		       		</tr>`);
+//	 				
+//	 			});
+	 		
+		 		
+	        },
+	        error: function(xhr){
+	            alert("An error occured: "+xhr.status+" "+xhr.statusText);
+	        }
+	    });
+		
+		
 	});
 
 	
-	$.ajax({
-        type:"JSON",
-        url:"../controller/"+minusculas+"/cAniadir"+Tabla+".php",
-        success: function(datosUsuarios){
-        	
-        	miDatosUsuarios=JSON.parse(datosUsuarios);
-//        	console.log(miDatosUsuarios);
-        	
-// 		$.each(miDatosUsuarios,function(i,datosUsuarios){
-// 				$(".panelU .divTablaAdmin table").append(`<tr>
-// 		           		<td>`+datosUsuarios.idUsuario+`</td>            		
-// 		           		<td>`+datosUsuarios.usuario+`</td>
-// 		           		<td>`+datosUsuarios.contrasena+`</td>
-// 		           		<td>`+datosUsuarios.nombre+`</td>
-// 		           		<td>`+datosUsuarios.correo+`</td>
-// 		           		<td>`+datosUsuarios.tipo+`</td>
-// 		           		<td><i class="fas fa-edit" value="`+datosUsuarios.idUsuario+`"></i>
-// 		           		<i class="fas fa-trash-alt" value="`+datosUsuarios.idUsuario+`"></i></td>
-// 		       		</tr>`);
-// 				
-// 			});
- 		
-	 		
-        },
-        error: function(xhr){
-            alert("An error occured: "+xhr.status+" "+xhr.statusText);
-        }
-    });
-	
-	
+
 	
 });
 }

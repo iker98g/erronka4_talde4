@@ -33,7 +33,7 @@ $(document).ready(function() {
 		$.ajax({
 			type: "POST",
 			data:{'nombre':nombre,'correo':correo, 'usuario':usuario,'contrasena':contrasena},
-	       	url: "controller/usuarios/cAniadirUsuarios.php", 
+	       	url: "controller/usuarios/cInsertUsuarios.php", 
 	       	dataType:"text",
 	    	success: function(result) { 
 	       		alert("Usuario insertado");
