@@ -95,7 +95,7 @@
             
             $username=$this->usuario;
             
-            $sql="call spFindUserByUsername('$username')";
+            $sql="call spSeleccionarUsuarioPorUsername('$username')";
             $result= $this->link->query($sql);
             
             $userExists=false;
@@ -125,7 +125,7 @@
             $options=['cost'=>10];
             $encriptedPass=password_hash ($contrasena,PASSWORD_BCRYPT,$options) ;
             
-            $sql="call spAniadirUsuario('$nombre', '$correo', '$usuario', '$encriptedPass')";
+            $sql="call spInsertarUsuario('$nombre', '$correo', '$usuario', '$encriptedPass')";
             
             if ($this->link->query($sql)>=1) {
                 return "El usuario se ha insertado con exito";
