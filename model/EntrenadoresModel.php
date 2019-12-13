@@ -122,6 +122,39 @@ class EntrenadoresModel extends EntrenadoresClass {
         
         $this->CloseConnect();
     }
+    public function findEntrenadoresByIdEquipo() {
+        
+        $this->OpenConnect();
+        $idEquipo=$this->idEquipo;
+        $sql = "CALL spEntrenadoresPorEquipo($idEquipo)";
+        $result= $this->link->query($sql);
+        
+        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+            $new=new EntrenadoresModel();
+            
+            $new->setIdEntrenador($row['idEntrenador']);
+            $new->setNombre($row['nombre']);
+            $new->setImagen($row['imagen']);
+            $new->setTelefono($row['telefono']);
+            $new->setIdEquipo($row['idEquipo']);
+            
+            
+            $equipo=new EquiposModel();
+            $equipo->setIdEquipo($row['idEquipo']);
+            $equipo->findEquipoById();
+            
+            $new->setObjectEquipo($equipo);
+            
+            array_push($this->list, $new);
+        }
+        mysqli_free_result($result);
+        unset($equipo);
+        $this->CloseConnect();
+        
+        
+        
+        
+    }
     
     function getListJsonString() {
         

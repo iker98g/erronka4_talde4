@@ -23,7 +23,7 @@
               <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
                   <li class="nav-item">
-                    <a class="nav-link" href="../index.php">Inicio</a>
+                    <a class="nav-link" href="../index.html">Inicio</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="vAdmin.php">Administración</a>
@@ -143,13 +143,21 @@
             </div>
 			</div>
           </div>
-          	<div ng-show="ver=='si'" ng-repeat="datos in misEquipos " style="text-align: center">
-                	<h1>{{datos.nombre}}</h1>
-                	<img src="{{datos.logo}}" width="200px" height="150px" alt="..." >
-                	<a href="" id="{{datos.idEquipo}}" ng-click="mostrarJugadores(datos.idEquipo)" class="btn btn-dark" >Ver jugadores</a>
+          <div> 
+                  	<div ng-show="ver=='si'" ng-repeat="datos in misEquipos " style="text-align: center">
+                        	<h1>{{datos.nombre}}</h1>
+                        	<img src="{{datos.logo}}" width="200px" height="150px" alt="..." >
+                        	<a href="" id="{{datos.idEquipo}}" ng-click="mostrarJugadores(datos.idEquipo)" class="btn btn-dark" >Ver jugadores</a>
+                        	<a href="" id="{{datos.idEquipo}}" ng-click="mostrarEntrenadores(datos.idEquipo)" class="btn btn-danger" >Ver entrenadores</a>
+                    </div>
+               		<div ng-show="verEntrenadores=='si'" ng-repeat="entrenador in misEntrenadores " style="text-align: center">
+                        	<h1 style="color:red">{{entrenador.nombre}}</h1>
+                        	<img src="{{entrenador.imagen}}" width="200px" height="150px" alt="..." >
+                        	
+                    </div>
             </div>
-       
 			<div class="row">
+
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3"  ng-show="verJugadores=='si'"  ng-repeat="datos in misJugadores" style="text-align: center">
 					<div style="display:inline-block">
 						<img src="{{datos.imagen}}" width="200px" height="150px" alt="..." >

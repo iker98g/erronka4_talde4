@@ -1,7 +1,8 @@
 var miApp=angular.module('miApp',[]);
         miApp.controller('miControlador',['$scope','$http', function($scope,$http){
            $scope.ver="no";
-           $scope.verJugadores='no';     
+           $scope.verJugadores='no';
+           $scope.verEntrenadores='no'; 
                 $http.get('../controller/categorias/cSeleccionarCategorias.php').then(function(data) {
                 	
                          //console.log(data.data);
@@ -22,6 +23,7 @@ var miApp=angular.module('miApp',[]);
        $scope.mostrarEquipos=function(gg){
     	   $scope.ver='si';
     	   $scope.verJugadores='no';
+    	   $scope.verEntrenadores='no';
     	   $scope.id= gg;
     	   $http({url:'../controller/equipos/cEquiposPorCategoria.php',
     		   method: "GET",
@@ -46,6 +48,7 @@ var miApp=angular.module('miApp',[]);
             
        $scope.mostrarJugadores=function(ff){
     	   $scope.verJugadores='si';
+    	   $scope.verEntrenadores='no';
     	   $scope.id= ff;
     	   $http({url:'../controller/jugadores/cMostrarJugadoresPorEquipo.php',
     		   method: "GET",
@@ -66,7 +69,31 @@ var miApp=angular.module('miApp',[]);
       		   console.log("Task finished.");
       	   });
        }         
-                
+        
+       
+       $scope.mostrarEntrenadores=function(bb){
+    	   $scope.verEntrenadores='si';
+    	   $scope.verJugadores='no';
+    	   $scope.id= bb;
+    	   $http({url:'../controller/entrenadores/cMostrarEntrenadoresPorEquipo.php',
+    		   method: "GET",
+    		   params:{value:$scope.id}}).then(function(data){
+    		   
+    			  //JSON.stringify
+    			 
+               $scope.misEntrenadores=data.data;
+               
+               console.log($scope.misEntrenadores);
+            
+              
+              
+             }).catch(function(response){
+          	   console.error('Error ocurred: ',response.status,response.data);
+          	   
+      	   }).finally(function(){
+      		   console.log("Task finished.");
+      	   });
+       }     
                 
                 
                 
