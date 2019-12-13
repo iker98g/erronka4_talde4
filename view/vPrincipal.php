@@ -43,7 +43,7 @@
       						<div class="modal-body">
         						<form>
   									<div class="form-group">
-    									<h6>Consulta</h1>
+    									<h6>Consulta</h6>
     									<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
   									</div>
   									<div class="form-group">

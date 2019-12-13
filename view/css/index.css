@@ -12,8 +12,37 @@ body p {
 	text-align: justify;
 }
 
-header i {
-	font-size: 30px;
+#nombreUsuario {
+	display: none;
+}
+
+.iconoSesion {
+	width: 42px;
+	height: 38px;
+}
+
+input[type="radio"] {
+  display: none;
+}
+.puntuacion {
+  color: grey;
+  font-size: 40px;
+}
+.clasificacion {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+  text-align: center;
+}
+.puntuacion:hover,
+.puntuacion:hover ~ .puntuacion {
+  color: orange;
+}
+input[type="radio"]:checked ~ .puntuacion {
+  color: orange;
+}
+
+body .hidden {
+	display: none;
 }
 
 nav img {
@@ -21,19 +50,16 @@ nav img {
 	height: 50px;
 }
 
-.container {
-	margin-top: 2rem;
-}
-
-.modal-header {
-	border-bottom: none!important;
-}
-
-.modal-content {
+.modal {
+	background-color: rgba(248, 249, 250);
 	background-image: url(../imagenes/logo_snitch.png);
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
+}
+
+.modal-header {
+	border-bottom: none!important;
 }
 
 .modal-footer {
@@ -52,8 +78,6 @@ main .jumbotron {
 .footer p {
 	color: rgba(255, 255, 255, .75);
 	text-align: center;
-	padding-left: 1rem;
-	padding-right: 1rem;
 }
 
 .footer i {
