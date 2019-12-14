@@ -283,6 +283,10 @@ function iniciarUAdmin(){
 
 /*INICIO DE INSERTAR NUEVOS DATOS EN LAS TABLAS EN LA VISTA ADMIN*/
 
+
+//ARREGLAR JS DESDE AQUI
+
+
 function botonInsertAdmin(){//se le llama desde iniciarJAdmin()
 
 	$(".insertButton button").click(function(){
@@ -327,8 +331,9 @@ function botonInsertAdmin(){//se le llama desde iniciarJAdmin()
 			cantidad=$("#cantidad").val();
 			cantidadInsert=parseInt(cantidad);
 			$("#formularioInsert").html("");
+			generarCodigoInsert();
 			//vaciamos el formulario donde hemos dado la opcion de selecionar cuantos inserts quiere(limite 12)
-			generarInserts();//Generamos los inserts llamando a esta funcion
+//			generarInserts();//Generamos los inserts llamando a esta funcion
 		});
 		
 			
@@ -341,26 +346,8 @@ function botonInsertAdmin(){//se le llama desde iniciarJAdmin()
 function generarInserts(){
 	/*Para meter la primera vez los datos le llamamos desde dentro de la funcion botonInsertAdmin()
 	 * despues le llamamos desde el boton del formulario con un myfunction=generarInserts()*/
-	$("#formularioInsert form").html("");
-			
-	if(cantidadInsert>=1 &&LoopTimes!=cantidadInsert && siguienteInsert==false){
-		generarCodigoYGuardarEnArrayInputs();
-		//console.log(LoopTimes +"loop y siguiente"+siguienteInsert);
-	}else{
-		$("#formularioInsert").html("");
-	}
-	LoopTimes+=1;
-}/*FIN DE LA FUNCION QUE ES PARA GENERAR LOS INSERTS Y PARA HACER INSERTS EN LA BASE DE DATOS*/
-
-function generarCodigoYGuardarEnArrayInputs(){
-	siguienteInsert=generarCodigoInsert();//llamamos a una funcion donde generamos los inputs y devuelve un true cuando se han insertado
-	if(siguienteInsert){
-				
-		console.log(LoopTimes+"LoopTimes y insertCantidad"+cantidadInsert);
-		
-		
+	if(cantidadInsert>=1 &&LoopTimes!=cantidadInsert&&siguienteInsert==false){
 		var elements = document.getElementsByName( Tabla );
-		datosInsert = [];
 		for(var i=0;i<elements.length;i++){
 			var input=elements[i];
 			var id = elements[i].getAttribute( 'id' );
@@ -369,22 +356,35 @@ function generarCodigoYGuardarEnArrayInputs(){
 			linea+=id+":"+contenido+",";	//añadimos 
 		}
 		linea=linea.slice(0,-1);
+		console.log("linea "+linea);
 		//console.log(datosInsert);
 		var values = linea.split(",");//separamos las partes de nuestro futuro array
 		for(var i=0; i<values.length; i++) {
 		    var keyValue = values[i].split(":");//separamos cada parte de cada campo ya que es key:value
 		    obj[keyValue[0]] = keyValue[1];//asignamos que el key sea el que esta en la posicion principal y el value en la secundaria del objeto
 		}
-		console.log(obj);
+		//console.log("Objeto "+obj);
 		datosInsert.push(obj);//añadimos al array creado anteriormente el objeto 
 		console.log(datosInsert);
 		//alert(minusculas+"<-carpeta Tabla->"+Tabla);
-		siguienteInsert=false;
-		//generarCodigoInsert();
+
+		if(siguienteInsert==false){
+					
+//			console.log(LoopTimes+"LoopTimes y insertCantidad"+cantidadInsert);
+				siguienteInsert=generarCodigoInsert();//llamamos a una funcion donde generamos los inputs y devuelve un true cuando se han insertado
+		
+			
+			siguienteInsert=false;
+			//generarCodigoInsert();
 
 
+		};
+		//console.log(LoopTimes +"loop y siguiente"+siguienteInsert);
+	}else{
+		$("#formularioInsert").html("");
 	}
-}
+	LoopTimes+=1;
+}/*FIN DE LA FUNCION QUE ES PARA GENERAR LOS INSERTS Y PARA HACER INSERTS EN LA BASE DE DATOS*/
 
 function generarCodigoInsert(){
 	$("#formularioInsert").html("");
@@ -418,6 +418,7 @@ function generarCodigoInsert(){
 	linea="";
 	
 	$("#formularioInsert").html(htmlCode);
+
 	return true;
 }
 /*FIN DE INSERTAR NUEVOS DATOS EN LAS TABLAS DESDE VADMIN */
