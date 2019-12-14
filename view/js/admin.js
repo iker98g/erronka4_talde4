@@ -5,6 +5,13 @@ var comprobarCa=0;
 var comprobarEn=0;
 var comprobarCo=0;
 var EquipoN;
+var LoopTimes=0;
+var datosInsert=[];
+var cantidad;
+var cantidadInsert=-1;
+var obj = {};//creamos un objeto vacio
+var siguienteInsert=false;
+var Tabla;
 var midato= new Object();
 var equipos = [];
 var m;// variable utilizada en frontal para sacar los tipos
@@ -132,7 +139,9 @@ $(document).ready(function(){
 		}
 	});	
 	
-	
+
+
+
 	});
 	
 	
@@ -500,7 +509,8 @@ function iniciarUAdmin(){
 /*INICIO DE INSERTAR NUEVOS DATOS EN LAS TABLAS EN LA VISTA ADMIN
 */
 
-function botonInsertAdmin(){
+async function botonInsertAdmin(){
+	
 $(".insertButton button").click(function(){
 	
 	/*AQUI EMPIEZA EL RECOGER VALOR DE EL BOTON CLICK INSERTAR*/
@@ -509,7 +519,7 @@ $(".insertButton button").click(function(){
 	var TablaInsert=$(this).text();
 	var TablaInsert1=TablaInsert.split(" ",2);//RECOGEMOS EN UN ARRAY LO QUE ESTA ESCRITO EN EL BOTON
 	TablaInsert =TablaInsert1[1]; 	//SELECCIONAMOS LA SEGUNDA POSICION del array Y LA GUARDAMOS EN UNA VARIABLE
-	//alert(TablaInsert);
+	
 	
 	minusculas=TablaInsert.substring(1,TablaInsert.length); //COGEMOS EL TEXTO EXCEPTO LA PRIMERA LETRA
 	mayusculas=TablaInsert.substring(0,1); //COGEMOS LA PRIMERA LETRA
@@ -523,30 +533,69 @@ $(".insertButton button").click(function(){
 	
 	/*AQUI EMPIEZA EL PREGUNTAR LA CANTIDAD DEL INSERT DESEADOS*/
 
-	var cantidadInsert=-1;
 	
-	 var htmlCodes=`<form id="formularioCantidadInsertar">`;
-	 htmlCodes+=`Cantidad de `+minusculas+` que desee insertar:  <select name="`+Tabla+`" id="cantidad"></select><br>`;		
+	
+	$("#formularioInsert").css("margin-top","16px");
 
-	 htmlCodes+=`</form>`;
-
+	var htmlCodes=`<form id="formularioCantidadInsertar">`;
+	htmlCodes+=`Cantidad de `+minusculas+` que desee insertar:  <select name="`+Tabla+`" id="cantidad"></select><br>`;		
+	htmlCodes+=`<input id="aceptarInsert" type=button value="Aceptar"></input>`;
+	htmlCodes+=`<input id="cancelarInsert" type=button value="Cancelar"></input>`;
+	htmlCodes+=`</form>`;
+	
 	$("#formularioInsert").html(htmlCodes);
 	for(var i=1;i<13;i++){
 		$("#formularioInsert select").append(`<option id=`+i+`> `+i+` </option>`);	
 	}
-	
-	$("#formularioInsert").css("margin-top","16px");
+
+
+	$("#cancelarInsert").click(function(){
+	$("#tablas").show();
+	$("#formularioInsert").html("");
+	});	
 		
 		
 	/*AQUI TERMINA EL PREGUNTAR LA CANTIDAD DEL INSERT DESEADOS*/
+		
+	$("#aceptarInsert").click(function(){
+
+		cantidad=$("#cantidad").val();
+		cantidadInsert=parseInt(cantidad);
+		
+		console.log("ACEPTAR");
+		$("#formularioInsert").html("");
+		
+		generarCodigoGuardarEnArrayInputs();
+		for(var i=0;i<cantidadInsert+1;i++){
+			await generarInsert();
+		}
+	});
 	
 		
-if(cantidadInsert=0){
 	
-		
-	var datosInsert=[];
-	//[{firstName:"John", lastName:"Doe", age:46}]
-	 var htmlCode=`<form>`;
+});
+}
+function generarInserts(){
+		$("#formularioInsert").html("");
+
+		generarCodigoGuardarEnArrayInputs();
+		$("#formularioInsert form #button").click(function(){
+			siguienteInsert=true;
+			LoopTimes+=1;
+			console.log(LoopTimes+"LoopTimes y insertCantidad"+cantidadInsert);
+			
+		if(cantidadInsert>=1 &&LoopTimes!=cantidadInsert && siguienteInsert==true){
+			generarCodigoGuardarEnArrayInputs();
+			siguienteInsert=false;
+		}
+		});
+	
+}
+
+
+function generarCodigoGuardarEnArrayInputs(){
+	
+	var htmlCode=`<form id="FormInsert">`;
 	
 	if(Tabla==="Equipos"||Tabla==="Jugadores"||Tabla==="Categorias"||Tabla==="Entrenadores"||Tabla==="Usuarios"){
 		htmlCode+=`Nombre:<br><input type="text" id="nombre" name="`+Tabla+`"><br>`;		
@@ -571,10 +620,12 @@ if(cantidadInsert=0){
 	}
 	htmlCode+=`  <input id="button" type="button" value="Submit">`;
 	htmlCode+=`</form>`;
-var linea="";
+	
+	var linea="";
+	
 	$("#formularioInsert").html(htmlCode);
 	
-	$("#formularioInsert form #button").click(function(){
+	$("#formularioInsert form #button").click(function(){		
 		var elements = document.getElementsByName( Tabla );
 		datosInsert = [];
 		for(var i=0;i<elements.length;i++){
@@ -587,53 +638,17 @@ var linea="";
 		linea=linea.slice(0,-1);
 		//console.log(datosInsert);
 		var values = linea.split(",");//separamos las partes de nuestro futuro array
-		var obj = {};//creamos un objeto vacio
 		for(var i=0; i<values.length; i++) {
 		    var keyValue = values[i].split(":");//separamos cada parte de cada campo ya que es key:value
 		    obj[keyValue[0]] = keyValue[1];//asignamos que el key sea el que esta en la posicion principal y el value en la secundaria del objeto
 		}
-		//console.log(obj);
+		console.log(obj);
 		datosInsert.push(obj);//añadimos al array creado anteriormente el objeto 
-		//console.log(datosInsert);
+		console.log(datosInsert);
 		//alert(minusculas+"<-carpeta Tabla->"+Tabla);
-		
-		$.ajax({
-	        type:"POST",
-	        data:{"datosInsert":datosInsert},
-	        url:"../controller/"+minusculas+"/cAniadir"+Tabla+".php",
-	        success: function(datosUsuarios){
-	        	console.log(datosUsuarios);
-	        	//miDatosUsuarios=JSON.parse(datosUsuarios);
-//	        	console.log(miDatosUsuarios);
-	        	
-//	 		$.each(miDatosUsuarios,function(i,datosUsuarios){
-//	 				$(".panelU .divTablaAdmin table").append(`<tr>
-//	 		           		<td>`+datosUsuarios.idUsuario+`</td>            		
-//	 		           		<td>`+datosUsuarios.usuario+`</td>
-//	 		           		<td>`+datosUsuarios.contrasena+`</td>
-//	 		           		<td>`+datosUsuarios.nombre+`</td>
-//	 		           		<td>`+datosUsuarios.correo+`</td>
-//	 		           		<td>`+datosUsuarios.tipo+`</td>
-//	 		           		<td><i class="fas fa-edit" value="`+datosUsuarios.idUsuario+`"></i>
-//	 		           		<i class="fas fa-trash-alt" value="`+datosUsuarios.idUsuario+`"></i></td>
-//	 		       		</tr>`);
-//	 				
-//	 			});
-	 		
-		 		
-	        },
-	        error: function(xhr){
-	            alert("An error occured: "+xhr.status+" "+xhr.statusText);
-	        }
-	    });
-		
-		
+
+
 	});
-
-	
-
-}	
-});
 }
 /*FIN DE INSERTAR NUEVOS DATOS EN LAS TABLAS DESDE VADMIN */
 

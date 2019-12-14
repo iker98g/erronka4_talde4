@@ -124,6 +124,7 @@ padding: 0;
 #formularioCantidadInsertar{
 	display: inline-block;
   	vertical-align: middle;
+  	text-align:center;
 }
 
  #formularioInsert form #cantidad{ 	 	
@@ -132,6 +133,16 @@ padding: 0;
  		font-size:20px;
 }
 
+#formularioInsert form #aceptarInsert{
+	background-color:green;
+ 		color:white;
+ 		font-size:20px;
+}
+#formularioInsert form #cancelarInsert{ 	 	
+ 		background-color:red;
+ 		color:white;
+ 		font-size:20px;
+}
 /*AQUI TERMINA EL CSS DE SELECCIONAR CANTIDAD DEL INSERT*/
 
 .footer_vAdmin>ul{
