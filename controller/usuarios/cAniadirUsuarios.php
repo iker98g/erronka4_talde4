@@ -1,18 +1,27 @@
 <?php
     include_once ("../../model/UsuariosModel.php");
-    print_r($_POST["datosInsert"]);
-    $nombre=($_POST["datosInsert"][0]["nombre"]);
-    $contrasena=($_POST["datosInsert"][0]["contrasena"]);
-    $tipo=($_POST["datosInsert"][0]["tipo"]);
-    $usuario=($_POST["datosInsert"][0]["usuario"]);
-    $correo=($_POST["datosInsert"][0]["correo"]);
+    $datosInsert=(count($_POST["datosInsert"]));
+    for($i = 0; $i <$datosInsert ; $i++){
+        $nombre=($_POST["datosInsert"][$i]["nombre"]);
+        $contrasena=($_POST["datosInsert"][$i]["contrasena"]);
+        $tipo=($_POST["datosInsert"][$i]["tipo"]);
+        $usuario=($_POST["datosInsert"][$i]["usuario"]);
+        $correo=($_POST["datosInsert"][$i]["correo"]);
+        echo $i."  nombre ".$nombre, "  contrasena ".$contrasena,"  tipo ".$tipo,"  usuario ".$usuario,"  correo ".$correo;
+        $usuarioNuevo = new UsuariosModel();
+        
+        $usuarioNuevo -> setNombre($nombre);
+        $usuarioNuevo -> setCorreo($correo);
+        $usuarioNuevo -> setContrasena($contrasena);
+        $usuarioNuevo -> setUsuario($usuario);
+        $usuarioNuevo -> setTipo($tipo);
+        
+        $usuarioNuevo -> aniadirUsuario();
+    }
     
-//     $usuarios = new UsuariosModel();
+    $datosInsert=($_POST["datosInsert"]);
     
-//     $usuarios -> setNombre($nombre);
-//     $usuarios -> setCorreo($correo);
-//     $usuarios -> setContrasena($contrasena);
-//     $usuarios -> setUsuario($usuario);
     
-//     $usuarios -> aniadirUsuario();
+    
+    
 ?>

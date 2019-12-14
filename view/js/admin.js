@@ -352,18 +352,14 @@ function generarInserts(){
 			var input=elements[i];
 			var id = elements[i].getAttribute( 'id' );
 			var contenido = $("#"+id).val();
-			//datosInsert.push({[id]:contenido});
 			linea+=id+":"+contenido+",";	//añadimos 
 		}
 		linea=linea.slice(0,-1);
-		console.log("linea "+linea);
-		//console.log(datosInsert);
 		var values = linea.split(",");//separamos las partes de nuestro futuro array
 		for(var i=0; i<values.length; i++) {
 		    var keyValue = values[i].split(":");//separamos cada parte de cada campo ya que es key:value
 		    obj[keyValue[0]] = keyValue[1];//asignamos que el key sea el que esta en la posicion principal y el value en la secundaria del objeto
 		}
-		//console.log("Objeto "+obj);
 		datosInsert.push(obj);//añadimos al array creado anteriormente el objeto 
 		console.log(datosInsert);
 		//alert(minusculas+"<-carpeta Tabla->"+Tabla);
@@ -378,7 +374,17 @@ function generarInserts(){
 		}
 		if(LoopTimes==cantidadInsert){
 			$("#formularioInsert").html("YA HAS TERMINADO DE INSERTAR LO QUE QUERIAS RELAJATE ");
-
+			$.ajax({
+		        type:"POST",
+		        data:{"datosInsert":datosInsert},
+		        url:"../controller/"+minusculas+"/cAniadir"+Tabla+".php",
+		        success: function(datosUsuarios){
+		        	console.log(datosUsuarios);
+		        },
+		        error: function(xhr){
+		            alert("An error occured: "+xhr.status+" "+xhr.statusText);
+		        }
+		    });
 		}
 	}
 	
@@ -420,136 +426,3 @@ function generarCodigoInsert(){
 	return true;
 }
 /*FIN DE INSERTAR NUEVOS DATOS EN LAS TABLAS DESDE VADMIN */
-
-//var nInput=$('#formularioInsert form :input').length-2;
-////alert(n);
-//nombreInput=$("#formularioInsert form input");//array de todos los objetos tipo input
-//
-////alert(nombre[0]);
-//
-//for(var i=0;i<nInput;i++){
-//	var id=$(nombreInput[i]).attr("id");
-//	//alert("id del input: "+id);
-//	var valor=$(nombreInput[i]).val();
-//	//alert("valor del input: "+valor);
-//
-//}
-//
-//var nSelect=$('#formularioInsert form * :not(:input)').length;
-//alert(nSelect);
-//nombreSelect=$("#formularioInsert form * :not(:input)");//array de todos los objetos tipo input
-//
-//alert(nombreSelect[0]);
-//
-//for(var i=0;i<nSelect;i++){
-//	var id=$(nombreSelect[i]).attr("id");
-//	alert("id del select: "+id);
-//	var valor=$(nombreSelect[i]).val();
-//	alert("valor del select: "+valor);
-//
-//}
-//
-
-
-//	$(".deleteV").click(function(){
-//		
-//		var id=$(this).val(); 
-//		console.log(id);
-//		
-//	  	$.ajax({
-//	       	type: "GET",
-//	       	data:{'id':id},
-//	       	url: "../controller/cDeleteVehiculo.php", 
-//
-//	       	success: function(result){  
-//	       		
-//	       		console.log(result);
-//	       		location.reload(true);  //recarga la pagina
-//	       	},
-//	       	error : function(xhr) {
-//	   			alert("An error occured: " + xhr.status + " " + xhr.statusText);
-//	   		}
-//	       });
-//	  	
-//	 
-//});
-//$(".updateV").click(function(){
-//	var todo=$(this).val();
-//
-//	var todo = todo.split("||");
-//	
-//		var id=todo[0]; 
-//		var nombre=todo[1]; 
-//		var modelo=todo[2]; 
-//		var potencia=todo[3]; 
-//		var img=todo[4]; 
-//		var tipo=todo[5]; 
-//
-//		$(".paneles").hide(800);
-//	$(".encabezado_vAdmin").hide(800);
-//	$("body").css("background-color", "	#abcdef");
-//
-//	 
-//	       	$(".insertarAdmin").append(`<form id="form_vAdminUpdate" >
-//    		    <div id="elementos_vAdminUpdate">
-//    		    
-//    		        <div class="nombre_vAdminInsertU">
-//    		        <label>Nombre:</label>
-//    		        <input id="nombre" type="text" value="`+nombre+`">
-//    		        </div>
-//    		        
-//    		        <div class="contrasena_vAdminInsertU">
-//    		        <label>modelo:</label>
-//    		        <input id="modelo" type="text"  value="`+modelo+`">
-//    		        </div>	
-//    		        	        
-//    		        <div class="nombre_vAdminInsertU">
-//    		        <label>potencia:</label>
-//    		        <input id="potencia" type="text"  value="`+potencia+`">
-//    		        </div>	
-//    		        
-//    		        <div class="apellido_vAdminInsertU">
-//    		        <label>img:</label>
-//    		        <input id="img" type="text"  value="`+img+`">
-//    		        </div>
-//    		        
-//    		        <div class="telefono_vAdminInsertU">
-//    		        <label>tipo:</label>
-//    		        <select id="tipo">
-//    		        <option value="Bicicleta">Bicicleta</option>
-//    		        <option value="Coche">Coche</option>
-//    		        <option value="Monopatin">Monopatin</option>
-//    		        <option value="Patinete">Patinete</option>
-//    		        </select>
-//    		        </div>
-//    		        
-//    		        <input type="button" class="submit_vAdminUpdate" id="`+id+`" value="GO!">
-//    				
-//    		    </div>
-//    		    <button class="boton_atras_vAdminU goBack">GO BACK</button>
-//    		    </form>`);
-//	       		
-//        	$(".submit_vAdminUpdate").click(function(){
-//        		var id=$(this).attr("id"); 
-//        		var nombre=$("#nombre").val();
-//        		var modelo=$("#modelo").val();
-//        		var potencia=$("#potencia").val();
-//        		var img=$("#img").val();
-//        		var tipo=$("#tipo").val();
-//        		
-//        		$.ajax({
-//        		 	type: "GET",
-//        		 	data:{'id':id,'nombre':nombre , 'modelo':modelo , 'potencia':potencia, 'img':img , 'tipo':tipo },
-//     		       	url: "../controller/cUpdateVehiculo.php", 
-//
-//     		       	success: function(result){  
-//     		       		
-//     		       		console.log(result);
-//     		       		location.reload(true);  //recarga la pagina
-//     		       	},
-//     		       	error : function(xhr) {
-//     		   			alert("An error occured: " + xhr.status + " " + xhr.statusText);
-//     		   		}
-//     		       });
-// 	       });
-//  });
