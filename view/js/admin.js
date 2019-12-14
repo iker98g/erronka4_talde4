@@ -1,4 +1,6 @@
 var EquipoN;
+var roles=[];
+var equiposInput=[];
 var LoopTimes=0;
 var datosInsert=[];
 var cantidad;
@@ -373,6 +375,7 @@ function generarInserts(){
 			$("#formularioInsert").html("");
 		}
 		if(LoopTimes==cantidadInsert){
+			$("#formularioInsert").html("");
 			$("#formularioInsert").html("YA HAS TERMINADO DE INSERTAR LO QUE QUERIAS RELAJATE ");
 			$.ajax({
 		        type:"POST",
@@ -392,37 +395,90 @@ function generarInserts(){
 
 function generarCodigoInsert(){
 	$("#formularioInsert").html("");
+	$.ajax({
+        type:"POST",
+        data:{"datosInsert":datosInsert},
+        url:"../controller/"+minusculas+"/cSeleccionar"+Tabla+".php",
+        success: function(datosTabla){
+        	
+        	misDatosTabla=JSON.parse(datosTabla);
+        	if(LoopTimes!=cantidadInsert){
 
-	var htmlCode=`<form id="FormInsert">`;
+        	var htmlCode=`<form id="FormInsert">`;
+        	
+        	if(Tabla==="Equipos"||Tabla==="Jugadores"||Tabla==="Categorias"||Tabla==="Entrenadores"||Tabla==="Usuarios"){
+        		htmlCode=`Nombre:<br><input type="text" id="nombre" name="`+Tabla+`" required><br>`;		
+        		$("#formularioInsert").append(htmlCode);
+        	}
+        	
+        	if(Tabla==="Jugadores"||Tabla==="Categorias"||Tabla==="Entrenadores"){
+        		htmlCode=`Imagen:<br><select name="`+Tabla+`" id="imagen"></select><br>`;
+        		$("#formularioInsert").append(htmlCode);
+        	}
+        	
+        	if(Tabla==="Jugadores"||Tabla==="Entrenadores"){
+        		htmlCode=`Telefono:<br><input type="number" id="telefono" name="`+Tabla+`" required><br>Equipo:<br><select id="equipo" name="`+Tabla+`" required></select>`;
+        		$("#formularioInsert").append(htmlCode);
+	        	$.each(misDatosTabla,function(i,datos_tabla){
+	        		if(!equiposInput.includes(datos_tabla.objectEquipo.nombre)){
+	        			$("#equipo").append(`<option id="`+datos_tabla.objectEquipo.nombre+`">`+datos_tabla.objectEquipo.nombre+`</option>`);
+	        			equiposInput.push(datos_tabla.objectEquipo.nombre);
+	        			}
+	        		});
+	        	
+        	}
+        	
+        	if(Tabla==="Equipos"){
+        		htmlCode=`Categoria:<br><select id="categoria" name="`+Tabla+`" required></select>Logo:<br><select name="`+Tabla+`" id="logo"></select><br>`;
+        		$("#formularioInsert").append(htmlCode);
+	        	$.each(misDatosTabla,function(i,datos_tabla){
+	        		$("#categoria").append(`<option id="`+datos_tabla.objectCategoria.nombre+`">`+datos_tabla.objectCategoria.nombre+`</option>`);
+	        	});        	
+	        }
+        	
+        	if(Tabla==="Jugadores"){
+        		htmlCode=`Rol:<br><select id="rol" name="`+Tabla+`" required></select>`;
+        		$("#formularioInsert").append(htmlCode);
+            	$.each(misDatosTabla,function(i,datos_tabla){
+     				if(!roles.includes(datos_tabla.rol)){
+                		$("#rol").append(`<option id="`+datos_tabla.rol+`">`+datos_tabla.rol+`</option>`);
+                		roles.push(datos_tabla.rol);
+     				}
+     			});
+            }
+        	
+        	if(Tabla==="Consultas"){
+        		htmlCode=`Consulta:<br><input type="text" id="consulta" name="`+Tabla+`"  required><br>Usuario:<br><select id="usuario" name="`+Tabla+`"  required></select>`;
+        		$("#formularioInsert").append(htmlCode);
+            	$.each(misDatosTabla,function(i,datos_tabla){
+     				$("#usuario").append(`<option id="`+datos_tabla.objectUsuario.usuario+`">`+datos_tabla.objectUsuario.usuario+`</option>`);
+            	});
+        	}
+        	
+        	if(Tabla==="Usuarios"){
+        		htmlCode=`Contrasena:<br><input type="password" id="contrasena" name="`+Tabla+`"  required><i class="fas fa-eye"></i><i class="fas fa-eye-slash"></i><br>Tipo:<br><select id="tipo" name="`+Tabla+`" required></select><br>Usuario:<br><input type="text" id="usuario" name="`+Tabla+`"><br>Correo:<br><input type="text" id="correo" name="`+Tabla+`"><br>`;
+        		$("#formularioInsert").append(htmlCode);
+//            	$.each(misDatosTabla,function(i,datos_tabla){
+//     				$("#tipo").append(`<option id="`+datos_tabla.objectTipo.nombre+`">`+datos_tabla.objectTipo.nombre+`</option>`);
+//     			});
+    			$("#tipo").append(`<option id="0">Administrador</option><option id="1">Entrenador</option><option id="2">Usuario Normal</option><option id="3">Anonimo</option>`);
+        	}
+        	
+        	htmlCode=`</form>`;
+        	htmlCode+=`  <input id="button" type="button" value="Submit" onclick="generarInserts()">`;
+
+        	linea="";
+        	
+        	$("#formularioInsert").append(htmlCode);
+        	equiposInput=[];
+        	roles=[];
+        	return true;
+        	}
+        },
+        error: function(xhr){
+            alert("An error occured: "+xhr.status+" "+xhr.statusText);
+        }
+    });
 	
-	if(Tabla==="Equipos"||Tabla==="Jugadores"||Tabla==="Categorias"||Tabla==="Entrenadores"||Tabla==="Usuarios"){
-		htmlCode+=`Nombre:<br><input type="text" id="nombre" name="`+Tabla+`"><br>`;		
-	}
-	if(Tabla==="Jugadores"||Tabla==="Categorias"||Tabla==="Entrenadores"){
-		htmlCode+=`Imagen:<br><select name="`+Tabla+`" id="imagen"><option></option></select><br>`;
-	}
-	if(Tabla==="Jugadores"||Tabla==="Entrenadores"){
-		htmlCode+=`Telefono:<br><input type="number" id="telefono" name="`+Tabla+`"><br>Equipo:<br><select id="equipo" name="`+Tabla+`"><option></option></select>`;
-	}
-	if(Tabla==="Equipos"){
-		htmlCode+=`Categoria:<br><select id="categoria" name="`+Tabla+`"><option></option></select>Logo:<br><select name="`+Tabla+`" id="logo"><option></option></select><br>`;
-	}
-	if(Tabla==="Jugadores"){
-		htmlCode+=`Rol:<br><select id="rol" name="`+Tabla+`"><option></option></select>`;
-	}
-	if(Tabla==="Consultas"){
-		htmlCode+=`Consulta:<br><input type="text" id="consulta" name="`+Tabla+`"><br>Usuario:<br><select id="usuario" name="`+Tabla+`"><option></option></select>`;
-	}
-	if(Tabla==="Usuarios"){
-		htmlCode+=`Contrasena:<br><input type="password" id="contrasena" name="`+Tabla+`"><i class="fas fa-eye"></i><i class="fas fa-eye-slash"></i><br>Tipo:<br><select id="tipo" name="`+Tabla+`"><option></option></select><br>Usuario:<br><input type="text" id="usuario" name="`+Tabla+`"><br>Correo:<br><input type="text" id="correo" name="`+Tabla+`"><br>`;
-	}
-	htmlCode+=`</form>`;
-	htmlCode+=`  <input id="button" type="button" value="Submit" onclick="generarInserts()">`;
-
-	linea="";
-	
-	$("#formularioInsert").html(htmlCode);
-
-	return true;
 }
 /*FIN DE INSERTAR NUEVOS DATOS EN LAS TABLAS DESDE VADMIN */

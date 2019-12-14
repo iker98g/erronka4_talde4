@@ -13,5 +13,5 @@
     $usuarios -> setContrasena($contrasena);
     $usuarios -> setUsuario($usuario);
     
-    $usuarios -> aniadirUsuario();
+    $usuarios -> insertarUsuario();
 ?>

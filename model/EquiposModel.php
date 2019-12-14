@@ -138,7 +138,6 @@ class EquiposModel extends EquiposClass {
             
             
             array_push($this->list, $this);
-            
         }
         mysqli_free_result($result);
         $this->CloseConnect();
@@ -146,7 +145,40 @@ class EquiposModel extends EquiposClass {
         
         
     }
-    
+    public function buscarEquipoId() {
+        
+        $this->OpenConnect();
+        $nombre=$this->nombre;
+        $sql = "CALL spbuscarEquipoId('$nombre')";
+        $result= $this->link->query($sql);
+/*         DELIMITER $$
+        CREATE DEFINER=`root`@`localhost` PROCEDURE `buscarEquipoId`(IN `pNombre` VARCHAR(42))
+        NO SQL
+        select * from equipo where equipo.nombre=pNombre$$
+        DELIMITER ; */
+        if ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+        {
+            
+            $this->setIdCategoria($row['idCategoria']);
+            $idEquipo=$this->setIdEquipo($row['idEquipo']);
+            $this->setNombre($row['nombre']);
+            $this->setLogo($row['logo']);
+            
+            array_push($this->list, $this);
+            return $idEquipo;
+            //problema https://stackoverflow.com/questions/614671/commands-out-of-sync-you-cant-run-this-command-now
+        } if ($this->link->query($sql)>=1) { // aldatu egiten da
+            return "El jugador se ha encontrado con exito";
+        } else {
+            return "Fallo al buscar el equipo: (" . $this->link->errno . ") " . $this->link->error;
+        }
+        
+        mysqli_free_result($result);
+        $this->CloseConnect();
+        
+        
+        
+    }
     function getListJsonString() {
         
         $arr=array();

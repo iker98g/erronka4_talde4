@@ -113,8 +113,46 @@
             mysqli_free_result($result);
             $this->CloseConnect();
         }
-        
         public function aniadirUsuario() {
+            $this->OpenConnect();
+            
+            $nombre=$this->nombre;
+            $tipo=$this->tipo;
+            $nombre=$this->nombre;
+            $correo=$this->correo;
+            $usuario=$this->usuario;
+            $contrasena=$this->contrasena;
+            if($tipo=="Administrador"){
+                $tipo="0";
+            }else if($tipo=="Entrenador"){
+                $tipo="1";
+            }else if($tipo=="Anonimo"){
+                $tipo="3";
+            }else{
+                $tipo="2";
+            }
+
+            $options=['cost'=>10];
+            $encriptedPass=password_hash ($contrasena,PASSWORD_BCRYPT,$options) ;
+            
+            $sql="call spAniadirUsuario('$usuario', '$encriptedPass', '$nombre', '$correo',$tipo)";
+/*             DELIMITER $$
+            CREATE DEFINER=`root`@`localhost` PROCEDURE `spAniadirUsuario`(IN `pUsuario` VARCHAR(50), IN `pContrasena` VARCHAR(255), IN `pNombre` VARCHAR(50), IN `pCorreo` VARCHAR(50), IN `pTipo` INT)
+            NO SQL
+            BEGIN
+            INSERT INTO usuario (usuario.usuario, usuario.contrasena, usuario.nombre, usuario.correo,usuario.tipo)
+            VALUES (pUsuario, pContrasena, pNombre, pCorreo,pTipo);
+            END$$
+            DELIMITER ; */
+            if ($this->link->query($sql)>=1) {
+                return "El usuario se ha insertado con exito";
+            }else {
+                return "Fallo en la insercion del usuario: (" . $this->link->errno . ") " . $this->link->error;
+            }
+            
+            $this->CloseConnect();
+        }
+        public function insertarUsuario() {
             $this->OpenConnect();
             
             $nombre=$this->nombre;

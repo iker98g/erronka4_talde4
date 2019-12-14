@@ -115,7 +115,7 @@ padding: 0;
 	align-items:center;/*Alinear verticalmente con flex*/
 	justify-content: center;/*Alinear horizontalmente con flex*/
 	font-size:2em;
-	flex-direction:row;
+	flex-direction:column;
 }
 #formularioCantidadInsertar{
 	display: inline-block;

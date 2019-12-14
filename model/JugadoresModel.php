@@ -79,13 +79,13 @@ class JugadoresModel extends JugadoresClass {
     public function aniadirJugador(){
         $this->OpenConnect();  // konexio zabaldu  - abrir conexión
         
-        $idEquipo=$this->getIdEquipo();
-        $nombre=$this->getNombre();
-        $rol=$this->getRol();
-        $imagen=$this->getImagen();
-        $telefono=$this->getTelefono();
+        $idEquipo=$this->idEquipo;
+        $nombre=$this->nombre;
+        $rol=$this->rol;
+        $imagen=$this->imagen;
+        $telefono=$this->telefono;
         
-        $sql="CALL spInsertarJugador($idEquipo, $nombre, $rol, $imagen, $telefono)";
+        $sql="CALL spInsertarJugador('$nombre','$imagen','$rol','$telefono',$idEquipo)";
         
         $numFilas=$this->link->query($sql);
         
