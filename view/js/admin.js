@@ -1,9 +1,3 @@
-//var comprobarJ=0;
-//var comprobarU=0;
-//var comprobarEq=0;
-//var comprobarCa=0;
-//var comprobarEn=0;
-//var comprobarCo=0;
 var EquipoN;
 var LoopTimes=0;
 var datosInsert=[];
@@ -18,8 +12,6 @@ var equipos = [];
 var clase;
 var m;// variable utilizada en frontal para sacar los tipos
 $(document).ready(function(){
-	
-	
 	/*INICIO DE CREAR TABLAS */
 	iniciarJAdmin(); //Mostrar datos de la tabla de jugadores por equipos
 
@@ -63,12 +55,16 @@ $(document).ready(function(){
 		}
 			
 		var visibilidad=$("."+clase+" .divTablaAdmin").is(`:visible`);
+		var visibilidadEquiposJugadores=$("#JugadoresPorEquipos").is(`:visible`);
 		/*si esta visible, se esconderá la tabla a la que hemos clickado (la que esta visible) y las 
 		 * tablas de jugadores en caso de que esten abiertas, si no lo está, se mostrará*/
 		if(visibilidad){
 			$(window).scrollTop(0);//cuando clickes en una tabla ira a la parte de arriba de la pagina
 			$("."+clase+" .divTablaAdmin").hide(1200);
 			$("#JugadoresPorEquipos").hide(800);
+		}else if(visibilidadEquiposJugadores){
+			$(window).scrollTop(0);//cuando clickes en una tabla ira a la parte de arriba de la pagina
+			$("#JugadoresPorEquipos").hide(1200);
 		}else{
 			$(window).scrollTop(0);
 			$("."+clase+" .divTablaAdmin").show(1200);
@@ -83,7 +79,6 @@ $(document).ready(function(){
 		}
 	}); /*FIN DE AL CLICKCAR QUE APAREZCA LA TABLA CORRESPONDIENTE Y SE ESCONDAN LAS OTRAS*/
 });//FIN DEL DOCUMENT READY
-
 
 
 /*INICIO DE INICIAR LAS TABLAS EN LA VISTA ADMIN*/
@@ -132,6 +127,8 @@ function iniciarJAdmin(){
 	 				
 	 		    	$(window).scrollTop(0);
 	 				var visibilidadJugadores=$("."+EquipoN+" .divTablaAdmin").is(`:visible`);
+		    		$(".JugadoresE").html("");//eliminamos los jugadores creados anteriormente
+
 	 				if(visibilidadJugadores){
 	 					$(".divTablaAdmin").hide(800);
 	 				}else{
@@ -281,75 +278,61 @@ function iniciarUAdmin(){
     });//FIN DEL AJAX DE GENERAR LA TABLA USUARIOS
 }//FIN DEL INICIAR LA FUNCION DE CREAR USUARIOS
 
-
 /*FIN DE INSERTAR DATOS EN LAS TABLAS DESDE VADMIN */
 
 
-/*INICIO DE INSERTAR NUEVOS DATOS EN LAS TABLAS EN LA VISTA ADMIN
-*/
- function botonInsertAdmin(){
+/*INICIO DE INSERTAR NUEVOS DATOS EN LAS TABLAS EN LA VISTA ADMIN*/
 
-	 //async	
-$(".insertButton button").click(function(){
-	
-	/*AQUI EMPIEZA EL RECOGER VALOR DE EL BOTON CLICK INSERTAR*/
-	
-	$("#tablas").hide();
-	var TablaInsert=$(this).text();
-	var TablaInsert1=TablaInsert.split(" ",2);//RECOGEMOS EN UN ARRAY LO QUE ESTA ESCRITO EN EL BOTON
-	TablaInsert =TablaInsert1[1]; 	//SELECCIONAMOS LA SEGUNDA POSICION del array Y LA GUARDAMOS EN UNA VARIABLE
-	
-	
-	minusculas=TablaInsert.substring(1,TablaInsert.length); //COGEMOS EL TEXTO EXCEPTO LA PRIMERA LETRA
-	mayusculas=TablaInsert.substring(0,1); //COGEMOS LA PRIMERA LETRA
-	minusculas=minusculas.toLowerCase(); //CAMBIAMOS EL TEXTO A MINUSCULAS
-	Tabla=mayusculas+minusculas;
-	minusculas=TablaInsert.toLowerCase();
-	//alert(Tabla);
-	
-	/*AQUI TERMINA EL RECOGER VALOR DE EL BOTON CLICK INSERTAR*/
-	
-	
-	/*AQUI EMPIEZA EL PREGUNTAR LA CANTIDAD DEL INSERT DESEADOS*/
+function botonInsertAdmin(){//se le llama desde iniciarJAdmin()
 
+	$(".insertButton button").click(function(){
 	
-	
-	$("#formularioInsert").css("margin-top","16px");
-
-	var htmlCodes=`<form id="formularioCantidadInsertar">`;
-	htmlCodes+=`Cantidad de `+minusculas+` que desee insertar:  <select name="`+Tabla+`" id="cantidad"></select><br>`;		
-	htmlCodes+=`<input id="aceptarInsert" type=button value="Aceptar"></input>`;
-	htmlCodes+=`<input id="cancelarInsert" type=button value="Cancelar"></input>`;
-	htmlCodes+=`</form>`;
-	
-	$("#formularioInsert").html(htmlCodes);
-	for(var i=1;i<13;i++){
-		$("#formularioInsert select").append(`<option id=`+i+`> `+i+` </option>`);	
-	}
-
-
-	$("#cancelarInsert").click(function(){
-	$("#tablas").show();
-	$("#formularioInsert").html("");
-	});	
+		/*AQUI EMPIEZA EL RECOGER VALOR DE EL BOTON CLICK INSERTAR*/
+		$("#tablas").hide();
+		var TablaInsert=$(this).text();
+		var TablaInsert1=TablaInsert.split(" ",2);//RECOGEMOS EN UN ARRAY LO QUE ESTA ESCRITO EN EL BOTON
+		TablaInsert =TablaInsert1[1]; 	//SELECCIONAMOS LA SEGUNDA POSICION del array Y LA GUARDAMOS EN UNA VARIABLE
 		
+		minusculas=TablaInsert.substring(1,TablaInsert.length); //COGEMOS EL TEXTO EXCEPTO LA PRIMERA LETRA
+		mayusculas=TablaInsert.substring(0,1); //COGEMOS LA PRIMERA LETRA
+		minusculas=minusculas.toLowerCase(); //CAMBIAMOS EL TEXTO A MINUSCULAS
+		Tabla=mayusculas+minusculas;
+		minusculas=TablaInsert.toLowerCase();
+		/*AQUI TERMINA EL RECOGER VALOR DE EL BOTON CLICK INSERTAR*/
 		
-	/*AQUI TERMINA EL PREGUNTAR LA CANTIDAD DEL INSERT DESEADOS*/
+		/*AQUI EMPIEZA EL PREGUNTAR LA CANTIDAD DEL INSERT DESEADOS*/
+		$("#formularioInsert").css("margin-top","16px");
+	
+		var htmlCodes=`<form id="formularioCantidadInsertar">`;
+		htmlCodes+=`Cantidad de `+minusculas+` que desee insertar:  <select name="`+Tabla+`" id="cantidad"></select><br>`;		
+		htmlCodes+=`<input id="aceptarInsert" type=button value="Aceptar"></input><input id="cancelarInsert" type=button value="Cancelar"></input>`;
+		htmlCodes+=`</form>`;
+		$("#formularioInsert").html(htmlCodes);
 		
-	$("#aceptarInsert").click(function(){
-
-		cantidad=$("#cantidad").val();
-		cantidadInsert=parseInt(cantidad);
+		for(var i=1;i<13;i++){//generamos 12 options, ya que va a ser el máximo de inserts para hacer (ya que por equipo son 12 jugadores)
+			$("#formularioInsert select").append(`<option id=`+i+`> `+i+` </option>`);	
+		}
+	
+		$("#cancelarInsert").click(function(){
+			$("#tablas").show();
+			$("#formularioInsert").html("");
+		});
+		/*AQUI TERMINA EL PREGUNTAR LA CANTIDAD DEL INSERT DESEADOS*/
+			
+		$("#aceptarInsert").click(function(){
+	
+			cantidad=$("#cantidad").val();
+			cantidadInsert=parseInt(cantidad);
+			
+			console.log("ACEPTAR");
+			$("#formularioInsert").html("");
+			
+			generarInserts();
+		});
 		
-		console.log("ACEPTAR");
-		$("#formularioInsert").html("");
-		
-		generarInserts();
+			
+	
 	});
-	
-		
-
-});
 }
 	
 
