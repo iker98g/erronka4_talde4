@@ -312,58 +312,50 @@ function botonInsertAdmin(){//se le llama desde iniciarJAdmin()
 		for(var i=1;i<13;i++){//generamos 12 options, ya que va a ser el máximo de inserts para hacer (ya que por equipo son 12 jugadores)
 			$("#formularioInsert select").append(`<option id=`+i+`> `+i+` </option>`);	
 		}
-	
+		/*AQUI TERMINA EL PREGUNTAR LA CANTIDAD DEL INSERT DESEADOS*/
+		
 		$("#cancelarInsert").click(function(){
+			$(".divTablaAdmin").hide(800);
+			$(".divTablaAdmin").css("margin","0px");
+			$(".titulo_boton").css({"border-bottom":"0px","background-color":"white"});
+			$("#JugadoresPorEquipos").hide(1200);
 			$("#tablas").show();
 			$("#formularioInsert").html("");
 		});
-		/*AQUI TERMINA EL PREGUNTAR LA CANTIDAD DEL INSERT DESEADOS*/
 			
 		$("#aceptarInsert").click(function(){
-	
 			cantidad=$("#cantidad").val();
 			cantidadInsert=parseInt(cantidad);
-			
-			console.log("ACEPTAR");
 			$("#formularioInsert").html("");
-			
-			generarInserts();
+			//vaciamos el formulario donde hemos dado la opcion de selecionar cuantos inserts quiere(limite 12)
+			generarInserts();//Generamos los inserts llamando a esta funcion
 		});
 		
 			
 	
-	});
-}
-	
+	});	/*AQUI TERMINA EL GENERAR EL FORMULARIO DE INSERT DESEADOS (DE TODAS LAS TABLAS, ya que todas usan el mismo)*/
 
+}/*FIN DE LA FUNCION QUE ES PARA CREAR EL FORMULARIO DE INSERTS DESEADOS (max 12)*/
+	
+/*AQUI LA FUNCION QUE GENERA LOS INSERTS QUE HAYA ELEGIDO EL USUARIO*/
 function generarInserts(){
-		siguienteInsert=true;
-		$("#formularioInsert form").html("");
-		if(LoopTimes==0){
-		generarCodigoGuardarEnArrayInputs();
-		}
-		
-//		$("#formularioInsert form #button").click(function(){
-			console.log(LoopTimes +"loop y siguiente"+siguienteInsert);
+	/*Para meter la primera vez los datos le llamamos desde dentro de la funcion botonInsertAdmin()
+	 * despues le llamamos desde el boton del formulario con un myfunction=generarInserts()*/
+	$("#formularioInsert form").html("");
 			
-		if(cantidadInsert>=1 &&LoopTimes!=cantidadInsert && siguienteInsert==true){
-			generarCodigoGuardarEnArrayInputs();
-		}else{
-			$("#formularioInsert").html("");
+	if(cantidadInsert>=1 &&LoopTimes!=cantidadInsert && siguienteInsert==false){
+		generarCodigoYGuardarEnArrayInputs();
+		//console.log(LoopTimes +"loop y siguiente"+siguienteInsert);
+	}else{
+		$("#formularioInsert").html("");
+	}
+	LoopTimes+=1;
+}/*FIN DE LA FUNCION QUE ES PARA GENERAR LOS INSERTS Y PARA HACER INSERTS EN LA BASE DE DATOS*/
 
-		}LoopTimes+=1;
-//		});
-	
-}
-
-
-function generarCodigoGuardarEnArrayInputs(){
-	
-	generar();
-	
-	$("#formularioInsert form #button").click(function(){	
-		
-		siguienteInsert=true;
+function generarCodigoYGuardarEnArrayInputs(){
+	siguienteInsert=generarCodigoInsert();//llamamos a una funcion donde generamos los inputs y devuelve un true cuando se han insertado
+	if(siguienteInsert){
+				
 		console.log(LoopTimes+"LoopTimes y insertCantidad"+cantidadInsert);
 		
 		
@@ -387,14 +379,14 @@ function generarCodigoGuardarEnArrayInputs(){
 		datosInsert.push(obj);//añadimos al array creado anteriormente el objeto 
 		console.log(datosInsert);
 		//alert(minusculas+"<-carpeta Tabla->"+Tabla);
-		generar();
 		siguienteInsert=false;
+		//generarCodigoInsert();
 
 
-	});
+	}
 }
 
-function generar(){
+function generarCodigoInsert(){
 	$("#formularioInsert").html("");
 
 	var htmlCode=`<form id="FormInsert">`;
@@ -426,7 +418,7 @@ function generar(){
 	linea="";
 	
 	$("#formularioInsert").html(htmlCode);
-	
+	return true;
 }
 /*FIN DE INSERTAR NUEVOS DATOS EN LAS TABLAS DESDE VADMIN */
 
