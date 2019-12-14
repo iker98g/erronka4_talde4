@@ -502,6 +502,10 @@ function iniciarUAdmin(){
 
 function botonInsertAdmin(){
 $(".insertButton button").click(function(){
+	
+	/*AQUI EMPIEZA EL RECOGER VALOR DE EL BOTON CLICK INSERTAR*/
+	
+	$("#tablas").hide();
 	var TablaInsert=$(this).text();
 	var TablaInsert1=TablaInsert.split(" ",2);//RECOGEMOS EN UN ARRAY LO QUE ESTA ESCRITO EN EL BOTON
 	TablaInsert =TablaInsert1[1]; 	//SELECCIONAMOS LA SEGUNDA POSICION del array Y LA GUARDAMOS EN UNA VARIABLE
@@ -513,8 +517,34 @@ $(".insertButton button").click(function(){
 	Tabla=mayusculas+minusculas;
 	minusculas=TablaInsert.toLowerCase();
 	//alert(Tabla);
+	
+	/*AQUI TERMINA EL RECOGER VALOR DE EL BOTON CLICK INSERTAR*/
+	
+	
+	/*AQUI EMPIEZA EL PREGUNTAR LA CANTIDAD DEL INSERT DESEADOS*/
+
+	var cantidadInsert=-1;
+	
+	 var htmlCodes=`<form id="formularioCantidadInsertar">`;
+	 htmlCodes+=`Cantidad de `+minusculas+` que desee insertar:  <select name="`+Tabla+`" id="cantidad"></select><br>`;		
+
+	 htmlCodes+=`</form>`;
+
+	$("#formularioInsert").html(htmlCodes);
+	for(var i=1;i<13;i++){
+		$("#formularioInsert select").append(`<option id=`+i+`> `+i+` </option>`);	
+	}
+	
+	$("#formularioInsert").css("margin-top","16px");
 		
-	var datosInsert=[{}];
+		
+	/*AQUI TERMINA EL PREGUNTAR LA CANTIDAD DEL INSERT DESEADOS*/
+	
+		
+if(cantidadInsert=0){
+	
+		
+	var datosInsert=[];
 	//[{firstName:"John", lastName:"Doe", age:46}]
 	 var htmlCode=`<form>`;
 	
@@ -541,21 +571,29 @@ $(".insertButton button").click(function(){
 	}
 	htmlCode+=`  <input id="button" type="button" value="Submit">`;
 	htmlCode+=`</form>`;
-
+var linea="";
 	$("#formularioInsert").html(htmlCode);
 	
 	$("#formularioInsert form #button").click(function(){
 		var elements = document.getElementsByName( Tabla );
-		datosInsert = [{}];
+		datosInsert = [];
 		for(var i=0;i<elements.length;i++){
 			var input=elements[i];
 			var id = elements[i].getAttribute( 'id' );
 			var contenido = $("#"+id).val();
-			datosInsert.push({id:contenido});
-			//alert(id+" <-Id y Contenido->"+contenido);
+			//datosInsert.push({[id]:contenido});
+			linea+=id+":"+contenido+",";	//añadimos 
 		}
-		datosInsert.splice(0,1);//aqui quitamos el campo vacio que aparece por defecto
-
+		linea=linea.slice(0,-1);
+		//console.log(datosInsert);
+		var values = linea.split(",");//separamos las partes de nuestro futuro array
+		var obj = {};//creamos un objeto vacio
+		for(var i=0; i<values.length; i++) {
+		    var keyValue = values[i].split(":");//separamos cada parte de cada campo ya que es key:value
+		    obj[keyValue[0]] = keyValue[1];//asignamos que el key sea el que esta en la posicion principal y el value en la secundaria del objeto
+		}
+		//console.log(obj);
+		datosInsert.push(obj);//añadimos al array creado anteriormente el objeto 
 		//console.log(datosInsert);
 		//alert(minusculas+"<-carpeta Tabla->"+Tabla);
 		
@@ -594,7 +632,7 @@ $(".insertButton button").click(function(){
 
 	
 
-	
+}	
 });
 }
 /*FIN DE INSERTAR NUEVOS DATOS EN LAS TABLAS DESDE VADMIN */

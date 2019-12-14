@@ -112,6 +112,28 @@ padding: 0;
 	display:none;
 }
 
+/*AQUI EMPIEZA EL CSS DE SELECCIONAR CANTIDAD DEL INSERT*/
+
+#formularioInsert{
+	display:flex;
+	align-items:center;/*Alinear verticalmente con flex*/
+	justify-content: center;/*Alinear horizontalmente con flex*/
+	font-size:2em;
+	flex-direction:row;
+}
+#formularioCantidadInsertar{
+	display: inline-block;
+  	vertical-align: middle;
+}
+
+ #formularioInsert form #cantidad{ 	 	
+ 		height:30px;
+ 		width:50px;
+ 		font-size:20px;
+}
+
+/*AQUI TERMINA EL CSS DE SELECCIONAR CANTIDAD DEL INSERT*/
+
 .footer_vAdmin>ul{
 	list-style: none;
 	display:flex;
@@ -154,13 +176,9 @@ padding: 0;
 
 
 /* FIN MEDIA QUERY*/
-#formularioInsert{
-	    text-align: center;
-}
 
-#formularioInsert > form{
-    display: inline-block;
-}
+
+
 
 /* .delete_paneles{ */
 /* 		padding:5px; */
