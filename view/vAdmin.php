@@ -21,14 +21,20 @@
 
 	</header>
 <div id="tablas">
-    	<div class="panelJ paneles" id="panelJ" >
+
+
+<!-- TABLA JUGADORES POR EQUIPOS-->
+
+    	<div class="panelJ paneles jugadores" id="panelJ" >
             <div class="titulo_boton">
                 <div class="tituloJAdmin" data-tipo="Jugador"><h2>Jugadores</h2></div>
               </div>
 		<div id="JugadoresPorEquipos" ></div>
         </div> 
         
-		<div class="panelEq paneles" id="panelEq" >
+  <!-- TABLA EQUIPOS -->
+        
+		<div class="panelEq paneles equipos" id="panelEq" >
 			<div class="titulo_boton">
         		<div class="tituloEqAdmin" data-tipo="Equipo">
         			<h2>Equipos</h2>
@@ -37,7 +43,7 @@
     		</div>
             <div class="divTablaAdmin" >
                 <div class="insertButton" ><button type="button" >+NUEVOS EQUIPOS</button></div>
-                <table class="rellenoAdminEquipo">
+                <table class="rellenoAdminEquipo relleno_equipos">
     			<tr>
     			
          			<th>IDEQUIPO</th>
@@ -49,15 +55,18 @@
         	</table>
         	        		
         </div>
-    </div>     
-        <div class="panelEn paneles" id="panelEn" >
+    </div>    
+    
+    <!-- TABLA ENTRENADORES -->
+     
+        <div class="panelEn paneles entrenadores" id="panelEn" >
             <div class="titulo_boton">
                 <div class="tituloEnAdmin" data-tipo="Entrenador"><h2>Entrenadores</h2></div>
                 <!-- <button class="insertEn insert_paneles" >INSERT</button> -->
             </div>
             <div class="divTablaAdmin" >
                 <div class="insertButton"><button type="button">+NUEVOS ENTRENADORES</button></div>
-                <table class="rellenoAdminEntrenador">
+                <table class="rellenoAdminEntrenador relleno_entrenadores">
                     <tr>
                     
                          <th>IDENTRENADOR</th> 
@@ -70,14 +79,17 @@
                 </table>
             </div>
         </div> 
-            <div class="panelCa paneles" id="panelCa" >
+            
+           <!-- TABLA CATEGORIAS -->
+            
+            <div class="panelCa paneles categorias" id="panelCa" >
                 <div class="titulo_boton"  >
                     <div class="tituloCaAdmin" data-tipo="Categoria"><h2>Categorias</h2></div>
                     <!-- <button class="insertCa insert_paneles" >INSERT</button> -->
                 </div>
                 <div class="divTablaAdmin" >
                     <div class="insertButton" ><button type="button" >+NUEVAS CATEGORIAS</button></div>
-                    <table class="rellenoAdminCategoria">
+                    <table class="rellenoAdminCategoria relleno_categorias">
                         <tr>
                         
                              <th>IDCATEGORIA</th> 
@@ -89,15 +101,16 @@
                 </div>
                 </div>
                 
+        <!-- TABLA CONSULTAS -->
         
-                <div class="panelCo paneles" id="panelCo" >
+                <div class="panelCo paneles consultas" id="panelCo" >
                     <div class="titulo_boton">
                         <div class="tituloCoAdmin" data-tipo="Consulta"><h2 >Consultas</h2></div>
                         <!-- <button class="insertCo insert_paneles" >INSERT</button> -->
                     </div>
                     <div class="divTablaAdmin" >
                         <div class="insertButton" ><button type="button" >+NUEVAS CONSULTAS</button></div>
-                        <table class="rellenoAdminConsulta">
+                        <table class="rellenoAdminConsulta relleno_consultas">
                             <tr>
                             
                                     <th>IDCONSULTA</th> 
@@ -108,14 +121,17 @@
                         </table>
                     </div>    
                 </div> 
-        <div class="panelU paneles" id="panelU">
+                
+                <!-- TABLA USUARIOS -->
+                
+        <div class="panelU paneles usuarios" id="panelU">
 			<div class="titulo_boton">
     		<div class="tituloUAdmin" data-tipo="Usuario"><h2>Usuarios</h2></div>
     		<!-- <button class="insertU insert_paneles">INSERT</button> -->
     		</div>
             <div class="divTablaAdmin">
                 <div class="insertButton" ><button type="button" >+NUEVOS USUARIOS</button></div>
-                <table class="rellenoAdminUsuario">
+                <table class="rellenoAdminUsuario relleno_usuarios">
     			<tr>
     			
          			<th>IDUSUARIO</th>

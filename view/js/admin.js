@@ -1,9 +1,9 @@
-var comprobarJ=0;
-var comprobarU=0;
-var comprobarEq=0;
-var comprobarCa=0;
-var comprobarEn=0;
-var comprobarCo=0;
+//var comprobarJ=0;
+//var comprobarU=0;
+//var comprobarEq=0;
+//var comprobarCa=0;
+//var comprobarEn=0;
+//var comprobarCo=0;
 var EquipoN;
 var LoopTimes=0;
 var datosInsert=[];
@@ -15,211 +15,134 @@ var linea;
 var Tabla;
 var midato= new Object();
 var equipos = [];
+var clase;
 var m;// variable utilizada en frontal para sacar los tipos
 $(document).ready(function(){
 	
 	
-//CSS Y MOSTRAR LAS TABLAS 
+	/*INICIO DE CREAR TABLAS */
+	iniciarJAdmin(); //Mostrar datos de la tabla de jugadores por equipos
+
+	iniciarEqAdmin(); //Mostrar datos de la tabla de equipos
+    
+    iniciarEnAdmin(); //Mostrar datos de la tabla de entrenadores
+    
+    iniciarCaAdmin(); //Mostrar datos de la tabla de categorias
+
+    iniciarCoAdmin(); //Mostrar datos de la tabla de consultas
+
+    iniciarUAdmin(); //Mostrar datos de la tabla de usuarios
+	/*FIN DE CREAR TABLAS */
+
+    /*INICIO DE AL CLICKCAR QUE APAREZCA LA TABLA CORRESPONDIENTE Y SE ESCONDAN LAS OTRAS*/
+	$(".titulo_boton div").click(function(){
+		//Al clickar en cualquier nombre de tabla, se esconden todas y se les cambia el fondo y el margen
+		$(".divTablaAdmin").hide(800);
+		$(".divTablaAdmin").css("margin","0px");
+		$(".titulo_boton").css({"border-bottom":"0px","background-color":"white"});
 	
-	iniciarJAdmin(); //Mostrar datos de la tabla de jugadores con sus equipos
-	
-	$(".tituloJAdmin").click(function(){
-		if(comprobarJ==0){
+		//hemos creado un array con el nombre de las tablas
+		var TablasPrograma=["jugadores","equipos","entrenadores","categorias","consultas","usuarios"];
+		clase=$(this).parent().parent().attr(`class`);//recogemos la clase de el div abuelo del titulo de la tabla
+		clases=clase.split(" "); //convertimos la clase en un array separandolo por sus clases 
+		var encontrarClase=false; //creamos variable para saber si ha encontrado la clase con el mismo nombre que alguna de las tablas
+		var index=0;
+		while(encontrarClase==false){
+			
+			if(clases.indexOf(TablasPrograma[index])!=-1){ 
+			/*Aqui busca en el array clases cada campo del array de las tablas, si no lo encuentra será -1 siempre
+			 * y entonces no se meterá en el if. En caso de entrar en el if, 
+			 * guardamos el indice donde está el nombre(de la clase) de la tabla (estamos en el array) en una variable,
+			 * luego guardamos del array de clases el valor de la posicion encontrada y
+			 * le decimos que la hemos encontrado cambiando a true encontrarClase*/
+			num=clases.indexOf(TablasPrograma[index]);
+			clase=clases[num];
+			encontrarClase=true;
+			}
+			index+=1;
+		}
+			
+		var visibilidad=$("."+clase+" .divTablaAdmin").is(`:visible`);
+		/*si esta visible, se esconderá la tabla a la que hemos clickado (la que esta visible) y las 
+		 * tablas de jugadores en caso de que esten abiertas, si no lo está, se mostrará*/
+		if(visibilidad){
+			$(window).scrollTop(0);
+			$("."+clase+" .divTablaAdmin").hide(1200);
 			$("#JugadoresPorEquipos").hide(800);
-			$(".divTablaAdmin").hide(800);
-			$("#JugadoresPorEquipos").css("margin","0px");
-			$(".titulo_boton").css({"border-bottom":"0px","background-color":"white"});
-			$(".panelJ #JugadoresPorEquipos").show(1200);
-			$(".panelJ #JugadoresPorEquipos").css({"margin-top":"50px", "margin-bottom": "50px"});
-			$(".panelJ .titulo_boton").css({"border-bottom":"1px solid black", "background-color":"gray"});
-			comprobarJ=1;
 		}else{
+			$(window).scrollTop(0);
+			$("."+clase+" .divTablaAdmin").show(1200);
 			$("#JugadoresPorEquipos").hide(800);
 			$("#JugadoresPorEquipos").css("margin","0px");
-			$(".titulo_boton").css({"border-bottom":"0px","background-color":"white"});
-			comprobarJ=0;
-		 }
-    });
-	
-	iniciarEqAdmin();
-
-    $(".tituloEqAdmin").click(function(){
-		if(comprobarEq==0){
-			$(".divTablaAdmin").hide(800);
-			$(".divTablaAdmin").css("margin","0px");
-			$(".titulo_boton").css({"border-bottom":"0px","background-color":"white"});
-			$(".panelEq .divTablaAdmin").show(1200);
-			$(".panelJ #JugadoresPorEquipos").hide(800);
-			$(".panelEq .divTablaAdmin .rellenoAdminEquipo").css({"margin-top":"50px", "margin-bottom": "50px"});
-			$(".panelEq .titulo_boton").css({"border-bottom":"1px solid black", "background-color":"gray"});
-			comprobarEq=1;
-		}else{
-			$(".divTablaAdmin").hide(800);
-			$(".divTablaAdmin").css("margin","0px");
-			$(".titulo_boton").css({"border-bottom":"0px","background-color":"white"});
-			comprobarEq=0;
+			$(".relleno_"+clase).css({"margin-top":"50px", "margin-bottom": "50px"});
+			$("."+clase+" .titulo_boton").css({"border-bottom":"1px solid black", "background-color":"gray"});
+			$(".JugadoresEquiposTitulo .divTablaAdmin").hide();//Escondemos las tablas de jugadores por equipos (no los titulos)
+			if(clase=="jugadores"){//aqui mostramos los nombres de los equipos
+				$("#JugadoresPorEquipos").show(1200);
+			}
 		}
-    });
-    
-    iniciarEnAdmin();
-    
-    $(".tituloEnAdmin").click(function(){
-		if(comprobarEn==0){
-            $(".divTablaAdmin").hide(800);
-			$(".divTablaAdmin").css("margin","0px");
-			$(".titulo_boton").css({"border-bottom":"0px","background-color":"white"});
-			$(".panelEn .divTablaAdmin").show(1200);
-			$(".panelJ #JugadoresPorEquipos").hide(800);
-			$(".panelEn .divTablaAdmin .rellenoAdminEntrenador").css({"margin-top":"50px", "margin-bottom": "50px"});
-			$(".panelEn .titulo_boton").css({"border-bottom":"1px solid black", "background-color":"gray"});
-			comprobarEn=1;
-		}else{
-			$(".divTablaAdmin").hide(800);
-			$(".divTablaAdmin").css("margin","0px");
-			$(".titulo_boton").css({"border-bottom":"0px","background-color":"white"});
-			comprobarEn=0;
-		}
-    });	
-
-    iniciarCaAdmin();
-
-    $(".tituloCaAdmin").click(function(){
-		if(comprobarCa==0){
-            $(".divTablaAdmin").hide(800);
-			$(".divTablaAdmin").css("margin","0px");
-			$(".titulo_boton").css({"border-bottom":"0px","background-color":"white"});
-			$(".panelCa .divTablaAdmin").show(1200);
-			$(".panelJ #JugadoresPorEquipos").hide(800);
-			$(".panelCa .divTablaAdmin .rellenoAdminCategoria").css({"margin-top":"50px", "margin-bottom": "50px"});
-			$(".panelCa .titulo_boton").css({"border-bottom":"1px solid black", "background-color":"gray"});
-			comprobarCa=1;
-		}else{
-			$(".divTablaAdmin").hide(800);
-			$(".divTablaAdmin").css("margin","0px");
-			$(".titulo_boton").css({"border-bottom":"0px","background-color":"white"});
-			comprobarCa=0;
-		}
-    });	
-    iniciarCoAdmin();
-
-    $(".tituloCoAdmin").click(function(){
-		if(comprobarCo==0){
-            $(".divTablaAdmin").hide(800);
-			$(".divTablaAdmin").css("margin","0px");
-			$(".titulo_boton").css({"border-bottom":"0px","background-color":"white"});
-			$(".panelCo .divTablaAdmin").show(1200);
-			$(".panelJ #JugadoresPorEquipos").hide(800);
-			$(".panelCo .divTablaAdmin .rellenoAdminConsulta").css({"margin-top":"50px", "margin-bottom": "50px"});
-			$(".panelCo .titulo_boton").css({"border-bottom":"1px solid black", "background-color":"gray"});
-			comprobarCo=1;
-		}else{
-            $(".divTablaAdmin").hide(800);
-			$(".divTablaAdmin").css("margin","0px");
-			$(".titulo_boton").css({"border-bottom":"0px","background-color":"white"});
-			comprobarCo=0;
-		}
-    });	
-
-    iniciarUAdmin();
-    
-    $(".tituloUAdmin").click(function(){
-		if(comprobarU==0){
-			$(".divTablaAdmin").hide(800);
-			$(".divTablaAdmin").css("margin","0px");
-			$(".titulo_boton").css({"border-bottom":"0px","background-color":"white"});
-			$(".panelU .divTablaAdmin").show(1200);
-			$(".panelJ #JugadoresPorEquipos").hide(800);
-			$(".panelU .divTablaAdmin .rellenoAdminUsuario").css({"margin-top":"50px", "margin-bottom": "50px"});
-			$(".panelU .titulo_boton").css({"border-bottom":"1px solid black", "background-color":"gray"});
-			comprobarU=1;
-		}else{
-			$(".divTablaAdmin").hide(800);
-			$(".divTablaAdmin").css("margin","0px");
-			$(".titulo_boton").css({"border-bottom":"0px","background-color":"white"});
-			comprobarU=0;
-		}
-	});	
-	
+	}); /*FIN DE AL CLICKCAR QUE APAREZCA LA TABLA CORRESPONDIENTE Y SE ESCONDAN LAS OTRAS*/
+});//FIN DEL DOCUMENT READY
 
 
 
-	});
-	
-	
-//FIN DE CSS Y MOSTRAR LAS TABLAS 
-
-
-
-/*INICIO DE INICIAR LAS TABLAS EN LA VISTA ADMIN
- * 
- * 
-*/
-
+/*INICIO DE INICIAR LAS TABLAS EN LA VISTA ADMIN*/
 function iniciarJAdmin(){
 	$.ajax({
         type:"JSON",
         url:"../controller/jugadores/cSeleccionarJugadores.php",
         success: function(datosJugadores){
-        	
+
         	miDatosJugadores=JSON.parse(datosJugadores);
-//        	console.log(miDatosJugadores);
-        	
- 		$.each(miDatosJugadores,function(i,datosJugadores){
+        	$.each(miDatosJugadores,function(i,datosJugadores){
 				var equipoClass=datosJugadores.objectEquipo.nombre.replace(/ /g, "");
+				/*recogemos los nombres de los equipos (y les quitamos los espacios) y comprobramos si están en 
+				 * el array equipos, en caso de no estar entra en el if y se añade al array el nombre del 
+				 * equipo sin espacios*/
 				if(!equipos.includes(equipoClass)){
 
-					$("#JugadoresPorEquipos").append(`
- 				<div class="JugadoresEquiposTitulo paneles `+equipoClass+` " >
+					$("#JugadoresPorEquipos").append(`<div class="JugadoresEquiposTitulo paneles `+equipoClass+` " >
  				
-					<div class="titulo_boton">
-						<div class="tituloEquipo">
-							<h2>`+datosJugadores.objectEquipo.nombre+`</h2>
-						</div>
-					</div>
+					<div class="titulo_boton"><div class="tituloEquipo"><h2>`+datosJugadores.objectEquipo.nombre+`</h2></div></div>
 					
 			        <div class="divTablaAdmin">
 						<div class="insertButton" ><button type="button" >+NUEVOS JUGADORES</button></div>
-						<table class="rellenoAdminJugadoresEquipos">
-					        <tr>
-					        
-					            <th>IDJUGADOR</th> 
-					            <th>NOMBRE</th>
-					            <th>IMAGEN</th>
-					            <th>ROL</th>
-					            <th>TELEFONO</th>
-					            <th>EQUIPO</th>
-					            <th>ACCION</th>
-					        </tr>
-					    </table>
+						<table class="rellenoAdminJugadoresEquipos"><tr><th>IDJUGADOR</th><th>NOMBRE</th><th>IMAGEN</th><th>ROL</th><th>TELEFONO</th><th>EQUIPO</th><th>ACCION</th></tr></table>
 					</div>
-				</div>
- 				`);
- 				
- 				equipos.push(equipoClass);
+					
+				</div>`);
+ 				equipos.push(equipoClass);//añadimos el nombre del equipo al array
  			}
- 		});
- 		
- 		botonInsertAdmin();//boton para insertar Nuevas lineas en cualquiera de las tablas
- 		
+				/*LLAMADA A LA FUNCION PARA INSERTAR EN CUALQUIER TABLA LAS LINEAS QUE EL ADMINISTRADOR DESEE*/
+	        	botonInsertAdmin();//boton para insertar nuevas lineas en cualquiera de las tablas
+	        	/*LO PONEMOS AQUI PORQUE AQUI SE GENERA EL BOTON DE JUGADORES POR EQUIPOS(si no solo iria en las demas tablas)*/
+ 		});//AQUI TERMINA EL GENERADOR DE LOS TITULOS DE LOS EQUIPOS POR JUGADORES
  		
  		for(var i=0;i<equipos.length;i++){
  			var equipo=equipos[i];
 
- 			
- 		    $("."+equipos[i]+" .titulo_boton").click(function(){
- 		    	var NombreEquipo=$(this).parent().attr("class");
+ 		    $("."+equipos[i]+" .titulo_boton").click(function(){//cuando clicke en alguno de los titulos de los equipos(tabla jugadores)
+ 		    	var NombreEquipo=$(this).parent().attr("class");//recogemos las clases del padre
  		    	
- 		    	NombreEquipo=NombreEquipo.split(" ");
+ 		    	NombreEquipo=NombreEquipo.split(" ");//guardamos como array las clases del padre
  		    	EquipoN =NombreEquipo[2];
- 		    	
- 		    	$(".divTablaAdmin").hide(800);
- 		    	$("."+EquipoN+" .divTablaAdmin").show(1200);
- 				$(".panelJ .divTablaAdmin .rellenoAdminJugadoresEquipos").css({"margin-top":"50px", "margin-bottom": "50px"});
- 				$(".panelJ .titulo_boton").css({"border-bottom":"1px solid black", "background-color":"gray"});
-	    		$(".JugadoresE ").html(``);
+ 		    	/*recogemos la clase que esta en el index 2 es decir, en la tercera posicion, 
+ 		    	 * ya que siempre será el nombre del equipo*/
+ 				$(window).scrollTop(0);
+ 				var visibilidadJugadores=$("."+EquipoN+" .divTablaAdmin").is(`:visible`);
+ 				if(visibilidadJugadores){
+ 					$(".divTablaAdmin").hide(800);
+ 				}else{
+ 					$(".divTablaAdmin").hide(800);
+ 	 		    	$("."+EquipoN+" .divTablaAdmin").show(1200);//mostramos la tabla de jugadores del equipo en el que hemos clickado
+ 	 				$(".panelJ .divTablaAdmin .rellenoAdminJugadoresEquipos").css({"margin-top":"50px", "margin-bottom": "50px"});
+ 	 				$(".panelJ .titulo_boton").css({"border-bottom":"1px solid black", "background-color":"gray"});
 
+ 				}
+ 				
  		    	$.each(miDatosJugadores,function(i,datosJugadores){
  					var equipoJugador=datosJugadores.objectEquipo.nombre.replace(/ /g, "");
+ 					//volvemos a recoger el nombre del equipo
  					 					
  		    		if(equipoJugador==EquipoN){
  		    			$(".JugadoresEquipos").css("background-color","white!important");

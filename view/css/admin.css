@@ -4,9 +4,7 @@ height: 100%;
 margin: 0;
 padding: 0;
 }
-#JugadoresPorEquipos{
-	display:none;
-}
+
 .encabezado_vAdmin{
 	border:2px solid #1c1c1c;
 	height:70px;
@@ -46,7 +44,9 @@ padding: 0;
 	text-align:left;
 	margin:  30px 0px 10px 30px;
 }
-
+#JugadoresPorEquipos{
+	display:none;
+}
 .JugadoresEquipos{
 	background-color:#00aaaa!important;
 	width:100%!important;
@@ -102,10 +102,6 @@ padding: 0;
 .titulo_boton >div{
 	margin-left:20px;
 }
-/* .titulo_boton>h2{
-	 align-self: center;
-	justify-self: center; 
-} */
 
 
 .divTablaAdmin{
