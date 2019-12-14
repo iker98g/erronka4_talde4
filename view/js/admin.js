@@ -11,6 +11,7 @@ var cantidad;
 var cantidadInsert=-1;
 var obj = {};//creamos un objeto vacio
 var siguienteInsert=false;
+var linea;
 var Tabla;
 var midato= new Object();
 var equipos = [];
@@ -508,9 +509,9 @@ function iniciarUAdmin(){
 
 /*INICIO DE INSERTAR NUEVOS DATOS EN LAS TABLAS EN LA VISTA ADMIN
 */
+ function botonInsertAdmin(){
 
-async function botonInsertAdmin(){
-	
+	 //async	
 $(".insertButton button").click(function(){
 	
 	/*AQUI EMPIEZA EL RECOGER VALOR DE EL BOTON CLICK INSERTAR*/
@@ -565,36 +566,76 @@ $(".insertButton button").click(function(){
 		console.log("ACEPTAR");
 		$("#formularioInsert").html("");
 		
-		generarCodigoGuardarEnArrayInputs();
-		for(var i=0;i<cantidadInsert+1;i++){
-			await generarInsert();
-		}
+		generarInserts();
 	});
 	
 		
-	
+
 });
 }
-function generarInserts(){
-		$("#formularioInsert").html("");
+	
 
+function generarInserts(){
+		siguienteInsert=true;
+		$("#formularioInsert form").html("");
+		if(LoopTimes==0){
 		generarCodigoGuardarEnArrayInputs();
-		$("#formularioInsert form #button").click(function(){
-			siguienteInsert=true;
-			LoopTimes+=1;
-			console.log(LoopTimes+"LoopTimes y insertCantidad"+cantidadInsert);
+		}
+		
+//		$("#formularioInsert form #button").click(function(){
+			console.log(LoopTimes +"loop y siguiente"+siguienteInsert);
 			
 		if(cantidadInsert>=1 &&LoopTimes!=cantidadInsert && siguienteInsert==true){
 			generarCodigoGuardarEnArrayInputs();
-			siguienteInsert=false;
-		}
-		});
+		}else{
+			$("#formularioInsert").html("");
+
+		}LoopTimes+=1;
+//		});
 	
 }
 
 
 function generarCodigoGuardarEnArrayInputs(){
 	
+	generar();
+	
+	$("#formularioInsert form #button").click(function(){	
+		
+		siguienteInsert=true;
+		console.log(LoopTimes+"LoopTimes y insertCantidad"+cantidadInsert);
+		
+		
+		var elements = document.getElementsByName( Tabla );
+		datosInsert = [];
+		for(var i=0;i<elements.length;i++){
+			var input=elements[i];
+			var id = elements[i].getAttribute( 'id' );
+			var contenido = $("#"+id).val();
+			//datosInsert.push({[id]:contenido});
+			linea+=id+":"+contenido+",";	//añadimos 
+		}
+		linea=linea.slice(0,-1);
+		//console.log(datosInsert);
+		var values = linea.split(",");//separamos las partes de nuestro futuro array
+		for(var i=0; i<values.length; i++) {
+		    var keyValue = values[i].split(":");//separamos cada parte de cada campo ya que es key:value
+		    obj[keyValue[0]] = keyValue[1];//asignamos que el key sea el que esta en la posicion principal y el value en la secundaria del objeto
+		}
+		console.log(obj);
+		datosInsert.push(obj);//añadimos al array creado anteriormente el objeto 
+		console.log(datosInsert);
+		//alert(minusculas+"<-carpeta Tabla->"+Tabla);
+		generar();
+		siguienteInsert=false;
+
+
+	});
+}
+
+function generar(){
+	$("#formularioInsert").html("");
+
 	var htmlCode=`<form id="FormInsert">`;
 	
 	if(Tabla==="Equipos"||Tabla==="Jugadores"||Tabla==="Categorias"||Tabla==="Entrenadores"||Tabla==="Usuarios"){
@@ -618,37 +659,13 @@ function generarCodigoGuardarEnArrayInputs(){
 	if(Tabla==="Usuarios"){
 		htmlCode+=`Contrasena:<br><input type="password" id="contrasena" name="`+Tabla+`"><i class="fas fa-eye"></i><i class="fas fa-eye-slash"></i><br>Tipo:<br><select id="tipo" name="`+Tabla+`"><option></option></select><br>Usuario:<br><input type="text" id="usuario" name="`+Tabla+`"><br>Correo:<br><input type="text" id="correo" name="`+Tabla+`"><br>`;
 	}
-	htmlCode+=`  <input id="button" type="button" value="Submit">`;
 	htmlCode+=`</form>`;
-	
-	var linea="";
+	htmlCode+=`  <input id="button" type="button" value="Submit" onclick="generarInserts()">`;
+
+	linea="";
 	
 	$("#formularioInsert").html(htmlCode);
 	
-	$("#formularioInsert form #button").click(function(){		
-		var elements = document.getElementsByName( Tabla );
-		datosInsert = [];
-		for(var i=0;i<elements.length;i++){
-			var input=elements[i];
-			var id = elements[i].getAttribute( 'id' );
-			var contenido = $("#"+id).val();
-			//datosInsert.push({[id]:contenido});
-			linea+=id+":"+contenido+",";	//añadimos 
-		}
-		linea=linea.slice(0,-1);
-		//console.log(datosInsert);
-		var values = linea.split(",");//separamos las partes de nuestro futuro array
-		for(var i=0; i<values.length; i++) {
-		    var keyValue = values[i].split(":");//separamos cada parte de cada campo ya que es key:value
-		    obj[keyValue[0]] = keyValue[1];//asignamos que el key sea el que esta en la posicion principal y el value en la secundaria del objeto
-		}
-		console.log(obj);
-		datosInsert.push(obj);//añadimos al array creado anteriormente el objeto 
-		console.log(datosInsert);
-		//alert(minusculas+"<-carpeta Tabla->"+Tabla);
-
-
-	});
 }
 /*FIN DE INSERTAR NUEVOS DATOS EN LAS TABLAS DESDE VADMIN */
 
