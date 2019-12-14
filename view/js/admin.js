@@ -66,7 +66,7 @@ $(document).ready(function(){
 		/*si esta visible, se esconderá la tabla a la que hemos clickado (la que esta visible) y las 
 		 * tablas de jugadores en caso de que esten abiertas, si no lo está, se mostrará*/
 		if(visibilidad){
-			$(window).scrollTop(0);
+			$(window).scrollTop(0);//cuando clickes en una tabla ira a la parte de arriba de la pagina
 			$("."+clase+" .divTablaAdmin").hide(1200);
 			$("#JugadoresPorEquipos").hide(800);
 		}else{
@@ -92,219 +92,100 @@ function iniciarJAdmin(){
         type:"JSON",
         url:"../controller/jugadores/cSeleccionarJugadores.php",
         success: function(datosJugadores){
-
+        	
         	miDatosJugadores=JSON.parse(datosJugadores);
+        	
         	$.each(miDatosJugadores,function(i,datosJugadores){
 				var equipoClass=datosJugadores.objectEquipo.nombre.replace(/ /g, "");
 				/*recogemos los nombres de los equipos (y les quitamos los espacios) y comprobramos si están en 
 				 * el array equipos, en caso de no estar entra en el if y se añade al array el nombre del 
 				 * equipo sin espacios*/
 				if(!equipos.includes(equipoClass)){
-
-					$("#JugadoresPorEquipos").append(`<div class="JugadoresEquiposTitulo paneles `+equipoClass+` " >
- 				
-					<div class="titulo_boton"><div class="tituloEquipo"><h2>`+datosJugadores.objectEquipo.nombre+`</h2></div></div>
-					
-			        <div class="divTablaAdmin">
-						<div class="insertButton" ><button type="button" >+NUEVOS JUGADORES</button></div>
-						<table class="rellenoAdminJugadoresEquipos"><tr><th>IDJUGADOR</th><th>NOMBRE</th><th>IMAGEN</th><th>ROL</th><th>TELEFONO</th><th>EQUIPO</th><th>ACCION</th></tr></table>
-					</div>
-					
-				</div>`);
- 				equipos.push(equipoClass);//añadimos el nombre del equipo al array
- 			}
+	
+						$("#JugadoresPorEquipos").append(`<div class="JugadoresEquiposTitulo paneles `+equipoClass+` " >
+	 				
+						<div class="titulo_boton"><div class="tituloEquipo"><h2>`+datosJugadores.objectEquipo.nombre+`</h2></div></div>
+						
+				        <div class="divTablaAdmin">
+							<div class="insertButton" ><button type="button" >+NUEVOS JUGADORES</button></div>
+							<table class="rellenoAdminJugadoresEquipos"><tr><th>IDJUGADOR</th><th>NOMBRE</th><th>IMAGEN</th><th>ROL</th><th>TELEFONO</th><th>EQUIPO</th><th>ACCION</th></tr></table>
+						</div>
+						
+					</div>`);
+	 				equipos.push(equipoClass);//añadimos el nombre del equipo al array
+				}
 				/*LLAMADA A LA FUNCION PARA INSERTAR EN CUALQUIER TABLA LAS LINEAS QUE EL ADMINISTRADOR DESEE*/
 	        	botonInsertAdmin();//boton para insertar nuevas lineas en cualquiera de las tablas
 	        	/*LO PONEMOS AQUI PORQUE AQUI SE GENERA EL BOTON DE JUGADORES POR EQUIPOS(si no solo iria en las demas tablas)*/
- 		});//AQUI TERMINA EL GENERADOR DE LOS TITULOS DE LOS EQUIPOS POR JUGADORES
+        	});//AQUI TERMINA EL GENERADOR DE LOS TITULOS DE LOS EQUIPOS POR JUGADORES
  		
- 		for(var i=0;i<equipos.length;i++){
- 			var equipo=equipos[i];
-
- 		    $("."+equipos[i]+" .titulo_boton").click(function(){//cuando clicke en alguno de los titulos de los equipos(tabla jugadores)
- 		    	var NombreEquipo=$(this).parent().attr("class");//recogemos las clases del padre
- 		    	
- 		    	NombreEquipo=NombreEquipo.split(" ");//guardamos como array las clases del padre
- 		    	EquipoN =NombreEquipo[2];
- 		    	/*recogemos la clase que esta en el index 2 es decir, en la tercera posicion, 
- 		    	 * ya que siempre será el nombre del equipo*/
- 				$(window).scrollTop(0);
- 				var visibilidadJugadores=$("."+EquipoN+" .divTablaAdmin").is(`:visible`);
- 				if(visibilidadJugadores){
- 					$(".divTablaAdmin").hide(800);
- 				}else{
- 					$(".divTablaAdmin").hide(800);
- 	 		    	$("."+EquipoN+" .divTablaAdmin").show(1200);//mostramos la tabla de jugadores del equipo en el que hemos clickado
- 	 				$(".panelJ .divTablaAdmin .rellenoAdminJugadoresEquipos").css({"margin-top":"50px", "margin-bottom": "50px"});
- 	 				$(".panelJ .titulo_boton").css({"border-bottom":"1px solid black", "background-color":"gray"});
-
- 				}
- 				
- 		    	$.each(miDatosJugadores,function(i,datosJugadores){
- 					var equipoJugador=datosJugadores.objectEquipo.nombre.replace(/ /g, "");
- 					//volvemos a recoger el nombre del equipo
- 					 					
- 		    		if(equipoJugador==EquipoN){
- 		    			$(".JugadoresEquipos").css("background-color","white!important");
- 		    			$("."+EquipoN+" .rellenoAdminJugadoresEquipos").append(`<tr class="JugadoresE">
- 		           		<td>`+datosJugadores.idJugador+`</td>            		
- 		           		<td>`+datosJugadores.nombre+`</td>
- 		           		<td><img src="`+datosJugadores.imagen+`" style="width:100px; height:auto;"></td>
- 		           		<td>`+datosJugadores.rol+`</td>
- 		           		<td>`+datosJugadores.telefono+`</td>
- 		           		<td>`+datosJugadores.objectEquipo.nombre+`</td>
- 		           		<td><i class="fas fa-edit" value="`+datosJugadores.idJugador+`"></i>
- 		           		<i class="fas fa-trash-alt" value="`+datosJugadores.idJugador+`"></i></td>
- 		       		</tr>`);
- 		    		}
- 		    		});
- 		    		
-
- 		    });
- 		    }
- 		
-// 		$(".deleteV").click(function(){
-// 			
-// 			var id=$(this).val(); 
-// 			console.log(id);
-// 			
-// 		  	$.ajax({
-// 		       	type: "GET",
-// 		       	data:{'id':id},
-// 		       	url: "../controller/cDeleteVehiculo.php", 
-//
-// 		       	success: function(result){  
-// 		       		
-// 		       		console.log(result);
-// 		       		location.reload(true);  //recarga la pagina
-// 		       	},
-// 		       	error : function(xhr) {
-// 		   			alert("An error occured: " + xhr.status + " " + xhr.statusText);
-// 		   		}
-// 		       });
-// 		  	
-// 		 
-// 	   });
-//		$(".updateV").click(function(){
-//			var todo=$(this).val();
-//
-//			var todo = todo.split("||");
-//			
-// 			var id=todo[0]; 
-// 			var nombre=todo[1]; 
-// 			var modelo=todo[2]; 
-// 			var potencia=todo[3]; 
-// 			var img=todo[4]; 
-// 			var tipo=todo[5]; 
-//
-// 			$(".paneles").hide(800);
-//    		$(".encabezado_vAdmin").hide(800);
-//    		$("body").css("background-color", "	#abcdef");
-//
-// 		 
-// 		       	$(".insertarAdmin").append(`<form id="form_vAdminUpdate" >
-//	        		    <div id="elementos_vAdminUpdate">
-//	        		    
-//	        		        <div class="nombre_vAdminInsertU">
-//	        		        <label>Nombre:</label>
-//	        		        <input id="nombre" type="text" value="`+nombre+`">
-//	        		        </div>
-//	        		        
-//	        		        <div class="contrasena_vAdminInsertU">
-//	        		        <label>modelo:</label>
-//	        		        <input id="modelo" type="text"  value="`+modelo+`">
-//	        		        </div>	
-//	        		        	        
-//	        		        <div class="nombre_vAdminInsertU">
-//	        		        <label>potencia:</label>
-//	        		        <input id="potencia" type="text"  value="`+potencia+`">
-//	        		        </div>	
-//	        		        
-//	        		        <div class="apellido_vAdminInsertU">
-//	        		        <label>img:</label>
-//	        		        <input id="img" type="text"  value="`+img+`">
-//	        		        </div>
-//	        		        
-//	        		        <div class="telefono_vAdminInsertU">
-//	        		        <label>tipo:</label>
-//	        		        <select id="tipo">
-//	        		        <option value="Bicicleta">Bicicleta</option>
-//	        		        <option value="Coche">Coche</option>
-//	        		        <option value="Monopatin">Monopatin</option>
-//	        		        <option value="Patinete">Patinete</option>
-//	        		        </select>
-//	        		        </div>
-//	        		        
-//	        		        <input type="button" class="submit_vAdminUpdate" id="`+id+`" value="GO!">
-//	        				
-//	        		    </div>
-//	        		    <button class="boton_atras_vAdminU goBack">GO BACK</button>
-//	        		    </form>`);
-// 		       		
-//		        	$(".submit_vAdminUpdate").click(function(){
-//		        		var id=$(this).attr("id"); 
-//		        		var nombre=$("#nombre").val();
-//		        		var modelo=$("#modelo").val();
-//		        		var potencia=$("#potencia").val();
-//		        		var img=$("#img").val();
-//		        		var tipo=$("#tipo").val();
-//		        		
-//		        		$.ajax({
-//		        		 	type: "GET",
-//		        		 	data:{'id':id,'nombre':nombre , 'modelo':modelo , 'potencia':potencia, 'img':img , 'tipo':tipo },
-//		     		       	url: "../controller/cUpdateVehiculo.php", 
-//
-//		     		       	success: function(result){  
-//		     		       		
-//		     		       		console.log(result);
-//		     		       		location.reload(true);  //recarga la pagina
-//		     		       	},
-//		     		       	error : function(xhr) {
-//		     		   			alert("An error occured: " + xhr.status + " " + xhr.statusText);
-//		     		   		}
-//		     		       });
-//		 	       });
-//		  });
-		
- 
-
+	 		for(var i=0;i<equipos.length;i++){
+	 			var equipo=equipos[i];
+	
+	 		    $("."+equipos[i]+" .titulo_boton").click(function(){//cuando clicke en alguno de los titulos de los equipos(tabla jugadores)
+	 		    	var NombreEquipo=$(this).parent().attr("class");//recogemos las clases del padre
+	 		    	
+	 		    	NombreEquipo=NombreEquipo.split(" ");//guardamos como array las clases del padre
+	 		    	EquipoN =NombreEquipo[2];
+	 		    	/*recogemos la clase que esta en el index 2 es decir, en la tercera posicion, 
+	 		    	 * ya que siempre será el nombre del equipo*/
+	 				
+	 		    	$(window).scrollTop(0);
+	 				var visibilidadJugadores=$("."+EquipoN+" .divTablaAdmin").is(`:visible`);
+	 				if(visibilidadJugadores){
+	 					$(".divTablaAdmin").hide(800);
+	 				}else{
+	 					$(".divTablaAdmin").hide(800);
+	 	 		    	$("."+EquipoN+" .divTablaAdmin").show(1200);//mostramos la tabla de jugadores del equipo en el que hemos clickado
+	 	 				$(".panelJ .divTablaAdmin .rellenoAdminJugadoresEquipos").css({"margin-top":"50px", "margin-bottom": "50px"});
+	 	 				$(".panelJ .titulo_boton").css({"border-bottom":"1px solid black", "background-color":"gray"});
+	 				}
+	 				
+	 		    	$.each(miDatosJugadores,function(i,datosJugadores){
+	 					var equipoJugador=datosJugadores.objectEquipo.nombre.replace(/ /g, "");
+	 					//volvemos a recoger el nombre del equipo
+	 					 					
+	 		    		if(equipoJugador==EquipoN){//si son jugadores del equipo clickado, entra en el if
+	 		    			$(".JugadoresEquipos").css("background-color","white!important");
+	 		    			$("."+EquipoN+" .rellenoAdminJugadoresEquipos").append(`<tr class="JugadoresE">
+	 		           		<td>`+datosJugadores.idJugador+`</td><td>`+datosJugadores.nombre+`</td>
+	 		           		<td><img src="`+datosJugadores.imagen+`" style="width:100px; height:auto;"></td>
+	 		           		<td>`+datosJugadores.rol+`</td><td>`+datosJugadores.telefono+`</td>
+	 		           		<td>`+datosJugadores.objectEquipo.nombre+`</td><td><i class="fas fa-edit" value="`+datosJugadores.idJugador+`"></i>
+	 		           		<i class="fas fa-trash-alt" value="`+datosJugadores.idJugador+`"></i></td></tr>`);
+	 		    		}
+	 		    	});
+	 		    });//FIN DEL EVENTO DE CLICKAR EN LOS EQUIPOS DENTRO DE LA TABLA JUGADORES
+	 		}
         },
         error: function(xhr){
             alert("An error occured: "+xhr.status+" "+xhr.statusText);
         }
-    });
-	}
-
+    });//FIN DEL AJAX DE GENERAR LA TABLA DE JUGADORES (POR EQUIPOS)
+}//FIN DEL INICIAR LA FUNCION DE CREAR JUGADORES (POR EQUIPOS)
 
 function iniciarEqAdmin(){
 	$.ajax({
         type:"JSON",
         url:"../controller/equipos/cSeleccionarEquipos.php",
         success: function(datosEquipos){
-        	
+
         	miDatosEquipos=JSON.parse(datosEquipos);
-//        	console.log(miDatosEquipos);
         	
- 		$.each(miDatosEquipos,function(i,datosEquipo){
+        	$.each(miDatosEquipos,function(i,datosEquipo){
 				
- 				$(".panelEq .divTablaAdmin table").append(`<tr>
- 		           		<td>`+datosEquipo.idEquipo+`</td>            		
- 		           		<td>`+datosEquipo.nombre+`</td>
- 		           		<td><img src="`+datosEquipo.logo+`" style="width:100px; height:auto;"></td>
- 		           		<td>`+datosEquipo.objectCategoria.nombre+`</td>
- 		           		<td><i class="fas fa-edit" value="`+datosEquipo.idEquipo+`"></i>
- 		           		<i class="fas fa-trash-alt" value="`+datosEquipo.idEquipo+`"></i></td>
- 		       		</tr>`);
+ 				$(".panelEq .divTablaAdmin table").append(`<tr><td>`+datosEquipo.idEquipo+`</td>            		
+ 		           		<td>`+datosEquipo.nombre+`</td><td><img src="`+datosEquipo.logo+`" style="width:100px; height:auto;"></td>
+ 		           		<td>`+datosEquipo.objectCategoria.nombre+`</td><td><i class="fas fa-edit" value="`+datosEquipo.idEquipo+`"></i>
+ 		           		<i class="fas fa-trash-alt" value="`+datosEquipo.idEquipo+`"></i></td></tr>`);
  				
- 			});
- 		
-	 		
+ 			});//FIN DE GENERAR LA TABLA DE EQUIPOS
         },
         error: function(xhr){
             alert("An error occured: "+xhr.status+" "+xhr.statusText);
         }
-    });
-	}
+	});//FIN DEL AJAX DE GENERAR LA TABLA EQUIPOS
+}//FIN DEL INICIAR LA FUNCION DE CREAR EQUIPOS
 
 function iniciarEnAdmin(){
 	$.ajax({
@@ -313,29 +194,22 @@ function iniciarEnAdmin(){
         success: function(datosEntrenadores){
         	
         	miDatosEntrenadores=JSON.parse(datosEntrenadores);
-//        	console.log(miDatosEntrenadores);
         	
- 		$.each(miDatosEntrenadores,function(i,datosEntrenador){
+        	$.each(miDatosEntrenadores,function(i,datosEntrenador){
 				
- 				$(".panelEn .divTablaAdmin table").append(`<tr>
- 		           		<td>`+datosEntrenador.idEntrenador+`</td>            		
- 		           		<td>`+datosEntrenador.nombre+`</td>
- 		           		<td><img src="`+datosEntrenador.imagen+`" style="width:100px; height:auto;"></td>
- 		           		<td>`+datosEntrenador.telefono+`</td>
- 		           		<td>`+datosEntrenador.objectEquipo.nombre+`</td>
+ 				$(".panelEn .divTablaAdmin table").append(`<tr><td>`+datosEntrenador.idEntrenador+`</td>            		
+ 		           		<td>`+datosEntrenador.nombre+`</td><td><img src="`+datosEntrenador.imagen+`" style="width:100px; height:auto;"></td>
+ 		           		<td>`+datosEntrenador.telefono+`</td><td>`+datosEntrenador.objectEquipo.nombre+`</td>
  		           		<td><i class="fas fa-edit" value="`+datosEntrenador.idEntrenador+`"></i>
- 		           		<i class="fas fa-trash-alt" value="`+datosEntrenador.idEntrenador+`"></i></td>
- 		       		</tr>`);
+ 		           		<i class="fas fa-trash-alt" value="`+datosEntrenador.idEntrenador+`"></i></td></tr>`);
  				
- 			});
- 		
-	 		
+ 			});//FIN DE GENERAR LA TABLA DE ENTRENADORES
         },
         error: function(xhr){
             alert("An error occured: "+xhr.status+" "+xhr.statusText);
         }
-    });
-	}
+    });//FIN DEL AJAX DE GENERAR LA TABLA ENTRENADORES
+}//FIN DEL INICIAR LA FUNCION DE CREAR ENTRENADORES
 
 function iniciarCaAdmin(){
 	$.ajax({
@@ -344,28 +218,21 @@ function iniciarCaAdmin(){
         success: function(datosCategorias){
         	
         	miDatosCategorias=JSON.parse(datosCategorias);
-//        	console.log(miDatosCategorias);
         	
- 		$.each(miDatosCategorias,function(i,datosCategoria){
+        	$.each(miDatosCategorias,function(i,datosCategoria){
 				
- 				$(".panelCa .divTablaAdmin table").append(`<tr>
- 		           		<td>`+datosCategoria.idCategoria+`</td>            		
- 		           		<td>`+datosCategoria.nombre+`</td>
- 		           		<td><img src="`+datosCategoria.imagen+`" style="width:100px; height:auto;"></td>
+ 				$(".panelCa .divTablaAdmin table").append(`<tr><td>`+datosCategoria.idCategoria+`</td>            		
+ 		           		<td>`+datosCategoria.nombre+`</td><td><img src="`+datosCategoria.imagen+`" style="width:100px; height:auto;"></td>
  		           		<td><i class="fas fa-edit" value="`+datosCategoria.idCategoria+`"></i>
- 		           		<i class="fas fa-trash-alt" value="`+datosCategoria.idCategoria+`"></i></td>
- 		       		</tr>`);
+ 		           		<i class="fas fa-trash-alt" value="`+datosCategoria.idCategoria+`"></i></td></tr>`);
  				
- 			});
- 		
-	 		
+ 			});//FIN DE GENERAR LA TABLA DE CATEGORIAS
         },
         error: function(xhr){
             alert("An error occured: "+xhr.status+" "+xhr.statusText);
         }
-    });
-	}
-
+    });//FIN DEL AJAX DE GENERAR LA TABLA CATEGORIAS
+}//FIN DEL INICIAR LA FUNCION DE CREAR CATEGORIAS
 
 function iniciarCoAdmin(){
 	$.ajax({
@@ -374,28 +241,21 @@ function iniciarCoAdmin(){
         success: function(datosConsultas){
         	
         	miDatosConsultas=JSON.parse(datosConsultas);
-//        	console.log(miDatosConsultas);
         	
- 		$.each(miDatosConsultas,function(i,datosConsultas){
+        	$.each(miDatosConsultas,function(i,datosConsultas){
 
- 			$(".panelCo .divTablaAdmin table").append(`<tr>
- 		           		<td>`+datosConsultas.idConsulta+`</td>            		
- 		           		<td>`+datosConsultas.consulta+`</td>
- 		           		<td>`+datosConsultas.objectUsuario.usuario+`</td>
+ 			$(".panelCo .divTablaAdmin table").append(`<tr><td>`+datosConsultas.idConsulta+`</td>            		
+ 		           		<td>`+datosConsultas.consulta+`</td><td>`+datosConsultas.objectUsuario.usuario+`</td>
  		           		<td><i class="fas fa-edit" value="`+datosConsultas.idConsulta+`"></i>
- 		           		<i class="fas fa-trash-alt" value="`+datosConsultas.idConsulta+`"></i></td>
- 		       		</tr>`);
+ 		           		<i class="fas fa-trash-alt" value="`+datosConsultas.idConsulta+`"></i></td></tr>`);
  				
- 			});
- 		
-	 		
+ 			});//FIN DE GENERAR LA TABLA DE CONSULTAS
         },
         error: function(xhr){
             alert("An error occured: "+xhr.status+" "+xhr.statusText);
         }
-    });
-	}
-
+    });//FIN DEL AJAX DE GENERAR LA TABLA CONSULTAS
+}//FIN DEL INICIAR LA FUNCION DE CREAR CONSULTAS
 
 function iniciarUAdmin(){
 	$.ajax({
@@ -407,26 +267,21 @@ function iniciarUAdmin(){
 //        	console.log(miDatosUsuarios);
         	
  		$.each(miDatosUsuarios,function(i,datosUsuarios){
- 				$(".panelU .divTablaAdmin table").append(`<tr>
- 		           		<td>`+datosUsuarios.idUsuario+`</td>            		
- 		           		<td>`+datosUsuarios.usuario+`</td>
- 		           		<td>`+datosUsuarios.contrasena+`</td>
- 		           		<td>`+datosUsuarios.nombre+`</td>
- 		           		<td>`+datosUsuarios.correo+`</td>
- 		           		<td>`+datosUsuarios.tipo+`</td>
- 		           		<td><i class="fas fa-edit" value="`+datosUsuarios.idUsuario+`"></i>
- 		           		<i class="fas fa-trash-alt" value="`+datosUsuarios.idUsuario+`"></i></td>
- 		       		</tr>`);
+ 				$(".panelU .divTablaAdmin table").append(`<tr><td>`+datosUsuarios.idUsuario+`</td>            		
+ 		           		<td>`+datosUsuarios.usuario+`</td><td>`+datosUsuarios.contrasena+`</td>
+ 		           		<td>`+datosUsuarios.nombre+`</td><td>`+datosUsuarios.correo+`</td>
+ 		           		<td>`+datosUsuarios.tipo+`</td><td><i class="fas fa-edit" value="`+datosUsuarios.idUsuario+`"></i>
+ 		           		<i class="fas fa-trash-alt" value="`+datosUsuarios.idUsuario+`"></i></td></tr>`);
  				
- 			});
- 		
-	 		
+ 			});//FIN DE GENERAR LA TABLA DE USUARIOS	
         },
         error: function(xhr){
             alert("An error occured: "+xhr.status+" "+xhr.statusText);
         }
-    });
-	}
+    });//FIN DEL AJAX DE GENERAR LA TABLA USUARIOS
+}//FIN DEL INICIAR LA FUNCION DE CREAR USUARIOS
+
+
 /*FIN DE INSERTAR DATOS EN LAS TABLAS DESDE VADMIN */
 
 
@@ -620,3 +475,107 @@ function generar(){
 //
 //}
 //
+
+
+//	$(".deleteV").click(function(){
+//		
+//		var id=$(this).val(); 
+//		console.log(id);
+//		
+//	  	$.ajax({
+//	       	type: "GET",
+//	       	data:{'id':id},
+//	       	url: "../controller/cDeleteVehiculo.php", 
+//
+//	       	success: function(result){  
+//	       		
+//	       		console.log(result);
+//	       		location.reload(true);  //recarga la pagina
+//	       	},
+//	       	error : function(xhr) {
+//	   			alert("An error occured: " + xhr.status + " " + xhr.statusText);
+//	   		}
+//	       });
+//	  	
+//	 
+//});
+//$(".updateV").click(function(){
+//	var todo=$(this).val();
+//
+//	var todo = todo.split("||");
+//	
+//		var id=todo[0]; 
+//		var nombre=todo[1]; 
+//		var modelo=todo[2]; 
+//		var potencia=todo[3]; 
+//		var img=todo[4]; 
+//		var tipo=todo[5]; 
+//
+//		$(".paneles").hide(800);
+//	$(".encabezado_vAdmin").hide(800);
+//	$("body").css("background-color", "	#abcdef");
+//
+//	 
+//	       	$(".insertarAdmin").append(`<form id="form_vAdminUpdate" >
+//    		    <div id="elementos_vAdminUpdate">
+//    		    
+//    		        <div class="nombre_vAdminInsertU">
+//    		        <label>Nombre:</label>
+//    		        <input id="nombre" type="text" value="`+nombre+`">
+//    		        </div>
+//    		        
+//    		        <div class="contrasena_vAdminInsertU">
+//    		        <label>modelo:</label>
+//    		        <input id="modelo" type="text"  value="`+modelo+`">
+//    		        </div>	
+//    		        	        
+//    		        <div class="nombre_vAdminInsertU">
+//    		        <label>potencia:</label>
+//    		        <input id="potencia" type="text"  value="`+potencia+`">
+//    		        </div>	
+//    		        
+//    		        <div class="apellido_vAdminInsertU">
+//    		        <label>img:</label>
+//    		        <input id="img" type="text"  value="`+img+`">
+//    		        </div>
+//    		        
+//    		        <div class="telefono_vAdminInsertU">
+//    		        <label>tipo:</label>
+//    		        <select id="tipo">
+//    		        <option value="Bicicleta">Bicicleta</option>
+//    		        <option value="Coche">Coche</option>
+//    		        <option value="Monopatin">Monopatin</option>
+//    		        <option value="Patinete">Patinete</option>
+//    		        </select>
+//    		        </div>
+//    		        
+//    		        <input type="button" class="submit_vAdminUpdate" id="`+id+`" value="GO!">
+//    				
+//    		    </div>
+//    		    <button class="boton_atras_vAdminU goBack">GO BACK</button>
+//    		    </form>`);
+//	       		
+//        	$(".submit_vAdminUpdate").click(function(){
+//        		var id=$(this).attr("id"); 
+//        		var nombre=$("#nombre").val();
+//        		var modelo=$("#modelo").val();
+//        		var potencia=$("#potencia").val();
+//        		var img=$("#img").val();
+//        		var tipo=$("#tipo").val();
+//        		
+//        		$.ajax({
+//        		 	type: "GET",
+//        		 	data:{'id':id,'nombre':nombre , 'modelo':modelo , 'potencia':potencia, 'img':img , 'tipo':tipo },
+//     		       	url: "../controller/cUpdateVehiculo.php", 
+//
+//     		       	success: function(result){  
+//     		       		
+//     		       		console.log(result);
+//     		       		location.reload(true);  //recarga la pagina
+//     		       	},
+//     		       	error : function(xhr) {
+//     		   			alert("An error occured: " + xhr.status + " " + xhr.statusText);
+//     		   		}
+//     		       });
+// 	       });
+//  });
