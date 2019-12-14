@@ -346,7 +346,7 @@ function botonInsertAdmin(){//se le llama desde iniciarJAdmin()
 function generarInserts(){
 	/*Para meter la primera vez los datos le llamamos desde dentro de la funcion botonInsertAdmin()
 	 * despues le llamamos desde el boton del formulario con un myfunction=generarInserts()*/
-	if(cantidadInsert>=1 &&LoopTimes!=cantidadInsert&&siguienteInsert==false){
+	if(cantidadInsert>=1 &&(LoopTimes==cantidadInsert||LoopTimes!=cantidadInsert)&&siguienteInsert==false){
 		var elements = document.getElementsByName( Tabla );
 		for(var i=0;i<elements.length;i++){
 			var input=elements[i];
@@ -368,22 +368,20 @@ function generarInserts(){
 		console.log(datosInsert);
 		//alert(minusculas+"<-carpeta Tabla->"+Tabla);
 
-		if(siguienteInsert==false){
-					
+		if(cantidadInsert>=1 &&LoopTimes!=cantidadInsert&&siguienteInsert==false){	
 //			console.log(LoopTimes+"LoopTimes y insertCantidad"+cantidadInsert);
-				siguienteInsert=generarCodigoInsert();//llamamos a una funcion donde generamos los inputs y devuelve un true cuando se han insertado
-		
-			
+			siguienteInsert=generarCodigoInsert();//llamamos a una funcion donde generamos los inputs y devuelve un true cuando se han insertado
 			siguienteInsert=false;
-			//generarCodigoInsert();
+			LoopTimes+=1;//console.log(LoopTimes +"loop y siguiente"+siguienteInsert);
+		}else{
+			$("#formularioInsert").html("");
+		}
+		if(LoopTimes==cantidadInsert){
+			$("#formularioInsert").html("YA HAS TERMINADO DE INSERTAR LO QUE QUERIAS RELAJATE ");
 
-
-		};
-		//console.log(LoopTimes +"loop y siguiente"+siguienteInsert);
-	}else{
-		$("#formularioInsert").html("");
+		}
 	}
-	LoopTimes+=1;
+	
 }/*FIN DE LA FUNCION QUE ES PARA GENERAR LOS INSERTS Y PARA HACER INSERTS EN LA BASE DE DATOS*/
 
 function generarCodigoInsert(){
