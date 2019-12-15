@@ -1,6 +1,8 @@
 var EquipoN;
 var roles=[];
 var equiposInput=[];
+var categorias=[];
+var users=[];
 var LoopTimes=0;
 var datosInsert=[];
 var cantidad;
@@ -325,6 +327,7 @@ function botonInsertAdmin(){//se le llama desde iniciarJAdmin()
 			$(".divTablaAdmin").css("margin","0px");
 			$(".titulo_boton").css({"border-bottom":"0px","background-color":"white"});
 			$("#JugadoresPorEquipos").hide(1200);
+			$(".JugadoresEquiposTitulo .divTablaAdmin").hide();//Escondemos las tablas de jugadores por equipos (no los titulos)
 			$("#tablas").show();
 			$("#formularioInsert").html("");
 		});
@@ -405,20 +408,21 @@ function generarCodigoInsert(){
         	if(LoopTimes!=cantidadInsert){
 
         	var htmlCode=`<form id="FormInsert">`;
-        	
+    		$("#formularioInsert").html(htmlCode);
+
         	if(Tabla==="Equipos"||Tabla==="Jugadores"||Tabla==="Categorias"||Tabla==="Entrenadores"||Tabla==="Usuarios"){
-        		htmlCode=`Nombre:<br><input type="text" id="nombre" name="`+Tabla+`" required><br>`;		
-        		$("#formularioInsert").append(htmlCode);
+        		htmlCode=`<p>Nombre:</p><input type="text" id="nombre" name="`+Tabla+`" required>`;		
+        		$("#FormInsert").append(htmlCode);
         	}
         	
         	if(Tabla==="Jugadores"||Tabla==="Categorias"||Tabla==="Entrenadores"){
-        		htmlCode=`Imagen:<br><select name="`+Tabla+`" id="imagen"></select><br>`;
-        		$("#formularioInsert").append(htmlCode);
+        		htmlCode=`<p>Imagen:</p><input type="text" name="`+Tabla+`" id="imagen"></input>`;
+        		$("#FormInsert").append(htmlCode);
         	}
         	
         	if(Tabla==="Jugadores"||Tabla==="Entrenadores"){
-        		htmlCode=`Telefono:<br><input type="number" id="telefono" name="`+Tabla+`" required><br>Equipo:<br><select id="equipo" name="`+Tabla+`" required></select>`;
-        		$("#formularioInsert").append(htmlCode);
+        		htmlCode=`<p>Telefono:</p><input type="number" id="telefono" name="`+Tabla+`" required><p>Equipo:</p><select id="equipo" name="`+Tabla+`" required></select>`;
+        		$("#FormInsert").append(htmlCode);
 	        	$.each(misDatosTabla,function(i,datos_tabla){
 	        		if(!equiposInput.includes(datos_tabla.objectEquipo.nombre)){
 	        			$("#equipo").append(`<option id="`+datos_tabla.objectEquipo.nombre+`">`+datos_tabla.objectEquipo.nombre+`</option>`);
@@ -429,16 +433,19 @@ function generarCodigoInsert(){
         	}
         	
         	if(Tabla==="Equipos"){
-        		htmlCode=`Categoria:<br><select id="categoria" name="`+Tabla+`" required></select>Logo:<br><select name="`+Tabla+`" id="logo"></select><br>`;
-        		$("#formularioInsert").append(htmlCode);
+        		htmlCode=`<p>Categoria:</p><select id="categoria" name="`+Tabla+`" required></select><p>Logo:</p><input type="text" name="`+Tabla+`" id="logo"></input>`;
+        		$("#FormInsert").append(htmlCode);
 	        	$.each(misDatosTabla,function(i,datos_tabla){
-	        		$("#categoria").append(`<option id="`+datos_tabla.objectCategoria.nombre+`">`+datos_tabla.objectCategoria.nombre+`</option>`);
-	        	});        	
+     				if(!categorias.includes(datos_tabla.objectCategoria.nombre)){
+     					$("#categoria").append(`<option id="`+datos_tabla.objectCategoria.nombre+`">`+datos_tabla.objectCategoria.nombre+`</option>`);
+     					categorias.push(datos_tabla.objectCategoria.nombre);
+     				}
+ 				});        	
 	        }
         	
         	if(Tabla==="Jugadores"){
-        		htmlCode=`Rol:<br><select id="rol" name="`+Tabla+`" required></select>`;
-        		$("#formularioInsert").append(htmlCode);
+        		htmlCode=`<p>Rol:</p><select id="rol" name="`+Tabla+`" required></select>`;
+        		$("#FormInsert").append(htmlCode);
             	$.each(misDatosTabla,function(i,datos_tabla){
      				if(!roles.includes(datos_tabla.rol)){
                 		$("#rol").append(`<option id="`+datos_tabla.rol+`">`+datos_tabla.rol+`</option>`);
@@ -448,28 +455,47 @@ function generarCodigoInsert(){
             }
         	
         	if(Tabla==="Consultas"){
-        		htmlCode=`Consulta:<br><input type="text" id="consulta" name="`+Tabla+`"  required><br>Usuario:<br><select id="usuario" name="`+Tabla+`"  required></select>`;
-        		$("#formularioInsert").append(htmlCode);
+        		htmlCode=`<p>Consulta:</p><input type="text" id="consulta" name="`+Tabla+`"  required><p>Usuario:</p><select id="usuario" name="`+Tabla+`"  required></select>`;
+        		$("#FormInsert").append(htmlCode);
             	$.each(misDatosTabla,function(i,datos_tabla){
-     				$("#usuario").append(`<option id="`+datos_tabla.objectUsuario.usuario+`">`+datos_tabla.objectUsuario.usuario+`</option>`);
-            	});
+     				if(!users.includes(datos_tabla.objectUsuario.usuario)){
+						$("#usuario").append(`<option id="`+datos_tabla.objectUsuario.usuario+`">`+datos_tabla.objectUsuario.usuario+`</option>`);
+						users.push(datos_tabla.objectUsuario.usuario);
+     				}
+     				});
         	}
         	
         	if(Tabla==="Usuarios"){
-        		htmlCode=`Contrasena:<br><input type="password" id="contrasena" name="`+Tabla+`"  required><i class="fas fa-eye"></i><i class="fas fa-eye-slash"></i><br>Tipo:<br><select id="tipo" name="`+Tabla+`" required></select><br>Usuario:<br><input type="text" id="usuario" name="`+Tabla+`"><br>Correo:<br><input type="text" id="correo" name="`+Tabla+`"><br>`;
-        		$("#formularioInsert").append(htmlCode);
+        		htmlCode=`<p>Contrasena:</p><input type="password" id="contrasena" name="`+Tabla+`"  required><p>Tipo:</p><select id="tipo" name="`+Tabla+`" required></select><p>Usuario:</p><input type="text" id="usuario" name="`+Tabla+`"><p>Correo:</p><input type="text" id="correo" name="`+Tabla+`">`;
+        		$("#FormInsert").append(htmlCode);
 //            	$.each(misDatosTabla,function(i,datos_tabla){
 //     				$("#tipo").append(`<option id="`+datos_tabla.objectTipo.nombre+`">`+datos_tabla.objectTipo.nombre+`</option>`);
 //     			});
     			$("#tipo").append(`<option id="0">Administrador</option><option id="1">Entrenador</option><option id="2">Usuario Normal</option><option id="3">Anonimo</option>`);
         	}
-        	
-        	htmlCode=`</form>`;
-        	htmlCode+=`  <input id="button" type="button" value="Submit" onclick="generarInserts()">`;
+        	htmlCode=` </form>`;
+        	$("#formularioInsert").append(htmlCode);
+
+        	htmlCode=`<input id="button" type="button" value="Submit" onclick="generarInserts()">`;
+        	$("#formularioInsert").append(htmlCode);
 
         	linea="";
         	
-        	$("#formularioInsert").append(htmlCode);
+            $("#formularioInsert #FormInsert").css({"display":"grid", "grid-template-columns":"auto auto"});
+            $("#formularioInsert #FormInsert input,select").css({"height":"30%","margin":"auto"});
+            $("#formularioInsert #FormInsert input").css({"background-color":"transparent","border":"none","border-bottom":"2px solid black"});
+            $("#formularioInsert #FormInsert input").focus(function(){
+                $("#formularioInsert #FormInsert input").css({"background-color":"transparent","border-bottom":"2px solid black","color":"black","font-weight":"normal"});
+                $("#formularioInsert #FormInsert select").css({"background-color":"transparent","border":"1px solid black","color":"black","font-weight":"normal"});
+                $(this).css({"background-color":"#90ee90","border-bottom":"2px solid green","color":"darkgreen","font-weight":"bold"});
+            });
+            $("#formularioInsert #FormInsert select").click(function(){
+                $("#formularioInsert #FormInsert input").css({"background-color":"transparent","border-bottom":"2px solid black","color":"black","font-weight":"normal"});
+                $(this).css({"background-color":"#90ee90","border":"2px solid green","color":"darkgreen","font-weight":"bold"});
+            });
+            $("#formularioInsert").css({"justify-self":"center","align-self":"center"});
+            categorias=[];
+            users=[];
         	equiposInput=[];
         	roles=[];
         	return true;
