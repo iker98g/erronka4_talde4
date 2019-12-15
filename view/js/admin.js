@@ -29,59 +29,9 @@ $(document).ready(function(){
 
     iniciarUAdmin(); //Mostrar datos de la tabla de usuarios
 	/*FIN DE CREAR TABLAS */
+    
+    aparicionTablas();
 
-    /*INICIO DE AL CLICKCAR QUE APAREZCA LA TABLA CORRESPONDIENTE Y SE ESCONDAN LAS OTRAS*/
-	$(".titulo_boton div").click(function(){
-		//Al clickar en cualquier nombre de tabla, se esconden todas y se les cambia el fondo y el margen
-		$(".divTablaAdmin").hide(800);
-		$(".divTablaAdmin").css("margin","0px");
-		$(".titulo_boton").css({"border-bottom":"0px","background-color":"white"});
-	
-		//hemos creado un array con el nombre de las tablas
-		var TablasPrograma=["jugadores","equipos","entrenadores","categorias","consultas","usuarios"];
-		clase=$(this).parent().parent().attr(`class`);//recogemos la clase de el div abuelo del titulo de la tabla
-		clases=clase.split(" "); //convertimos la clase en un array separandolo por sus clases 
-		var encontrarClase=false; //creamos variable para saber si ha encontrado la clase con el mismo nombre que alguna de las tablas
-		var index=0;
-		while(encontrarClase==false){
-			
-			if(clases.indexOf(TablasPrograma[index])!=-1){ 
-			/*Aqui busca en el array clases cada campo del array de las tablas, si no lo encuentra será -1 siempre
-			 * y entonces no se meterá en el if. En caso de entrar en el if, 
-			 * guardamos el indice donde está el nombre(de la clase) de la tabla (estamos en el array) en una variable,
-			 * luego guardamos del array de clases el valor de la posicion encontrada y
-			 * le decimos que la hemos encontrado cambiando a true encontrarClase*/
-			num=clases.indexOf(TablasPrograma[index]);
-			clase=clases[num];
-			encontrarClase=true;
-			}
-			index+=1;
-		}
-			
-		var visibilidad=$("."+clase+" .divTablaAdmin").is(`:visible`);
-		var visibilidadEquiposJugadores=$("#JugadoresPorEquipos").is(`:visible`);
-		/*si esta visible, se esconderá la tabla a la que hemos clickado (la que esta visible) y las 
-		 * tablas de jugadores en caso de que esten abiertas, si no lo está, se mostrará*/
-		if(visibilidad){
-			$(window).scrollTop(0);//cuando clickes en una tabla ira a la parte de arriba de la pagina
-			$("."+clase+" .divTablaAdmin").hide(1200);
-			$("#JugadoresPorEquipos").hide(800);
-		}else if(visibilidadEquiposJugadores){
-			$(window).scrollTop(0);//cuando clickes en una tabla ira a la parte de arriba de la pagina
-			$("#JugadoresPorEquipos").hide(1200);
-		}else{
-			$(window).scrollTop(0);
-			$("."+clase+" .divTablaAdmin").show(1200);
-			$("#JugadoresPorEquipos").hide(800);
-			$("#JugadoresPorEquipos").css("margin","0px");
-			$(".relleno_"+clase).css({"margin-top":"50px", "margin-bottom": "50px"});
-			$("."+clase+" .titulo_boton").css({"border-bottom":"1px solid black", "background-color":"gray"});
-			$(".JugadoresEquiposTitulo .divTablaAdmin").hide();//Escondemos las tablas de jugadores por equipos (no los titulos)
-			if(clase=="jugadores"){//aqui mostramos los nombres de los equipos
-				$("#JugadoresPorEquipos").show(1200);
-			}
-		}
-	}); /*FIN DE AL CLICKCAR QUE APAREZCA LA TABLA CORRESPONDIENTE Y SE ESCONDAN LAS OTRAS*/
 });//FIN DEL DOCUMENT READY
 
 
@@ -156,6 +106,7 @@ function iniciarJAdmin(){
 	 		           		<i class="fas fa-trash-alt" value="`+datosJugadores.idJugador+`"></i></td></tr>`);
 	 		    		}
 	 		    	});
+
 	 		    });//FIN DEL EVENTO DE CLICKAR EN LOS EQUIPOS DENTRO DE LA TABLA JUGADORES
 	 		}
         },
@@ -181,7 +132,8 @@ function iniciarEqAdmin(){
  		           		<i class="fas fa-trash-alt" value="`+datosEquipo.idEquipo+`"></i></td></tr>`);
  				
  			});//FIN DE GENERAR LA TABLA DE EQUIPOS
-        },
+
+ 		},
         error: function(xhr){
             alert("An error occured: "+xhr.status+" "+xhr.statusText);
         }
@@ -205,7 +157,8 @@ function iniciarEnAdmin(){
  		           		<i class="fas fa-trash-alt" value="`+datosEntrenador.idEntrenador+`"></i></td></tr>`);
  				
  			});//FIN DE GENERAR LA TABLA DE ENTRENADORES
-        },
+
+       	},
         error: function(xhr){
             alert("An error occured: "+xhr.status+" "+xhr.statusText);
         }
@@ -228,7 +181,8 @@ function iniciarCaAdmin(){
  		           		<i class="fas fa-trash-alt" value="`+datosCategoria.idCategoria+`"></i></td></tr>`);
  				
  			});//FIN DE GENERAR LA TABLA DE CATEGORIAS
-        },
+
+       	},
         error: function(xhr){
             alert("An error occured: "+xhr.status+" "+xhr.statusText);
         }
@@ -247,11 +201,12 @@ function iniciarCoAdmin(){
 
  			$(".panelCo .divTablaAdmin table").append(`<tr><td>`+datosConsultas.idConsulta+`</td>            		
  		           		<td>`+datosConsultas.consulta+`</td><td>`+datosConsultas.objectUsuario.usuario+`</td>
- 		           		<td><i class="fas fa-edit" value="`+datosConsultas.idConsulta+`"></i>
- 		           		<i class="fas fa-trash-alt" value="`+datosConsultas.idConsulta+`"></i></td></tr>`);
+ 		           		<td><div onclick="editarElemento()" style="display:inline-block" class="editar" id="`+datosConsultas.idConsulta+`"><i class="fas fa-edit"></i></div>
+ 		           		<div onclick="borrarElemento()" style="display:inline-block" data-tabla="consulta" class="borrar" id="`+datosConsultas.idConsulta+`"><i class="fas fa-trash-alt" ></i></div></td></tr>`);
  				
  			});//FIN DE GENERAR LA TABLA DE CONSULTAS
-        },
+
+       	},
         error: function(xhr){
             alert("An error occured: "+xhr.status+" "+xhr.statusText);
         }
@@ -271,26 +226,80 @@ function iniciarUAdmin(){
  				$(".panelU .divTablaAdmin table").append(`<tr><td>`+datosUsuarios.idUsuario+`</td>            		
  		           		<td>`+datosUsuarios.usuario+`</td><td>`+datosUsuarios.contrasena+`</td>
  		           		<td>`+datosUsuarios.nombre+`</td><td>`+datosUsuarios.correo+`</td>
- 		           		<td>`+datosUsuarios.tipo+`</td><td><i class="fas fa-edit" value="`+datosUsuarios.idUsuario+`"></i>
- 		           		<i class="fas fa-trash-alt" value="`+datosUsuarios.idUsuario+`"></i></td></tr>`);
+ 		           		<td>`+datosUsuarios.tipo+`</td><td><div onclick="editarElemento()" style="display:inline-block" class="editar" id="`+datosUsuarios.idUsuario+`"><i class="fas fa-edit"></i></div>
+ 		           		<div onclick="borrarElemento()" style="display:inline-block" data-tabla="usuario" class="borrar" id="`+datosUsuarios.idUsuario+`"><i class="fas fa-trash-alt" ></i></div></td></tr>`);
  				
  			});//FIN DE GENERAR LA TABLA DE USUARIOS	
-        },
+ 			
+ 		
+		
+		},
         error: function(xhr){
             alert("An error occured: "+xhr.status+" "+xhr.statusText);
         }
+		
     });//FIN DEL AJAX DE GENERAR LA TABLA USUARIOS
-}//FIN DEL INICIAR LA FUNCION DE CREAR USUARIOS
-
+	}//FIN DEL INICIAR LA FUNCION DE CREAR USUARIOS
 /*FIN DE INSERTAR DATOS EN LAS TABLAS DESDE VADMIN */
 
+/*INICIO DE AL CLICKCAR QUE APAREZCA LA TABLA CORRESPONDIENTE Y SE ESCONDAN LAS OTRAS*/
+function aparicionTablas(){
+	$(".titulo_boton div").click(function(){
+		contador=0;
+		//Al clickar en cualquier nombre de tabla, se esconden todas y se les cambia el fondo y el margen
+		$(".divTablaAdmin").hide(800);
+		$(".divTablaAdmin").css("margin","0px");
+		$(".titulo_boton").css({"border-bottom":"0px","background-color":"white"});
+	
+		//hemos creado un array con el nombre de las tablas
+		var TablasPrograma=["jugadores","equipos","entrenadores","categorias","consultas","usuarios"];
+		clase=$(this).parent().parent().attr(`class`);//recogemos la clase de el div abuelo del titulo de la tabla
+		clases=clase.split(" "); //convertimos la clase en un array separandolo por sus clases 
+		var encontrarClase=false; //creamos variable para saber si ha encontrado la clase con el mismo nombre que alguna de las tablas
+		var index=0;
+		while(encontrarClase==false){
+			
+			if(clases.indexOf(TablasPrograma[index])!=-1){ 
+			/*Aqui busca en el array clases cada campo del array de las tablas, si no lo encuentra será -1 siempre
+			 * y entonces no se meterá en el if. En caso de entrar en el if, 
+			 * guardamos el indice donde está el nombre(de la clase) de la tabla (estamos en el array) en una variable,
+			 * luego guardamos del array de clases el valor de la posicion encontrada y
+			 * le decimos que la hemos encontrado cambiando a true encontrarClase*/
+			num=clases.indexOf(TablasPrograma[index]);
+			clase=clases[num];
+			encontrarClase=true;
+			}
+			index+=1;
+		}
+			
+		var visibilidad=$("."+clase+" .divTablaAdmin").is(`:visible`);
+		var visibilidadEquiposJugadores=$("#JugadoresPorEquipos").is(`:visible`);
+		/*si esta visible, se esconderá la tabla a la que hemos clickado (la que esta visible) y las 
+		 * tablas de jugadores en caso de que esten abiertas, si no lo está, se mostrará*/
+		if(visibilidad){
+			$(window).scrollTop(0);//cuando clickes en una tabla ira a la parte de arriba de la pagina
+			$("."+clase+" .divTablaAdmin").hide(1200);
+			$("#JugadoresPorEquipos").hide(800);
+		}else if(visibilidadEquiposJugadores){
+			$(window).scrollTop(0);//cuando clickes en una tabla ira a la parte de arriba de la pagina
+			$("#JugadoresPorEquipos").hide(1200);
+		}else{
+			$(window).scrollTop(0);
+			$("."+clase+" .divTablaAdmin").show(1200);
+			$("#JugadoresPorEquipos").hide(800);
+			$("#JugadoresPorEquipos").css("margin","0px");
+			$(".relleno_"+clase).css({"margin-top":"50px", "margin-bottom": "50px"});
+			$("."+clase+" .titulo_boton").css({"border-bottom":"1px solid black", "background-color":"gray"});
+			$(".JugadoresEquiposTitulo .divTablaAdmin").hide();//Escondemos las tablas de jugadores por equipos (no los titulos)
+			if(clase=="jugadores"){//aqui mostramos los nombres de los equipos
+				$("#JugadoresPorEquipos").show(1200);
+			}
+		}
+	});
+}//FIN DE LA FUNCION DE APARICION DE TABLAS
+/*INICIO DE AL CLICKCAR QUE APAREZCA LA TABLA CORRESPONDIENTE Y SE ESCONDAN LAS OTRAS*/
 
 /*INICIO DE INSERTAR NUEVOS DATOS EN LAS TABLAS EN LA VISTA ADMIN*/
-
-
-//ARREGLAR JS DESDE AQUI
-
-
 function botonInsertAdmin(){//se le llama desde iniciarJAdmin()
 
 	$(".insertButton button").click(function(){
@@ -508,3 +517,28 @@ function generarCodigoInsert(){
 	
 }
 /*FIN DE INSERTAR NUEVOS DATOS EN LAS TABLAS DESDE VADMIN */
+var ID=[];
+var TABLITA=[];
+var contador=0;
+function borrarElemento(){
+	$(".borrar").click(function(){
+		id=$(this).attr("id");
+		tablita=$(this).data("tabla");
+		contador+=1;
+		console.log(contador);
+		if(!ID.includes(id)&&(TABLITA.includes(tablita)||contador==1)){
+			ID.push(id);
+			if(!TABLITA.includes(tablita)){TABLITA.push(tablita);}
+			console.log(ID);
+			console.log(TABLITA);
+}else{
+		console.log("No no");
+	}
+
+	});	
+}
+function editarElemento(){
+	$(".fa-edit").click(function(){
+		alert("EDITAR EDITAR");
+	});
+}
