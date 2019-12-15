@@ -1,17 +1,33 @@
 <?php
 include_once ("../../model/EntrenadoresModel.php");
+include_once ("../../model/EquiposModel.php");
+$datosInsert=(count($_POST["datosInsert"]));
+for($i = 0; $i <$datosInsert ; $i++){
+    $nombre=($_POST["datosInsert"][$i]["nombre"]);
+    $imagen=($_POST["datosInsert"][$i]["imagen"]);
+    $telefono=($_POST["datosInsert"][$i]["telefono"]);
+    $equipo=($_POST["datosInsert"][$i]["equipo"]);
+    
+    $entrenadorNuevo = new EntrenadoresModel();
+    
+    $entrenadorNuevo -> setNombre($nombre);
+    $entrenadorNuevo -> setImagen($imagen);
+    $entrenadorNuevo -> setTelefono($telefono);
+    
+    $equipoEntrenadorNuevo = new EquiposModel();
+    $equipoEntrenadorNuevo->setNombre($equipo);
+    
+    $equipoEntrenadorNuevo->buscarEquipoId();
+    $entrenadorNuevo -> setIdEquipo($equipoEntrenadorNuevo->getIdEquipo());
+    $equipoEntrenadorNuevo -> setIdEquipo($equipoEntrenadorNuevo->getIdEquipo());
+    
+    $equipoEntrenadorNuevo->findEquipoById();
+    
+    $resultado=$entrenadorNuevo -> aniadirEntrenador();
+    
+    echo $resultado;
+}
 
-$nombre = filter_input(INPUT_POST, 'nombre');
-$imagen = filter_input(INPUT_POST, 'imagen');
-$telefono = filter_input(INPUT_POST, 'telefono');
-$idEquipo = filter_input(INPUT_POST, 'idEquipo');
+$datosInsert=($_POST["datosInsert"]);
 
-$entrenador = new EntrenadoresModel();
-
-$entrenador -> setNombre($nombre);
-$entrenador -> setImagen($imagen);
-$entrenador -> setTelefono($telefono);
-$entrenador -> setIdEquipo($idEquipo);
-
-$resultado = $entrenador -> aniadirEntrenador();
 ?>

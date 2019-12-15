@@ -126,7 +126,7 @@ class EquiposModel extends EquiposClass {
 
         $this->OpenConnect();
         $idEquipo=$this->idEquipo;
-        $sql = "CALL spSeleccionarEquipoPorId('$idEquipo')";
+        $sql = "CALL spSeleccionarEquipoPorId($idEquipo)";
         $result= $this->link->query($sql);
         
         if ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))

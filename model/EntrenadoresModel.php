@@ -69,12 +69,17 @@ class EntrenadoresModel extends EntrenadoresClass {
     public function aniadirEntrenador(){
         $this->OpenConnect();  // konexio zabaldu  - abrir conexión
         
-        $nombre=$this->getNombre();
-        $imagen=$this->getImagen();
-        $telefono=$this->getTelefono();
-        $idEquipo=$this->getIdEquipo();
+        $idEquipo=$this->idEquipo;
+        $nombre=$this->nombre;
+        $imagen=$this->imagen;
+        $telefono=$this->telefono;
         
-        $sql="CALL spInsertarEntrenador($nombre, $imagen, $telefono, $idEquipo)";
+        $sql="CALL spInsertarEntrenador('$nombre','$imagen','$telefono',$idEquipo)";
+//         DELIMITER $$
+//         CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarEntrenador`(IN `pNombre` VARCHAR(50), IN `pImagen` VARCHAR(200), IN `pTelefono` VARCHAR(42), IN `pIdEquipo` INT)
+//         NO SQL
+//         INSERT INTO `jugador`(`nombre`, `imagen`, `telefono`, `idEquipo`) VALUES (pNombre,pImagen,pTelefono,pIdEquipo)$$
+//         DELIMITER ;        
         
         $numFilas=$this->link->query($sql);
         
@@ -86,6 +91,7 @@ class EntrenadoresModel extends EntrenadoresClass {
         
         $this->CloseConnect();
     }
+    
     
     public function borrarEntrenador() {
         $this->OpenConnect();
