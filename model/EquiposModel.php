@@ -65,26 +65,30 @@ class EquiposModel extends EquiposClass {
         unset($categoria);
         $this->CloseConnect();
     }
-    
     public function aniadirEquipo(){
         $this->OpenConnect();  // konexio zabaldu  - abrir conexión
         
-        $nombre=$this->getNombre();
-        $idCategoria=$this->getIdCategoria();
-        $logo=$this->getLogo();
+        $idCategoria=$this->idCategoria;
+        $nombre=$this->nombre;
+        $logo=$this->logo;
         
-        $sql="CALL spInsertarEquipo($nombre, $idCategoria, $logo)";
-        
+        $sql="CALL spInsertarEquipo('$nombre','$logo',$idCategoria)";
+        //         DELIMITER $$
+        //         CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarEquipo`(IN `pNombre` VARCHAR(50), IN `pLogo` VARCHAR(200),  IN `pIdCategoria` INT)
+        //         NO SQL
+        //         INSERT INTO `equipo`(`nombre`, `logo`, `idCategoria`) VALUES (pNombre,pLogo,pIdCategoria)$$
+        //         DELIMITER ;
         $numFilas=$this->link->query($sql);
         
         if ($numFilas>=1) {
-            return "Equipo insertado";
+            return "Entrenador insertado";
         } else {
-            return "Error al insertar el equipo";
+            return "Error al insertar el entrenador";
         }
         
         $this->CloseConnect();
     }
+    
     
     public function borrarEquipo() {
         $this->OpenConnect();
@@ -128,7 +132,11 @@ class EquiposModel extends EquiposClass {
         $idEquipo=$this->idEquipo;
         $sql = "CALL spSeleccionarEquipoPorId($idEquipo)";
         $result= $this->link->query($sql);
-        
+//         DELIMITER $$
+//         CREATE DEFINER=`root`@`localhost` PROCEDURE `spSeleccionarEquipoPorId`(IN `pIdEquipo` INT)
+//         NO SQL
+//         select * from equipo where equipo.idEquipo=pIdEquipo$$
+//         DELIMITER ;
         if ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
         {
             $this->setIdCategoria($row['idCategoria']);
@@ -149,10 +157,10 @@ class EquiposModel extends EquiposClass {
         
         $this->OpenConnect();
         $nombre=$this->nombre;
-        $sql = "CALL spbuscarEquipoId('$nombre')";
+        $sql = "CALL spBuscarEquipoId('$nombre')";
         $result= $this->link->query($sql);
 /*         DELIMITER $$
-        CREATE DEFINER=`root`@`localhost` PROCEDURE `buscarEquipoId`(IN `pNombre` VARCHAR(42))
+        CREATE DEFINER=`root`@`localhost` PROCEDURE `spBuscarEquipoId`(IN `pNombre` VARCHAR(42))
         NO SQL
         select * from equipo where equipo.nombre=pNombre$$
         DELIMITER ; */
@@ -163,22 +171,12 @@ class EquiposModel extends EquiposClass {
             $this->setIdEquipo($row['idEquipo']);
             $this->setNombre($row['nombre']);
             $this->setLogo($row['logo']);
-           // $idEquipo=
             array_push($this->list, $this);
-            //problema https://stackoverflow.com/questions/614671/commands-out-of-sync-you-cant-run-this-command-now
         } 
         mysqli_free_result($result);
         $this->CloseConnect();
-//         if ($this->link->query($sql)>=1) { // aldatu egiten da
-//             return "El jugador se ha encontrado con exito";
-//         } else {
-//             return "(" . $this->link->errno . ") " . $this->link->error;
-//         }
-        
-       
-        
-        
     }
+    
     function getListJsonString() {
         
         $arr=array();

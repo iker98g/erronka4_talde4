@@ -69,17 +69,21 @@
         public function aniadirConsulta(){
             $this->OpenConnect();  // konexio zabaldu  - abrir conexión
             
-            $consulta=$this->getConsulta();
-            $idUsuario=$this->getIdUsuario();
+            $consulta=$this->consulta;
+            $idUsuario=$this->idUsuario;
             
-            $sql="CALL spInsertarConsulta($consulta, $idUsuario)";
-            
+            $sql="CALL spInsertarConsulta('$consulta',$idUsuario)";
+            //         DELIMITER $$
+            //         CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarConsulta`(IN `pConsulta` VARCHAR(300), IN `pIdUsuario` INT(200))
+            //         NO SQL
+            //         INSERT INTO `consulta`(`consulta`, `idUsuario`) VALUES (pConsulta,pIdUsuario)$$
+            //         DELIMITER ;
             $numFilas=$this->link->query($sql);
             
             if ($numFilas>=1) {
-                return "Consulta insertada";
+                return "Entrenador insertado";
             } else {
-                return "Error al insertar la consulta";
+                return "Error al insertar el entrenador";
             }
             
             $this->CloseConnect();

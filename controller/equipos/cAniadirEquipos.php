@@ -1,15 +1,31 @@
 <?php
+include_once ("../../model/CategoriasModel.php");
 include_once ("../../model/EquiposModel.php");
+$datosInsert=(count($_POST["datosInsert"]));
+for($i = 0; $i <$datosInsert ; $i++){
+    $nombre=($_POST["datosInsert"][$i]["nombre"]);
+    $logo=($_POST["datosInsert"][$i]["logo"]);
+    $categoria=($_POST["datosInsert"][$i]["categoria"]);
+    
+    $equipoNuevo = new EquiposModel();
+    
+    $equipoNuevo -> setNombre($nombre);
+    $equipoNuevo -> setLogo($logo);
+    
+    $categoriaEquipoNuevo = new CategoriasModel();
+    $categoriaEquipoNuevo->setNombre($categoria);
+    
+    $categoriaEquipoNuevo->buscarCategoriaId();
+    $equipoNuevo -> setIdEquipo($categoriaEquipoNuevo->getIdCategoria());
+    $categoriaEquipoNuevo -> setIdEquipo($categoriaEquipoNuevo->getIdCategoria());
+    
+    $categoriaEquipoNuevo->findEquipoById();
+    
+    $resultado=$equipoNuevo -> aniadirEquipo();
+    
+    echo $resultado;
+}
 
-$nombre = filter_input(INPUT_POST, 'nombre');
-$idCategoria = filter_input(INPUT_POST, 'idCategoria');
-$logo = filter_input(INPUT_POST, 'logo');
+$datosInsert=($_POST["datosInsert"]);
 
-$equipo = new EquiposModel();
-
-$equipo -> setNombre($nombre);
-$equipo -> setIdCategoria($idCategoria);
-$equipo -> setLogo($logo);
-
-$resultado = $equipo -> aniadirEquipo();
 ?>

@@ -1,13 +1,29 @@
 <?php
 include_once ("../../model/ConsultasModel.php");
+include_once ("../../model/UsuariosModel.php");
+$datosInsert=(count($_POST["datosInsert"]));
+for($i = 0; $i <$datosInsert ; $i++){
+    $consulta=($_POST["datosInsert"][$i]["consulta"]);
+    $usuario=($_POST["datosInsert"][$i]["usuario"]);
+    
+    $consultaNueva = new ConsultasModel();
+    
+    $consultaNueva -> setNombre($consulta);
 
-$consulta = filter_input(INPUT_POST, 'consulta');
-$idUsuario = filter_input(INPUT_POST, 'idUsuario');
+    $consultaUsuarioNueva = new UsuariosModel();
+    $consultaUsuarioNueva->setUsuario($usuario);
+    
+    $consultaUsuarioNueva->buscarUsuarioId();
+    $consultaNueva -> setIdUsuario($consultaUsuarioNueva->getIdUsuario());
+    $consultaUsuarioNueva -> setIdUsuario($consultaUsuarioNueva->getIdUsuario());
+    
+    $consultaUsuarioNueva->findUsuarioById();
+    
+    $resultado=$consultaNueva -> aniadirConsulta();
+    
+    echo $resultado;
+}
 
-$consultas = new ConsultasModel();
+$datosInsert=($_POST["datosInsert"]);
 
-$consultas -> setConsulta($consulta);
-$consultas -> setIdUsuario($idUsuario);
-
-$resultado = $consultas -> aniadirConsulta();
 ?>

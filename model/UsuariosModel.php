@@ -60,7 +60,11 @@
             $idUsuario=$this->idUsuario;
             $sql = "CALL spSeleccionarUsuarioPorId($idUsuario)";
             $result= $this->link->query($sql);
-            
+//             DELIMITER $$
+//             CREATE DEFINER=`root`@`localhost` PROCEDURE `spSeleccionarUsuarioPorId`(IN `pIdUsuario` INT)
+//             NO SQL
+//             select * from usuario where usuario.idUsuario=pIdUsuario$$
+//             DELIMITER ;
             if ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
             {
                 $this->setIdUsuario($row['idUsuario']);
@@ -76,7 +80,32 @@
             mysqli_free_result($result);
             $this->CloseConnect();   
         }
- 
+        public function buscarUsuarioId() {
+            
+            $this->OpenConnect();
+            $usuario=$this->usuario;
+            $sql = "CALL spBuscarUsuarioId('$usuario')";
+            $result= $this->link->query($sql);
+            /*         DELIMITER $$
+             CREATE DEFINER=`root`@`localhost` PROCEDURE `spBuscarUsuarioId`(IN `pUsuario` VARCHAR(42))
+             NO SQL
+             select * from usuario where usuario.usuario=pUsuario$$
+             DELIMITER ; */
+            if ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+            {
+                
+                $this->setIdUsuario($row['idUsuario']);
+                $this->setUsuario($row['usuario']);
+                $this->setNombre($row['nombre']);
+                $this->setContrasena($row['contrasena']);
+                $this->setCorreo($row['correo']);
+                $this->setTipo($row['tipo']);
+                
+                array_push($this->list, $this);
+            }
+            mysqli_free_result($result);
+            $this->CloseConnect();
+        }
         function getListJsonString() {
             
             $arr=array();
