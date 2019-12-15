@@ -18,17 +18,16 @@ for($i = 0; $i <$datosInsert ; $i++){
     
     $equipoJugadorNuevo = new EquiposModel();
     $equipoJugadorNuevo->setNombre($equipo);
-    $idEquipo=$equipoJugadorNuevo->buscarEquipoId();
-    $Equipo=$equipoJugadorNuevo->findEquipoById();
     
-    $jugadorNuevo -> setIdEquipo($Equipo);
-    $equipoJugadorNuevo->setIdEquipo($idEquipo);
-    echo $Equipo;
-    echo ($idEquipo);
+    $equipoJugadorNuevo->buscarEquipoId();
+    $jugadorNuevo -> setIdEquipo($equipoJugadorNuevo->getIdEquipo());
+    $equipoJugadorNuevo -> setIdEquipo($equipoJugadorNuevo->getIdEquipo());
     
-//     $resultado=$jugadorNuevo -> aniadirJugador();
+    $equipoJugadorNuevo->findEquipoById();
+        
+    $resultado=$jugadorNuevo -> aniadirJugador();
   
-//     echo $resultado;
+     echo $resultado;
 }
 
 $datosInsert=($_POST["datosInsert"]);

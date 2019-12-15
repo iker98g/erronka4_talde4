@@ -126,7 +126,7 @@ class EquiposModel extends EquiposClass {
 
         $this->OpenConnect();
         $idEquipo=$this->idEquipo;
-        $sql = "CALL spSeleccionarEquipoPorId($idEquipo)";
+        $sql = "CALL spSeleccionarEquipoPorId('$idEquipo')";
         $result= $this->link->query($sql);
         
         if ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
@@ -160,22 +160,22 @@ class EquiposModel extends EquiposClass {
         {
             
             $this->setIdCategoria($row['idCategoria']);
-            $idEquipo=$this->setIdEquipo($row['idEquipo']);
+            $this->setIdEquipo($row['idEquipo']);
             $this->setNombre($row['nombre']);
             $this->setLogo($row['logo']);
-            
+           // $idEquipo=
             array_push($this->list, $this);
-            return $idEquipo;
             //problema https://stackoverflow.com/questions/614671/commands-out-of-sync-you-cant-run-this-command-now
-        } if ($this->link->query($sql)>=1) { // aldatu egiten da
-            return "El jugador se ha encontrado con exito";
-        } else {
-            return "Fallo al buscar el equipo: (" . $this->link->errno . ") " . $this->link->error;
-        }
-        
+        } 
         mysqli_free_result($result);
         $this->CloseConnect();
+//         if ($this->link->query($sql)>=1) { // aldatu egiten da
+//             return "El jugador se ha encontrado con exito";
+//         } else {
+//             return "(" . $this->link->errno . ") " . $this->link->error;
+//         }
         
+       
         
         
     }
