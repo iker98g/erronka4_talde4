@@ -73,11 +73,7 @@ class EquiposModel extends EquiposClass {
         $logo=$this->logo;
         
         $sql="CALL spInsertarEquipo('$nombre','$logo',$idCategoria)";
-        //         DELIMITER $$
-        //         CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarEquipo`(IN `pNombre` VARCHAR(50), IN `pLogo` VARCHAR(200),  IN `pIdCategoria` INT)
-        //         NO SQL
-        //         INSERT INTO `equipo`(`nombre`, `logo`, `idCategoria`) VALUES (pNombre,pLogo,pIdCategoria)$$
-        //         DELIMITER ;
+        //DELIMITER $$ CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarEquipo`(IN `pNombre` VARCHAR(50), IN `pLogo` VARCHAR(200),  IN `pIdCategoria` INT) NO SQL INSERT INTO `equipo`(`nombre`, `logo`, `idCategoria`) VALUES (pNombre,pLogo,pIdCategoria)$$ DELIMITER ;
         $numFilas=$this->link->query($sql);
         
         if ($numFilas>=1) {

@@ -75,11 +75,7 @@ class EntrenadoresModel extends EntrenadoresClass {
         $telefono=$this->telefono;
         
         $sql="CALL spInsertarEntrenador('$nombre','$imagen','$telefono',$idEquipo)";
-//         DELIMITER $$
-//         CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarEntrenador`(IN `pNombre` VARCHAR(50), IN `pImagen` VARCHAR(200), IN `pTelefono` VARCHAR(42), IN `pIdEquipo` INT)
-//         NO SQL
-//         INSERT INTO `entrenador`(`nombre`, `imagen`, `telefono`, `idEquipo`) VALUES (pNombre,pImagen,pTelefono,pIdEquipo)$$
-//         DELIMITER ;        
+//         DELIMITER $$ CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarEntrenador`(IN `pNombre` VARCHAR(50), IN `pImagen` VARCHAR(200), IN `pTelefono` VARCHAR(42), IN `pIdEquipo` INT) NO SQL INSERT INTO `entrenador`(`nombre`, `imagen`, `telefono`, `idEquipo`) VALUES (pNombre,pImagen,pTelefono,pIdEquipo)$$ DELIMITER ;        
         $numFilas=$this->link->query($sql);
         
         if ($numFilas>=1) {

@@ -86,11 +86,7 @@
             $usuario=$this->usuario;
             $sql = "CALL spBuscarUsuarioId('$usuario')";
             $result= $this->link->query($sql);
-            /*         DELIMITER $$
-             CREATE DEFINER=`root`@`localhost` PROCEDURE `spBuscarUsuarioId`(IN `pUsuario` VARCHAR(42))
-             NO SQL
-             select * from usuario where usuario.usuario=pUsuario$$
-             DELIMITER ; */
+            /*DELIMITER $$ CREATE DEFINER=`root`@`localhost` PROCEDURE `spBuscarUsuarioId`(IN `pUsuario` VARCHAR(42)) NO SQL select * from usuario where usuario.usuario=pUsuario$$ DELIMITER ; */
             if ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
             {
                 
@@ -165,14 +161,7 @@
             $encriptedPass=password_hash ($contrasena,PASSWORD_BCRYPT,$options) ;
             
             $sql="call spAniadirUsuario('$usuario', '$encriptedPass', '$nombre', '$correo',$tipo)";
-/*             DELIMITER $$
-            CREATE DEFINER=`root`@`localhost` PROCEDURE `spAniadirUsuario`(IN `pUsuario` VARCHAR(50), IN `pContrasena` VARCHAR(255), IN `pNombre` VARCHAR(50), IN `pCorreo` VARCHAR(50), IN `pTipo` INT)
-            NO SQL
-            BEGIN
-            INSERT INTO usuario (usuario.usuario, usuario.contrasena, usuario.nombre, usuario.correo,usuario.tipo)
-            VALUES (pUsuario, pContrasena, pNombre, pCorreo,pTipo);
-            END$$
-            DELIMITER ; */
+/*             DELIMITER $$ CREATE DEFINER=`root`@`localhost` PROCEDURE `spAniadirUsuario`(IN `pUsuario` VARCHAR(50), IN `pContrasena` VARCHAR(255), IN `pNombre` VARCHAR(50), IN `pCorreo` VARCHAR(50), IN `pTipo` INT) NO SQL BEGIN INSERT INTO usuario (usuario.usuario, usuario.contrasena, usuario.nombre, usuario.correo,usuario.tipo) VALUES (pUsuario, pContrasena, pNombre, pCorreo,pTipo); END$$ DELIMITER ; */
             if ($this->link->query($sql)>=1) {
                 return "El usuario se ha insertado con exito";
             }else {

@@ -59,11 +59,7 @@ class CategoriasModel extends CategoriasClass {
         $imagen=$this->imagen;
         
         $sql="CALL spInsertarCategoria('$nombre','$imagen')";
-        //         DELIMITER $$
-        //         CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarCategoria`(IN `pNombre` VARCHAR(50), IN `pImagen` VARCHAR(200))
-        //         NO SQL
-        //         INSERT INTO `categoria`(`nombre`, `imagen`) VALUES (pNombre,pImagen)$$
-        //         DELIMITER ;
+        //         DELIMITER $$ CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarCategoria`(IN `pNombre` VARCHAR(50), IN `pImagen` VARCHAR(200)) NO SQL INSERT INTO `categoria`(`nombre`, `imagen`) VALUES (pNombre,pImagen)$$ DELIMITER ;
         $numFilas=$this->link->query($sql);
         
         if ($numFilas>=1) {

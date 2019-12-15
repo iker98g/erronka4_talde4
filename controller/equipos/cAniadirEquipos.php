@@ -16,10 +16,10 @@ for($i = 0; $i <$datosInsert ; $i++){
     $categoriaEquipoNuevo->setNombre($categoria);
     
     $categoriaEquipoNuevo->buscarCategoriaId();
-    $equipoNuevo -> setIdEquipo($categoriaEquipoNuevo->getIdCategoria());
-    $categoriaEquipoNuevo -> setIdEquipo($categoriaEquipoNuevo->getIdCategoria());
+    $equipoNuevo -> setIdCategoria($categoriaEquipoNuevo->getIdCategoria());
+    $categoriaEquipoNuevo -> setIdCategoria($categoriaEquipoNuevo->getIdCategoria());
     
-    $categoriaEquipoNuevo->findEquipoById();
+    $categoriaEquipoNuevo->findCategoriaById();
     
     $resultado=$equipoNuevo -> aniadirEquipo();
     

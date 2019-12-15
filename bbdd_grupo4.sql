@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-12-2019 a las 09:48:17
--- Versión del servidor: 10.4.6-MariaDB
--- Versión de PHP: 7.3.9
+-- Tiempo de generación: 15-12-2019 a las 12:06:50
+-- Versión del servidor: 10.1.36-MariaDB
+-- Versión de PHP: 7.2.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -44,6 +44,9 @@ SELECT * FROM jugador$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spAllUsuarios` ()  NO SQL
 SELECT * FROM usuario$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spAniadirUsuario` (IN `pUsuario` VARCHAR(50), IN `pContrasena` VARCHAR(255), IN `pNombre` VARCHAR(50), IN `pCorreo` VARCHAR(50), IN `pTipo` INT)  NO SQL
+BEGIN INSERT INTO usuario (usuario.usuario, usuario.contrasena, usuario.nombre, usuario.correo,usuario.tipo) VALUES (pUsuario, pContrasena, pNombre, pCorreo,pTipo); END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spBorrarCategoria` (IN `pId` INT)  NO SQL
 DELETE FROM categoria
 WHERE categoria.idCategoria = pId$$
@@ -68,38 +71,32 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spBorrarUsuario` (IN `pId` INT)  NO
 DELETE FROM usuario
 WHERE usuario.idUsuario = pId$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spBuscarCategoriaId` (IN `pNombre` VARCHAR(42))  NO SQL
+select * from categoria where categoria.nombre=pNombre$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spBuscarEquipoId` (IN `pNombre` VARCHAR(42))  NO SQL
+select * from equipo where equipo.nombre=pNombre$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spBuscarUsuarioId` (IN `pUsuario` VARCHAR(42))  NO SQL
+select * from usuario where usuario.usuario=pUsuario$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spEquiposPorCategoria` (IN `p_idCategoria` INT)  NO SQL
 SELECT * FROM equipo WHERE equipo.idCategoria=p_idCategoria$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarCategoria` (IN `pNombre` VARCHAR(50))  NO SQL
-BEGIN
-INSERT INTO categoria (categoria.nombre)
-VALUES (pNombre);
-END$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarCategoria` (IN `pNombre` VARCHAR(50), IN `pImagen` VARCHAR(200))  NO SQL
+INSERT INTO `categoria`(`nombre`, `imagen`) VALUES (pNombre,pImagen)$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarConsulta` (IN `pNombre` VARCHAR(50), IN `pIdUsuario` INT)  NO SQL
-BEGIN
-INSERT INTO consulta (consulta.consulta, consulta.idUsuario)
-VALUES (pNombre, pIdUsuario);
-END$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarConsulta` (IN `pConsulta` VARCHAR(300), IN `pIdUsuario` INT(200))  NO SQL
+INSERT INTO `consulta`(`consulta`, `idUsuario`) VALUES (pConsulta,pIdUsuario)$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarEntrenador` (IN `pNombre` VARCHAR(50), IN `pImagen` VARCHAR(200), IN `pTelefono` VARCHAR(9), IN `pIdEquipo` INT)  NO SQL
-BEGIN
-INSERT INTO entrenador (entrenador.nombre, entrenador.imagen, entrenador.telefono, entrenador.idEquipo)
-VALUES (pNombre, pImagen, pTelefono, pIdEquipo);
-END$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarEntrenador` (IN `pNombre` VARCHAR(50), IN `pImagen` VARCHAR(200), IN `pTelefono` VARCHAR(42), IN `pIdEquipo` INT)  NO SQL
+INSERT INTO `entrenador`(`nombre`, `imagen`, `telefono`, `idEquipo`) VALUES (pNombre,pImagen,pTelefono,pIdEquipo)$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarEquipo` (IN `pNombre` VARCHAR(50), IN `pLogo` VARCHAR(200), IN `pIdCategoria` INT)  NO SQL
-BEGIN
-INSERT INTO equipo (equipo.nombre, equipo.logo, equipo.idCategoria)
-VALUES (pNombre, pLogo, pIdCategoria);
-END$$
+INSERT INTO `equipo`(`nombre`, `logo`, `idCategoria`) VALUES (pNombre,pLogo,pIdCategoria)$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarJugador` (IN `pNombre` VARCHAR(50), IN `pImagen` VARCHAR(200), IN `pRol` VARCHAR(50), IN `pTelefono` VARCHAR(9), IN `pIdEquipo` INT)  NO SQL
-BEGIN
-INSERT INTO jugador (jugador.nombre, jugador.imagen, jugador.rol, jugador.telefono, jugador.idEquipo)
-VALUES (pNombre, pImagen, pRol, pTelefono, pIdEquipo);
-END$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarJugador` (IN `pNombre` VARCHAR(50), IN `pImagen` VARCHAR(200), IN `pRol` VARCHAR(50), IN `pTelefono` VARCHAR(42), IN `pIdEquipo` INT)  NO SQL
+INSERT INTO `jugador`(`nombre`, `imagen`, `rol`, `telefono`, `idEquipo`) VALUES (pNombre,pImagen,pRol,pTelefono,pIdEquipo)$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarUsuario` (IN `pUsuario` VARCHAR(50), IN `pContrasena` VARCHAR(255), IN `pNombre` VARCHAR(50), IN `pCorreo` VARCHAR(50))  NO SQL
 BEGIN
@@ -309,7 +306,7 @@ CREATE TABLE `usuario` (
   `contrasena` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nombre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `correo` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tipo` int(1) NOT NULL DEFAULT 2
+  `tipo` int(1) NOT NULL DEFAULT '2'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --

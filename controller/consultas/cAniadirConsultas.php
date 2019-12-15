@@ -8,7 +8,7 @@ for($i = 0; $i <$datosInsert ; $i++){
     
     $consultaNueva = new ConsultasModel();
     
-    $consultaNueva -> setNombre($consulta);
+    $consultaNueva -> setConsulta($consulta);
 
     $consultaUsuarioNueva = new UsuariosModel();
     $consultaUsuarioNueva->setUsuario($usuario);

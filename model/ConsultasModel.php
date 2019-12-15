@@ -73,11 +73,7 @@
             $idUsuario=$this->idUsuario;
             
             $sql="CALL spInsertarConsulta('$consulta',$idUsuario)";
-            //         DELIMITER $$
-            //         CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarConsulta`(IN `pConsulta` VARCHAR(300), IN `pIdUsuario` INT(200))
-            //         NO SQL
-            //         INSERT INTO `consulta`(`consulta`, `idUsuario`) VALUES (pConsulta,pIdUsuario)$$
-            //         DELIMITER ;
+            //DELIMITER $$ CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarConsulta`(IN `pConsulta` VARCHAR(300), IN `pIdUsuario` INT(200)) NO SQL INSERT INTO `consulta`(`consulta`, `idUsuario`) VALUES (pConsulta,pIdUsuario)$$ DELIMITER ;
             $numFilas=$this->link->query($sql);
             
             if ($numFilas>=1) {

@@ -84,11 +84,7 @@ class JugadoresModel extends JugadoresClass {
         $rol=$this->rol;
         $imagen=$this->imagen;
         $telefono=$this->telefono;
-//         DELIMITER $$
-//         CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarJugador`(IN `pNombre` VARCHAR(50), IN `pImagen` VARCHAR(200), IN `pRol` VARCHAR(50), IN `pTelefono` VARCHAR(42), IN `pIdEquipo` INT)
-//         NO SQL
-//         INSERT INTO `jugador`(`nombre`, `imagen`, `rol`, `telefono`, `idEquipo`) VALUES (pNombre,pImagen,pRol,pTelefono,pIdEquipo)$$
-//         DELIMITER ;
+//         DELIMITER $$ CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarJugador`(IN `pNombre` VARCHAR(50), IN `pImagen` VARCHAR(200), IN `pRol` VARCHAR(50), IN `pTelefono` VARCHAR(42), IN `pIdEquipo` INT) NO SQL INSERT INTO `jugador`(`nombre`, `imagen`, `rol`, `telefono`, `idEquipo`) VALUES (pNombre,pImagen,pRol,pTelefono,pIdEquipo)$$ DELIMITER ;
         $sql="CALL spInsertarJugador('$nombre','$imagen','$rol','$telefono',$idEquipo)";
         
         $numFilas=$this->link->query($sql);
