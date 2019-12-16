@@ -487,13 +487,24 @@ function generarCodigoInsert(){
 	
 }
 /*FIN DE INSERTAR NUEVOS DATOS EN LAS TABLAS DESDE VADMIN */
-var ID=[];
-var TABLITA=[];
-var contador=0;
+
 function borrarElemento(id,tablita){
-
-		console.log(id+"<-id tablita->"+tablita);
-
+	minusculas=tablita.substring(1,tablita.length); //COGEMOS EL TEXTO EXCEPTO LA PRIMERA LETRA
+	mayusculas=tablita.substring(0,1); //COGEMOS LA PRIMERA LETRA
+	mayusculas=mayusculas.toUpperCase(); //CAMBIAMOS EL TEXTO A MINUSCULAS
+	Tabla=mayusculas+minusculas;
+		console.log(id+"<-id tablita->"+tablita+"Tabla->"+Tabla);
+		$.ajax({
+	        type:"POST",
+	        data:{"id":id},
+	        url:"../controller/"+tablita+"/cBorrar"+Tabla+".php",
+	        success: function(datosUsuarios){
+	        	console.log(datosUsuarios);
+	        },
+	        error: function(xhr){
+	            alert("An error occured: "+xhr.status+" "+xhr.statusText);
+	        }
+	    });
 }
 function editarElemento(){
 	$(".fa-edit").click(function(){
