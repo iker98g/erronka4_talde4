@@ -368,12 +368,14 @@ function generarInserts(){
 			var contenido = $("#"+id).val();
 			linea+=id+":"+contenido+",";	//añadimos 
 		}
+		
 		linea=linea.slice(0,-1);
 		var values = linea.split(",");//separamos las partes de nuestro futuro array
 		for(var i=0; i<values.length; i++) {
 		    var keyValue = values[i].split(":");//separamos cada parte de cada campo ya que es key:value
 		    obj[keyValue[0]] = keyValue[1];//asignamos que el key sea el que esta en la posicion principal y el value en la secundaria del objeto
 		}
+		datosInsert=[];
 		datosInsert.push(obj);//añadimos al array creado anteriormente el objeto 
 		console.log(datosInsert);
 		//alert(minusculas+"<-carpeta Tabla->"+Tabla);
@@ -386,9 +388,10 @@ function generarInserts(){
 		}else{
 			$("#formularioInsert").html("");
 		}
-		if(LoopTimes==cantidadInsert){
+		if(LoopTimes==cantidadInsert||LoopTimes!=cantidadInsert){
+
 			$("#formularioInsert").html("");
-			$("#formularioInsert").html("YA HAS TERMINADO DE INSERTAR LO QUE QUERIAS RELAJATE ");
+			$("#formularioInsert").html("YA HAS TERMINADO DE INSERTAR LO QUE QUERIAS ");
 			$.ajax({
 		        type:"POST",
 		        data:{"datosInsert":datosInsert},
