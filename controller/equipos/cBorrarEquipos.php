@@ -3,10 +3,10 @@ include_once ("../../model/EquiposModel.php");
 
 $equipo = new EquiposModel();
 
-$idEquipo = filter_input(INPUT_GET, "idEquipo");
+$id=($_POST["id"]);
 
-if ($idEquipo != null) {
-    $equipo -> setIdEquipo($idEquipo);
+if ($id != null) {
+    $equipo -> setIdEquipo($id);
     $resultado = $equipo -> borrarEquipo();
 } else {
     $resultado = "No se ha pasado la ID";

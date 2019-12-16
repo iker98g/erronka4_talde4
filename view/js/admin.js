@@ -493,18 +493,19 @@ function borrarElemento(id,tablita){
 	mayusculas=tablita.substring(0,1); //COGEMOS LA PRIMERA LETRA
 	mayusculas=mayusculas.toUpperCase(); //CAMBIAMOS EL TEXTO A MINUSCULAS
 	Tabla=mayusculas+minusculas;
-		console.log(id+"<-id tablita->"+tablita+"Tabla->"+Tabla);
-		$.ajax({
-	        type:"POST",
-	        data:{"id":id},
-	        url:"../controller/"+tablita+"/cBorrar"+Tabla+".php",
-	        success: function(datosUsuarios){
-	        	console.log(datosUsuarios);
-	        },
-	        error: function(xhr){
-	            alert("An error occured: "+xhr.status+" "+xhr.statusText);
-	        }
-	    });
+	console.log(id+" <-id tablita-> "+tablita+" Tabla-> "+Tabla);
+	
+	$.ajax({
+        type:"POST",
+        data:{"id":id},
+        url:"../controller/"+tablita+"/cBorrar"+Tabla+".php",
+        success: function(datosUsuarios){
+        	console.log(datosUsuarios);
+        },
+        error: function(xhr){
+            alert("An error occured: "+xhr.status+" "+xhr.statusText);
+        }
+    });
 }
 function editarElemento(){
 	$(".fa-edit").click(function(){

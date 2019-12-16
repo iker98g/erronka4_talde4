@@ -3,10 +3,10 @@ include_once ("../../model/ConsultasModel.php");
 
 $consultas = new ConsultasModel();
 
-$idConsulta = filter_input(INPUT_GET, "idConsulta");
+$id=($_POST["id"]);
 
-if ($idConsulta != null) {
-    $consultas -> setIdConsulta($idConsulta);
+if ($id != null) {
+    $consultas -> setIdConsulta($id);
     $resultado = $consultas -> borrarConsulta();
 } else {
     $resultado = "No se ha pasado la ID";
