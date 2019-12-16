@@ -163,10 +163,6 @@ class JugadoresModel extends JugadoresClass {
         mysqli_free_result($result);
         unset($equipo);
         $this->CloseConnect();
-        
-        
-        
-        
     }
     
     

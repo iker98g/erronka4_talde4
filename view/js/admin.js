@@ -491,24 +491,71 @@ function generarCodigoInsert(){
 function borrarElemento(id,tablita){
 	minusculas=tablita.substring(1,tablita.length); //COGEMOS EL TEXTO EXCEPTO LA PRIMERA LETRA
 	mayusculas=tablita.substring(0,1); //COGEMOS LA PRIMERA LETRA
-	mayusculas=mayusculas.toUpperCase(); //CAMBIAMOS EL TEXTO A MINUSCULAS
+	mayusculas=mayusculas.toUpperCase(); //CAMBIAMOS EL TEXTO A MAYUSCULAS
 	Tabla=mayusculas+minusculas;
 	console.log(id+" <-id tablita-> "+tablita+" Tabla-> "+Tabla);
 	
-	$.ajax({
-        type:"POST",
-        data:{"id":id},
-        url:"../controller/"+tablita+"/cBorrar"+Tabla+".php",
-        success: function(datosUsuarios){
-        	console.log(datosUsuarios);
-        },
-        error: function(xhr){
-            alert("An error occured: "+xhr.status+" "+xhr.statusText);
-        }
-    });
+//	$.ajax({
+//        type:"POST",
+//        data:{"id":id},
+//        url:"../controller/"+tablita+"/cBorrar"+Tabla+".php",
+//        success: function(resultado){
+//        	console.log(resultado);
+//        },
+//        error: function(xhr){
+//            alert("An error occured: "+xhr.status+" "+xhr.statusText);
+//        }
+//    });
 }
-function editarElemento(){
-	$(".fa-edit").click(function(){
-		alert("EDITAR EDITAR");
-	});
+function editarElemento(id,tablita){
+	
+	minusculas=tablita.substring(1,tablita.length); //COGEMOS EL TEXTO EXCEPTO LA PRIMERA LETRA
+	mayusculas=tablita.substring(0,1); //COGEMOS LA PRIMERA LETRA
+	mayusculas=mayusculas.toUpperCase(); //CAMBIAMOS EL TEXTO A MAYUSCULAS
+	Tabla=mayusculas+minusculas;
+	minusculas=Tabla.toLowerCase();
+	//console.log(id+" <-id tablita-> "+tablita+" Tabla-> "+Tabla);
+	$.ajax({
+      type:"POST",
+      data:{"id":id},
+      url:"../controller/"+minusculas+"/cSeleccionar"+Tabla+".php",
+      success: function(datosTabla){
+      	miDatosTabla=JSON.parse(datosTabla);
+    	ContenidoTablas="";
+    	if(Tabla.endsWith("es")){
+        	Tabla=Tabla.slice(0,-2); 
+        	console.log(Tabla);
+    	}else if(Tabla.endsWith("s")){
+    		Tabla=Tabla.slice(0,-1); 
+        	console.log(Tabla);
+    	}else{
+    		alert("NO SE PUEDE HACER EL MODIFICAR");
+    	}
+    	
+    	$.each(miDatosTabla,function(i,datos){
+    		var ws="id"+Tabla;
+    	var myVar=eval("datos.id"+Tabla);
+    	console.log({myVar});
+    	var idTabla="id"+Tabla;
+    	console.log("suma"+idTabla);
+    	var datosRequeridos= "datos.id"+Tabla;
+        	console.log("each:"+datosRequeridos);
+			console.log("intento"+JSON. stringify(datos));
+
+			if(id==datosRequeridos){
+//				ContenidoTablas+=`<div class="JugadoresEquiposTitulo paneles `+equipoClass+` " ><div class="titulo_boton"><div class="tituloEquipo"><h2>`+datosJugadores.objectEquipo.nombre+`</h2></div></div><div class="divTablaAdmin"><div class="insertButton" ><button type="button" >+NUEVOS JUGADORES</button></div><table class="rellenoAdminJugadoresEquipos"></table></div></div>`;
+// 				equipos.push(equipoClass);//añadimos el nombre del equipo al array
+			console.log("id encontrada"+id);
+			}
+			/*LLAMADA A LA FUNCION PARA INSERTAR EN CUALQUIER TABLA LAS LINEAS QUE EL ADMINISTRADOR DESEE*/
+//        	botonInsertAdmin();//boton para insertar nuevas lineas en cualquiera de las tablas
+        	/*LO PONEMOS AQUI PORQUE AQUI SE GENERA EL BOTON DE JUGADORES POR EQUIPOS(si no solo iria en las demas tablas)*/
+    	});//AQUI TERMINA EL GENERADOR DE LOS TITULOS DE LOS EQUIPOS POR JUGADORES
+      },
+      error: function(xhr){
+          alert("An error occured: "+xhr.status+" "+xhr.statusText);
+      }
+  });
+	generarCodigoInsert();
+	
 }

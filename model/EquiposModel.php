@@ -113,9 +113,9 @@ class EquiposModel extends EquiposClass {
         $sql = "CALL spModificarEquipo('$idEquipo','$nombre', '$idCategoria', '$logo')";
         
         if ($this->link->query($sql)>=1) { // aldatu egiten da
-            return "El jugador se ha modificado con exito";
+            return "El equipo se ha modificado con exito";
         } else {
-            return "Fallo al modificar el jugador: (" . $this->link->errno . ") " . $this->link->error;
+            return "Fallo al modificar el equipo: (" . $this->link->errno . ") " . $this->link->error;
         }
         
         $this->CloseConnect();
@@ -225,22 +225,6 @@ class EquiposModel extends EquiposClass {
         }
         mysqli_free_result($result);
         unset($categoria);
-        $this->CloseConnect();
-        //         if ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-            //         {
-            //             $this->setNombre($row['nombre']);
-            //             $this->setIdEquipo($row['idEquipo']);
-            //             $this->setLogo($row['logo']);
-            //             $this->setIdCategoria($row['idCategoria']);
-        
-        
-            //             array_push($this->list, $this);
-        
-            //         }
-        //         mysqli_free_result($result);
-        //         $this->CloseConnect();
-        
-        
-        
+        $this->CloseConnect(); 
     }
 }

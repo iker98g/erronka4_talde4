@@ -191,5 +191,21 @@
             
             $this->CloseConnect();
         }
+        public function borrarUsuario() {
+            $this->OpenConnect();
+            
+            $idUsuario=$this->getIdUsuario();
+            
+            $sql = "CALL spBorrarUsuario('$idUsuario')";
+            
+            if ($this->link->query($sql)>=1) { // aldatu egiten da
+                return "El usuario se ha borrado con exito";
+            } else {
+                return "Fallo al borrar el usuario: (" . $this->link->errno . ") " . $this->link->error;
+            }
+            
+            $this->CloseConnect();
+        }
+        
     }
 ?>

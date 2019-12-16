@@ -77,9 +77,9 @@
             $numFilas=$this->link->query($sql);
             
             if ($numFilas>=1) {
-                return "Entrenador insertado";
+                return "Consulta insertada";
             } else {
-                return "Error al insertar el entrenador";
+                return "Error al insertar la consulta";
             }
             
             $this->CloseConnect();

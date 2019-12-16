@@ -63,9 +63,9 @@ class CategoriasModel extends CategoriasClass {
         $numFilas=$this->link->query($sql);
         
         if ($numFilas>=1) {
-            return "Entrenador insertado";
+            return "Categoria insertada";
         } else {
-            return "Error al insertar el entrenador";
+            return "Error al insertar la categoria";
         }
         
         $this->CloseConnect();
@@ -119,9 +119,7 @@ class CategoriasModel extends CategoriasClass {
             $this->setIdCategoria($row['idCategoria']);
             $this->setNombre($row['nombre']);
             
-            
             array_push($this->list, $this);
-            
         }
         mysqli_free_result($result);
         $this->CloseConnect();
