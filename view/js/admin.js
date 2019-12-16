@@ -1,4 +1,4 @@
-var EquipoN,NombreTabla,ContenidoTablas,cantidad,linea,Tabla,clase;
+var EquipoN,NombreTabla,ContenidoTablas,cantidad,linea,Tabla,clase,datosEncontrados;
 var roles=[];
 var equiposInput=[];
 var categorias=[];
@@ -174,7 +174,7 @@ function iniciarCoAdmin(){
         	ContenidoTablas=`<tr><th>IDCONSULTA</th><th>CONSULTA</th><th>IDUSUARIO</th><th>ACCION</th></tr>`;
         	NombreTabla="consultas";
         	$.each(miDatosConsultas,function(i,datosConsultas){
-        		ContenidoTablas+=`<tr><td>`+datosConsultas.idConsulta+`</td><td>`+datosConsultas.consulta+`</td><td>`+datosConsultas.objectUsuario.usuario+`</td><td><div onclick="editarElemento(`+datosConsultas.idConsulta+`,'`+NombreTabla+`')" style="display:inline-block" class="editar" id="`+datosConsultas.idConsulta+`"><i class="fas fa-edit"></i></div><div onclick="borrarElemento(`+datosConsultas.idConsulta+`,'`+NombreTabla+`')" style="display:inline-block" class="borrar" id="`+datosConsultas.idConsulta+`"><i class="fas fa-trash-alt" ></i></div></td></tr>`;
+        		ContenidoTablas+=`<tr><td>`+datosConsultas.idConsulta+`</td><td>`+datosConsultas.consulta+`</td><td>`+datosConsultas.objectUsuario.usuario+`</td><td><div onclick="borrarElemento(`+datosConsultas.idConsulta+`,'`+NombreTabla+`')" style="display:inline-block" class="borrar" id="`+datosConsultas.idConsulta+`"><i class="fas fa-trash-alt" ></i></div></td></tr>`;
  				
  			});//FIN DE GENERAR LA TABLA DE CONSULTAS
         	$(".panelCo .divTablaAdmin table").html(ContenidoTablas);
@@ -270,7 +270,7 @@ function aparicionTablas(){
 function botonInsertAdmin(){//se le llama desde iniciarJAdmin()
 
 	$(".insertButton button").click(function(){
-	
+		
 		/*AQUI EMPIEZA EL RECOGER VALOR DE EL BOTON CLICK INSERTAR*/
 		$("#tablas").hide();
 		var TablaInsert=$(this).text();
@@ -297,7 +297,7 @@ function botonInsertAdmin(){//se le llama desde iniciarJAdmin()
 			$("#formularioInsert select").append(`<option id=`+i+`> `+i+` </option>`);	
 		}
 		/*AQUI TERMINA EL PREGUNTAR LA CANTIDAD DEL INSERT DESEADOS*/
-		
+		datosEncontrados=null;
 		$("#cancelarInsert").click(function(){
 			$(".divTablaAdmin").hide(800);
 			$(".divTablaAdmin").css("margin","0px");
@@ -327,51 +327,83 @@ function botonInsertAdmin(){//se le llama desde iniciarJAdmin()
 function generarInserts(){
 	/*Para meter la primera vez los datos le llamamos desde dentro de la funcion botonInsertAdmin()
 	 * despues le llamamos desde el boton del formulario con un myfunction=generarInserts()*/
-	if(cantidadInsert>=1 &&(LoopTimes==cantidadInsert||LoopTimes!=cantidadInsert)&&siguienteInsert==false){
-		var elements = document.getElementsByName( Tabla );
-		for(var i=0;i<elements.length;i++){
-			var input=elements[i];
-			var id = elements[i].getAttribute( 'id' );
-			var contenido = $("#"+id).val();
-			linea+=id+":"+contenido+",";	//añadimos 
-		}
+	if(datosEncontrados==null){
+
+		if(cantidadInsert>=1 &&(LoopTimes==cantidadInsert||LoopTimes!=cantidadInsert)&&siguienteInsert==false){
+			var elements = document.getElementsByName( Tabla );
+			for(var i=0;i<elements.length;i++){
+				var input=elements[i];
+				var id = elements[i].getAttribute( 'id' );
+				var contenido = $("#"+id).val();
+				linea+=id+":"+contenido+",";	//añadimos 
+			}
+			
+			linea=linea.slice(0,-1);
+			var values = linea.split(",");//separamos las partes de nuestro futuro array
+			for(var i=0; i<values.length; i++) {
+			    var keyValue = values[i].split(":");//separamos cada parte de cada campo ya que es key:value
+			    obj[keyValue[0]] = keyValue[1];//asignamos que el key sea el que esta en la posicion principal y el value en la secundaria del objeto
+			}
+			datosInsert=[];
+			datosInsert.push(obj);//añadimos al array creado anteriormente el objeto 
+			console.log(datosInsert);
+			//alert(minusculas+"<-carpeta Tabla->"+Tabla);
+				if(cantidadInsert>=1 &&LoopTimes!=cantidadInsert&&siguienteInsert==false&& datosEncontrados==null){	
+		//			console.log(LoopTimes+"LoopTimes y insertCantidad"+cantidadInsert);
+					siguienteInsert=generarCodigoInsert();//llamamos a una funcion donde generamos los inputs y devuelve un true cuando se han insertado
+					siguienteInsert=false;
+					LoopTimes+=1;//console.log(LoopTimes +"loop y siguiente"+siguienteInsert);
+				}
+				if((LoopTimes==cantidadInsert||LoopTimes!=cantidadInsert)&& datosEncontrados==null){
 		
-		linea=linea.slice(0,-1);
-		var values = linea.split(",");//separamos las partes de nuestro futuro array
-		for(var i=0; i<values.length; i++) {
-		    var keyValue = values[i].split(":");//separamos cada parte de cada campo ya que es key:value
-		    obj[keyValue[0]] = keyValue[1];//asignamos que el key sea el que esta en la posicion principal y el value en la secundaria del objeto
-		}
-		datosInsert=[];
-		datosInsert.push(obj);//añadimos al array creado anteriormente el objeto 
-		console.log(datosInsert);
-		//alert(minusculas+"<-carpeta Tabla->"+Tabla);
-
-		if(cantidadInsert>=1 &&LoopTimes!=cantidadInsert&&siguienteInsert==false){	
-//			console.log(LoopTimes+"LoopTimes y insertCantidad"+cantidadInsert);
-			siguienteInsert=generarCodigoInsert();//llamamos a una funcion donde generamos los inputs y devuelve un true cuando se han insertado
-			siguienteInsert=false;
-			LoopTimes+=1;//console.log(LoopTimes +"loop y siguiente"+siguienteInsert);
+					$("#formularioInsert").html("");
+					$("#formularioInsert").html("YA HAS TERMINADO DE INSERTAR LO QUE QUERIAS ");
+					$.ajax({
+				        type:"POST",
+				        data:{"datosInsert":datosInsert},
+				        url:"../controller/"+minusculas+"/cAniadir"+Tabla+".php",
+				        success: function(datosUsuarios){
+				        	console.log(datosUsuarios);
+				        },
+				        error: function(xhr){
+				            alert("An error occured: "+xhr.status+" "+xhr.statusText);
+				        }
+				    });
+				}
+			}
 		}else{
-			$("#formularioInsert").html("");
+			var elements = document.getElementsByName( Tabla );
+			for(var i=0;i<elements.length;i++){
+				var input=elements[i];
+				var id = elements[i].getAttribute( 'id' );
+				var contenido = $("#"+id).val();
+				linea+=id+":"+contenido+",";
+			}//añadimos 
+			linea=linea.slice(0,-1);
+			var values = linea.split(",");//separamos las partes de nuestro futuro array
+			for(var i=0; i<values.length; i++) {
+			    var keyValue = values[i].split(":");//separamos cada parte de cada campo ya que es key:value
+			    obj[keyValue[0]] = keyValue[1];//asignamos que el key sea el que esta en la posicion principal y el value en la secundaria del objeto
+			}
+			datosInsert=[];
+			datosInsert.push(obj);//añadimos al array creado anteriormente el objeto 
+			console.log(datosInsert);
+				$("#formularioInsert").html("");
+				$("#formularioInsert").html("YA HAS TERMINADO DE MODIFICAR LO QUE QUERIAS ");
+				$.ajax({
+			        type:"POST",
+			        data:{"datosInsert":datosInsert},
+			        url:"../controller/"+minusculas+"/cEditar"+Tabla+".php",
+			        success: function(datosUsuarios){
+			        	console.log(datosUsuarios);
+			        },
+			        error: function(xhr){
+			            alert("An error occured: "+xhr.status+" "+xhr.statusText);
+			        }
+			    });
+			
 		}
-		if(LoopTimes==cantidadInsert||LoopTimes!=cantidadInsert){
-
-			$("#formularioInsert").html("");
-			$("#formularioInsert").html("YA HAS TERMINADO DE INSERTAR LO QUE QUERIAS ");
-			$.ajax({
-		        type:"POST",
-		        data:{"datosInsert":datosInsert},
-		        url:"../controller/"+minusculas+"/cAniadir"+Tabla+".php",
-		        success: function(datosUsuarios){
-		        	console.log(datosUsuarios);
-		        },
-		        error: function(xhr){
-		            alert("An error occured: "+xhr.status+" "+xhr.statusText);
-		        }
-		    });
-		}
-	}
+	
 	
 }/*FIN DE LA FUNCION QUE ES PARA GENERAR LOS INSERTS Y PARA HACER INSERTS EN LA BASE DE DATOS*/
 
@@ -392,11 +424,22 @@ function generarCodigoInsert(){
         	if(Tabla==="Equipos"||Tabla==="Jugadores"||Tabla==="Categorias"||Tabla==="Entrenadores"||Tabla==="Usuarios"){
         		htmlCode=`<p>Nombre:</p><input type="text" id="nombre" name="`+Tabla+`" required>`;		
         		$("#FormInsert").append(htmlCode);
+        		if(datosEncontrados != null){ 
+            		$("#FormInsert #nombre").val(datosEncontrados.nombre);
+        		}else{
+            		$("#FormInsert #nombre").val("");
+        		};
+
         	}
         	
         	if(Tabla==="Jugadores"||Tabla==="Categorias"||Tabla==="Entrenadores"){
         		htmlCode=`<p>Imagen:</p><input type="text" name="`+Tabla+`" id="imagen"></input>`;
         		$("#FormInsert").append(htmlCode);
+        		if(datosEncontrados != null){ 
+            		$("#FormInsert #imagen").val(datosEncontrados.imagen);
+        		}else{
+            		$("#FormInsert #imagen").val("");
+        		};
         	}
         	
         	if(Tabla==="Jugadores"||Tabla==="Entrenadores"){
@@ -409,6 +452,14 @@ function generarCodigoInsert(){
 	        			}
 	        		});
 	        	
+	        	if(datosEncontrados != null){ 
+            		$("#FormInsert #telefono").val(datosEncontrados.telefono);
+            		$("#FormInsert #equipo").val(datosEncontrados.objectEquipo.nombre);
+        		}else{
+            		$("#FormInsert #telefono").val("");
+            		$("#FormInsert #equipo").val("");
+
+        		};
         	}
         	
         	if(Tabla==="Equipos"){
@@ -420,7 +471,14 @@ function generarCodigoInsert(){
      					categorias.push(datos_tabla.objectCategoria.nombre);
      				}
  				});        	
-	        }
+	        	if(datosEncontrados != null){ 
+            		$("#FormInsert #categoria").val(datosEncontrados.objectCategoria.nombre);
+            		$("#FormInsert #logo").val(datosEncontrados.logo);
+        		}else{
+            		$("#FormInsert #logo").val("");
+            		$("#FormInsert #categoria").val("");
+        		};
+        	}
         	
         	if(Tabla==="Jugadores"){
         		htmlCode=`<p>Rol:</p><select id="rol" name="`+Tabla+`" required></select>`;
@@ -431,7 +489,12 @@ function generarCodigoInsert(){
                 		roles.push(datos_tabla.rol);
      				}
      			});
-            }
+            	if(datosEncontrados != null){ 
+            		$("#FormInsert #rol").val(datosEncontrados.rol);
+        		}else{
+            		$("#FormInsert #rol").val("");
+        		};
+        	}
         	
         	if(Tabla==="Consultas"){
         		htmlCode=`<p>Consulta:</p><input type="text" id="consulta" name="`+Tabla+`"  required><p>Usuario:</p><select id="usuario" name="`+Tabla+`"  required></select>`;
@@ -442,6 +505,13 @@ function generarCodigoInsert(){
 						users.push(datos_tabla.objectUsuario.usuario);
      				}
      				});
+            	if(datosEncontrados != null){ 
+            		$("#FormInsert #consulta").val(datosEncontrados.consulta);
+            		$("#FormInsert #usuario").val(datosEncontrados.objectUsuario.nombre);
+        		}else{
+            		$("#FormInsert #consulta").val("");
+            		$("#FormInsert #usuario").val("");
+        		};
         	}
         	
         	if(Tabla==="Usuarios"){
@@ -450,8 +520,30 @@ function generarCodigoInsert(){
 //            	$.each(misDatosTabla,function(i,datos_tabla){
 //     				$("#tipo").append(`<option id="`+datos_tabla.objectTipo.nombre+`">`+datos_tabla.objectTipo.nombre+`</option>`);
 //     			});
-    			$("#tipo").append(`<option id="0">Administrador</option><option id="1">Entrenador</option><option id="2">Usuario Normal</option><option id="3">Anonimo</option>`);
+    			$("#tipo").append(`<option id="0">Administrador</option><option id="1">Entrenador</option><option id="2" selected>Usuario Normal</option><option id="3">Anonimo</option>`);
+            	if(datosEncontrados != null){ 
+            		
+            		 if(datosEncontrados.tipo=="0"){
+            			 datosEncontrados.tipo="Administrador";
+                     }else if(datosEncontrados.tipo=="1"){
+                    	 datosEncontrados.tipo="Entrenador";
+                     }else if(datosEncontrados.tipo=="2"){
+                    	 datosEncontrados.tipo="Usuario Normal";
+                     }else if(datosEncontrados.tipo=="3"){
+                    	 datosEncontrados.tipo="Anonimo";
+                     }
+            		$("#FormInsert #tipo").val(datosEncontrados.tipo);
+            		$("#FormInsert #contrasena").val(datosEncontrados.contrasena);
+            		$("#FormInsert #usuario").val(datosEncontrados.usuario);
+            		$("#FormInsert #correo").val(datosEncontrados.correo);
+        		}else{
+            		$("#FormInsert #contrasena").val("");
+            		$("#FormInsert #usuario").val("");
+            		$("#FormInsert #correo").val("");
+            		$("#FormInsert #tipo").val("");
+        		};
         	}
+        	
         	htmlCode=` </form>`;
         	$("#formularioInsert").append(htmlCode);
 
@@ -508,13 +600,14 @@ function borrarElemento(id,tablita){
 //    });
 }
 function editarElemento(id,tablita){
-	
+	$("#tablas .paneles").hide();
+	$("#tablas ."+tablita).show();
 	minusculas=tablita.substring(1,tablita.length); //COGEMOS EL TEXTO EXCEPTO LA PRIMERA LETRA
 	mayusculas=tablita.substring(0,1); //COGEMOS LA PRIMERA LETRA
 	mayusculas=mayusculas.toUpperCase(); //CAMBIAMOS EL TEXTO A MAYUSCULAS
 	Tabla=mayusculas+minusculas;
 	minusculas=Tabla.toLowerCase();
-	//console.log(id+" <-id tablita-> "+tablita+" Tabla-> "+Tabla);
+	console.log(id+" <-id tablita-> "+tablita+" Tabla-> "+Tabla);
 	$.ajax({
       type:"POST",
       data:{"id":id},
@@ -523,33 +616,31 @@ function editarElemento(id,tablita){
       	miDatosTabla=JSON.parse(datosTabla);
     	ContenidoTablas="";
     	if(Tabla.endsWith("es")){
-        	Tabla=Tabla.slice(0,-2); 
-        	console.log(Tabla);
+    		NombreTabla=Tabla.slice(0,-2); 
+        	console.log(NombreTabla);
     	}else if(Tabla.endsWith("s")){
-    		Tabla=Tabla.slice(0,-1); 
-        	console.log(Tabla);
+    		NombreTabla=Tabla.slice(0,-1); 
+        	console.log(NombreTabla);
     	}else{
     		alert("NO SE PUEDE HACER EL MODIFICAR");
     	}
     	
     	$.each(miDatosTabla,function(i,datos){
-    	var myVar=eval("datos.id"+Tabla);
+    	var myVar=eval("datos.id"+NombreTabla);
     	//console.log({myVar});
 
 			if(id==myVar){
-//				ContenidoTablas+=`<div class="JugadoresEquiposTitulo paneles `+equipoClass+` " ><div class="titulo_boton"><div class="tituloEquipo"><h2>`+datosJugadores.objectEquipo.nombre+`</h2></div></div><div class="divTablaAdmin"><div class="insertButton" ><button type="button" >+NUEVOS JUGADORES</button></div><table class="rellenoAdminJugadoresEquipos"></table></div></div>`;
-// 				equipos.push(equipoClass);//añadimos el nombre del equipo al array
+
 			console.log("id-> "+id+" MyVar-> "+myVar);
-			}
-			/*LLAMADA A LA FUNCION PARA INSERTAR EN CUALQUIER TABLA LAS LINEAS QUE EL ADMINISTRADOR DESEE*/
-//        	botonInsertAdmin();//boton para insertar nuevas lineas en cualquiera de las tablas
-        	/*LO PONEMOS AQUI PORQUE AQUI SE GENERA EL BOTON DE JUGADORES POR EQUIPOS(si no solo iria en las demas tablas)*/
-    	});//AQUI TERMINA EL GENERADOR DE LOS TITULOS DE LOS EQUIPOS POR JUGADORES
+			datosEncontrados=datos;
+			generarCodigoInsert();
+			}	
+    	});
       },
       error: function(xhr){
           alert("An error occured: "+xhr.status+" "+xhr.statusText);
       }
   });
-	generarCodigoInsert();
+	
 	
 }

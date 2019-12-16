@@ -1,42 +1,28 @@
 <?php
 include_once ("../../model/UsuariosModel.php");
-
-$usuarios = new UsuariosModel();
-
-$idUsuario = filter_input(INPUT_GET, "idUsuario");
-$nombre = filter_input(INPUT_GET, "nombre");
-$contrasena = filter_input(INPUT_GET, "contrasena");
-$tipo = filter_input(INPUT_GET, "tipo");
-$usuario = filter_input(INPUT_GET, "usuario");
-$correo = filter_input(INPUT_GET, "correo");
-
-if ($idUsuario != null) {
-    $usuarios -> setIdUsuario($idUsuario);
-
-    if ($nombre != null) {
-        $usuarios -> setNombre($nombre);
-    }
+$datosInsert=(count($_POST["datosInsert"]));
+for($i = 0; $i <$datosInsert ; $i++){
+    $nombre=($_POST["datosInsert"][$i]["nombre"]);
+    $contrasena=($_POST["datosInsert"][$i]["contrasena"]);
+    $tipo=($_POST["datosInsert"][$i]["tipo"]);
+    $usuario=($_POST["datosInsert"][$i]["usuario"]);
+    $correo=($_POST["datosInsert"][$i]["correo"]);
+    //echo $i."  nombre ".$nombre, "  contrasena ".$contrasena,"  tipo ".$tipo,"  usuario ".$usuario,"  correo ".$correo;
+    $usuarioNuevo = new UsuariosModel();
     
-    if ($contrasena != null) {
-        $usuarios -> setContrasena($contrasena);
-    }
-
-    if ($tipo != null) {
-        $usuarios -> setTipo($tipo);
-    }
-
-    if ($usuario != null) {
-        $usuarios -> setUsuario($usuario);
-    }
-
-    if ($correo != null) {
-        $usuarios -> setCorreo($correo);
-    }
-
-    $resultado = $usuarios -> editarUsuario();
-
-} else {
-    $resultado = "No se ha pasado la ID";
+    $usuarioNuevo -> setNombre($nombre);
+    $usuarioNuevo -> setCorreo($correo);
+    $usuarioNuevo -> setContrasena($contrasena);
+    $usuarioNuevo -> setUsuario($usuario);
+    $usuarioNuevo -> setTipo($tipo);
+    
+    $resultado=$usuarioNuevo -> editarUsuario();
+    echo $resultado;
 }
-echo $resultado;
+
+$datosInsert=($_POST["datosInsert"]);
+
+
+
+
 ?>

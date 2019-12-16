@@ -19,9 +19,7 @@ for($i = 0; $i <$datosInsert ; $i++){
     
     $equipoEntrenadorNuevo->buscarEquipoId();
     $entrenadorNuevo -> setIdEquipo($equipoEntrenadorNuevo->getIdEquipo());
-    $equipoEntrenadorNuevo -> setIdEquipo($equipoEntrenadorNuevo->getIdEquipo());
-    
-    $equipoEntrenadorNuevo->findEquipoById();
+
     
     $resultado=$entrenadorNuevo -> aniadirEntrenador();
     

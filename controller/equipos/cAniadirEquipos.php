@@ -17,9 +17,7 @@ for($i = 0; $i <$datosInsert ; $i++){
     
     $categoriaEquipoNuevo->buscarCategoriaId();
     $equipoNuevo -> setIdCategoria($categoriaEquipoNuevo->getIdCategoria());
-    $categoriaEquipoNuevo -> setIdCategoria($categoriaEquipoNuevo->getIdCategoria());
     
-    $categoriaEquipoNuevo->findCategoriaById();
     
     $resultado=$equipoNuevo -> aniadirEquipo();
     

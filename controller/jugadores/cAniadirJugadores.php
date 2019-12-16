@@ -21,9 +21,7 @@ for($i = 0; $i <$datosInsert ; $i++){
     
     $equipoJugadorNuevo->buscarEquipoId();
     $jugadorNuevo -> setIdEquipo($equipoJugadorNuevo->getIdEquipo());
-    $equipoJugadorNuevo -> setIdEquipo($equipoJugadorNuevo->getIdEquipo());
-    
-    $equipoJugadorNuevo->findEquipoById();
+
         
     $resultado=$jugadorNuevo -> aniadirJugador();
   
