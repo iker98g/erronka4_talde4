@@ -533,19 +533,13 @@ function editarElemento(id,tablita){
     	}
     	
     	$.each(miDatosTabla,function(i,datos){
-    		var ws="id"+Tabla;
     	var myVar=eval("datos.id"+Tabla);
-    	console.log({myVar});
-    	var idTabla="id"+Tabla;
-    	console.log("suma"+idTabla);
-    	var datosRequeridos= "datos.id"+Tabla;
-        	console.log("each:"+datosRequeridos);
-			console.log("intento"+JSON. stringify(datos));
+    	//console.log({myVar});
 
-			if(id==datosRequeridos){
+			if(id==myVar){
 //				ContenidoTablas+=`<div class="JugadoresEquiposTitulo paneles `+equipoClass+` " ><div class="titulo_boton"><div class="tituloEquipo"><h2>`+datosJugadores.objectEquipo.nombre+`</h2></div></div><div class="divTablaAdmin"><div class="insertButton" ><button type="button" >+NUEVOS JUGADORES</button></div><table class="rellenoAdminJugadoresEquipos"></table></div></div>`;
 // 				equipos.push(equipoClass);//añadimos el nombre del equipo al array
-			console.log("id encontrada"+id);
+			console.log("id-> "+id+" MyVar-> "+myVar);
 			}
 			/*LLAMADA A LA FUNCION PARA INSERTAR EN CUALQUIER TABLA LAS LINEAS QUE EL ADMINISTRADOR DESEE*/
 //        	botonInsertAdmin();//boton para insertar nuevas lineas en cualquiera de las tablas
