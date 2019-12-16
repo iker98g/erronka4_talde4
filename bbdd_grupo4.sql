@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-12-2019 a las 12:06:50
--- Versión del servidor: 10.1.36-MariaDB
--- Versión de PHP: 7.2.11
+-- Tiempo de generación: 16-12-2019 a las 10:08:47
+-- Versión del servidor: 10.4.6-MariaDB
+-- Versión de PHP: 7.1.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -79,6 +79,9 @@ select * from equipo where equipo.nombre=pNombre$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spBuscarUsuarioId` (IN `pUsuario` VARCHAR(42))  NO SQL
 select * from usuario where usuario.usuario=pUsuario$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spEntrenadoresPorEquipo` (IN `pId` INT)  NO SQL
+SELECT * FROM entrenador WHERE entrenador.idEquipo = pId$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spEquiposPorCategoria` (IN `p_idCategoria` INT)  NO SQL
 SELECT * FROM equipo WHERE equipo.idCategoria=p_idCategoria$$
@@ -306,7 +309,7 @@ CREATE TABLE `usuario` (
   `contrasena` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nombre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `correo` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tipo` int(1) NOT NULL DEFAULT '2'
+  `tipo` int(1) NOT NULL DEFAULT 2
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
