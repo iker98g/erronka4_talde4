@@ -2,6 +2,7 @@
 include_once ("../../model/UsuariosModel.php");
 $datosInsert=(count($_POST["datosInsert"]));
 for($i = 0; $i <$datosInsert ; $i++){
+    $id=($_POST["datosInsert"][$i]["id"]);
     $nombre=($_POST["datosInsert"][$i]["nombre"]);
     $contrasena=($_POST["datosInsert"][$i]["contrasena"]);
     $tipo=($_POST["datosInsert"][$i]["tipo"]);
@@ -10,6 +11,7 @@ for($i = 0; $i <$datosInsert ; $i++){
     //echo $i."  nombre ".$nombre, "  contrasena ".$contrasena,"  tipo ".$tipo,"  usuario ".$usuario,"  correo ".$correo;
     $usuarioNuevo = new UsuariosModel();
     
+    $usuarioNuevo -> setIdUsuario($id);
     $usuarioNuevo -> setNombre($nombre);
     $usuarioNuevo -> setCorreo($correo);
     $usuarioNuevo -> setContrasena($contrasena);

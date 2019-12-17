@@ -1,4 +1,5 @@
 var EquipoN,NombreTabla,ContenidoTablas,cantidad,linea,Tabla,clase,datosEncontrados;
+var idModificar=-1;
 var roles=[];
 var equiposInput=[];
 var categorias=[];
@@ -328,7 +329,6 @@ function generarInserts(){
 	/*Para meter la primera vez los datos le llamamos desde dentro de la funcion botonInsertAdmin()
 	 * despues le llamamos desde el boton del formulario con un myfunction=generarInserts()*/
 	if(datosEncontrados==null){
-
 		if(cantidadInsert>=1 &&(LoopTimes==cantidadInsert||LoopTimes!=cantidadInsert)&&siguienteInsert==false){
 			var elements = document.getElementsByName( Tabla );
 			for(var i=0;i<elements.length;i++){
@@ -355,16 +355,28 @@ function generarInserts(){
 					LoopTimes+=1;//console.log(LoopTimes +"loop y siguiente"+siguienteInsert);
 				}
 				if((LoopTimes==cantidadInsert||LoopTimes!=cantidadInsert)&& datosEncontrados==null){
-		
-					$("#formularioInsert").html("");
-					$("#formularioInsert").html("YA HAS TERMINADO DE INSERTAR LO QUE QUERIAS ");
+					$("#tablas").hide();
+
 					$.ajax({
 				        type:"POST",
 				        data:{"datosInsert":datosInsert},
 				        url:"../controller/"+minusculas+"/cAniadir"+Tabla+".php",
-				        success: function(datosUsuarios){
-				        	console.log(datosUsuarios);
-				        },
+				        success: function(datos){
+				        	console.log(datos);
+							$("#formularioInsert").html(`<input type="button" value="Volver a las tablas" class="volverTablas"></input>`);
+							$("#formularioInsert .volverTablas").click(function(){
+//								$(".divTablaAdmin").hide(800);
+//								$(".divTablaAdmin").css("margin","0px");
+//								$(".titulo_boton").css({"border-bottom":"0px","background-color":"white"});
+//								$("#JugadoresPorEquipos").hide(1200);
+//								$(".JugadoresEquiposTitulo .divTablaAdmin").hide();//Escondemos las tablas de jugadores por equipos (no los titulos)
+//								$("#tablas").show();
+//								$("#tablas .paneles").show();
+//								$("#formularioInsert").html("");
+							    location.reload();
+
+							});
+								},
 				        error: function(xhr){
 				            alert("An error occured: "+xhr.status+" "+xhr.statusText);
 				        }
@@ -372,6 +384,8 @@ function generarInserts(){
 				}
 			}
 		}else{
+			console.log("id"+idModificar);
+			linea="id:"+idModificar+",";
 			var elements = document.getElementsByName( Tabla );
 			for(var i=0;i<elements.length;i++){
 				var input=elements[i];
@@ -388,14 +402,28 @@ function generarInserts(){
 			datosInsert=[];
 			datosInsert.push(obj);//añadimos al array creado anteriormente el objeto 
 			console.log(datosInsert);
-				$("#formularioInsert").html("");
-				$("#formularioInsert").html("YA HAS TERMINADO DE MODIFICAR LO QUE QUERIAS ");
+			$("#tablas").hide(800);
+	
 				$.ajax({
 			        type:"POST",
 			        data:{"datosInsert":datosInsert},
 			        url:"../controller/"+minusculas+"/cEditar"+Tabla+".php",
-			        success: function(datosUsuarios){
-			        	console.log(datosUsuarios);
+			        success: function(datos){
+			        	console.log(datos);
+			        	$("#formularioInsert").html(`<input type="button" value="Volver a las tablas" class="volverTablas"></input>`);
+						$("#formularioInsert .volverTablas").click(function(){
+//							$(".divTablaAdmin").hide(800);
+//							$(".divTablaAdmin").css("margin","0px");
+//							$(".titulo_boton").css({"border-bottom":"0px","background-color":"white"});
+//							$("#JugadoresPorEquipos").hide(1200);
+//							$(".JugadoresEquiposTitulo .divTablaAdmin").hide();//Escondemos las tablas de jugadores por equipos (no los titulos)
+//							$("#tablas").show();
+//							$("#tablas .paneles").show();
+//							$("#formularioInsert").html("");
+						    location.reload();
+
+						});
+
 			        },
 			        error: function(xhr){
 			            alert("An error occured: "+xhr.status+" "+xhr.statusText);
@@ -546,10 +574,26 @@ function generarCodigoInsert(){
         	
         	htmlCode=` </form>`;
         	$("#formularioInsert").append(htmlCode);
-
-        	htmlCode=`<input id="button" type="button" value="Submit" onclick="generarInserts()">`;
+        	htmlCode=`<div id="botonesInsertMod"></div>`;
         	$("#formularioInsert").append(htmlCode);
 
+        	if(datosEncontrados != null){
+        		htmlCode=`<input type="button" id="cancelarModificar" value="CANCELAR" style="inline-block"></input>`;
+            	htmlCode+=`<input id="button" class="aceptarInsertMod" type="button" value="MODIFICAR" onclick="generarInserts()" style="inline-block">`;
+        		$("#formularioInsert #botonesInsertMod").html("");
+
+        		$("#formularioInsert #botonesInsertMod").html(htmlCode);
+        		$("#cancelarModificar").click(function(){
+		        	$("#tablas .paneles").show();
+	        		$("#formularioInsert").html("");
+	        	});
+        		
+        	}else{
+        		htmlCode=`<input id="button" type="button" value="INSERTAR"  class="aceptarInsertMod" onclick="generarInserts()">`;
+        		$("#formularioInsert #botonesInsertMod").html("");	
+
+        		$("#formularioInsert #botonesInsertMod").html(htmlCode);	
+        	}
         	linea="";
         	
             $("#formularioInsert #FormInsert").css({"display":"grid", "grid-template-columns":"auto auto"});
@@ -600,8 +644,10 @@ function borrarElemento(id,tablita){
 //    });
 }
 function editarElemento(id,tablita){
-	$("#tablas .paneles").hide();
-	$("#tablas ."+tablita).show();
+
+	
+		$("#tablas .paneles").hide();
+
 	minusculas=tablita.substring(1,tablita.length); //COGEMOS EL TEXTO EXCEPTO LA PRIMERA LETRA
 	mayusculas=tablita.substring(0,1); //COGEMOS LA PRIMERA LETRA
 	mayusculas=mayusculas.toUpperCase(); //CAMBIAMOS EL TEXTO A MAYUSCULAS
@@ -633,6 +679,7 @@ function editarElemento(id,tablita){
 
 			console.log("id-> "+id+" MyVar-> "+myVar);
 			datosEncontrados=datos;
+			idModificar=id;
 			generarCodigoInsert();
 			}	
     	});

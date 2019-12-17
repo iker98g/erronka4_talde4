@@ -104,7 +104,7 @@ class EntrenadoresModel extends EntrenadoresClass {
         $this->CloseConnect();
     }
     
-    public function editarJugador() {
+    public function editarEntrenador() {
         $this->OpenConnect();
         
         $idEntrenador=$this->getIdEntrenador();

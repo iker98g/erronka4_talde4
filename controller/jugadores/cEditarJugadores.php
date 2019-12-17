@@ -3,6 +3,7 @@ include_once ("../../model/JugadoresModel.php");
 include_once ("../../model/EquiposModel.php");
 $datosInsert=(count($_POST["datosInsert"]));
 for($i = 0; $i <$datosInsert ; $i++){
+    $id=($_POST["datosInsert"][$i]["id"]);
     $nombre=($_POST["datosInsert"][$i]["nombre"]);
     $imagen=($_POST["datosInsert"][$i]["imagen"]);
     $telefono=($_POST["datosInsert"][$i]["telefono"]);
@@ -11,6 +12,7 @@ for($i = 0; $i <$datosInsert ; $i++){
     
     $jugadorNuevo = new JugadoresModel();
     
+    $jugadorNuevo -> setIdJugador($id);
     $jugadorNuevo -> setNombre($nombre);
     $jugadorNuevo -> setImagen($imagen);
     $jugadorNuevo -> setRol($rol);
