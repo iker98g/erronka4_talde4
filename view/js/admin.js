@@ -51,10 +51,10 @@ function iniciarJAdmin(){
 	 				equipos.push(equipoClass);//añadimos el nombre del equipo al array
 				}
 				/*LLAMADA A LA FUNCION PARA INSERTAR EN CUALQUIER TABLA LAS LINEAS QUE EL ADMINISTRADOR DESEE*/
-	        	botonInsertAdmin();//boton para insertar nuevas lineas en cualquiera de las tablas
 	        	/*LO PONEMOS AQUI PORQUE AQUI SE GENERA EL BOTON DE JUGADORES POR EQUIPOS(si no solo iria en las demas tablas)*/
         	});//AQUI TERMINA EL GENERADOR DE LOS TITULOS DE LOS EQUIPOS POR JUGADORES
 			$("#JugadoresPorEquipos").html(ContenidoTablas);
+        	botonInsertAdmin();//boton para insertar nuevas lineas en cualquiera de las tablas
 
 	 		for(var i=0;i<equipos.length;i++){
 	 			var equipo=equipos[i];
@@ -631,17 +631,17 @@ function borrarElemento(id,tablita){
 	Tabla=mayusculas+minusculas;
 	console.log(id+" <-id tablita-> "+tablita+" Tabla-> "+Tabla);
 	
-//	$.ajax({
-//        type:"POST",
-//        data:{"id":id},
-//        url:"../controller/"+tablita+"/cBorrar"+Tabla+".php",
-//        success: function(resultado){
-//        	console.log(resultado);
-//        },
-//        error: function(xhr){
-//            alert("An error occured: "+xhr.status+" "+xhr.statusText);
-//        }
-//    });
+	$.ajax({
+        type:"POST",
+        data:{"id":id},
+        url:"../controller/"+tablita+"/cBorrar"+Tabla+".php",
+        success: function(resultado){
+        	console.log(resultado);
+        },
+        error: function(xhr){
+            alert("An error occured: "+xhr.status+" "+xhr.statusText);
+        }
+    });
 }
 function editarElemento(id,tablita){
 
