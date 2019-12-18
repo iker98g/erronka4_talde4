@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-12-2019 a las 10:08:47
--- Versión del servidor: 10.4.6-MariaDB
--- Versión de PHP: 7.1.32
+-- Tiempo de generación: 18-12-2019 a las 09:28:49
+-- Versión del servidor: 10.4.10-MariaDB
+-- Versión de PHP: 7.2.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -125,12 +125,12 @@ UPDATE entrenador
 SET entrenador.nombre = pNombre, entrenador.imagen = pImagen, entrenador.telefono = pTelefono, entrenador.idEquipo = pIdEquipo
 WHERE entrenador.idEntrenador = pIdEntrenador$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spModificarEquipo` (IN `pIdEquipo` INT, IN `pNombre` VARCHAR(50), IN `pLogo` VARCHAR(200), IN `pIdCategoria` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spModificarEquipo` (IN `pIdEquipo` INT, IN `pNombre` VARCHAR(50), IN `pIdCategoria` INT, IN `pLogo` VARCHAR(200))  NO SQL
 UPDATE equipo
 SET equipo.nombre = pNombre, equipo.logo = pLogo, equipo.idCategoria = pIdCategoria
 WHERE equipo.idEquipo = pIdEquipo$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spModificarJugador` (IN `pIdJugador` INT, IN `pNombre` VARCHAR(50), IN `pImagen` VARCHAR(200), IN `pRol` VARCHAR(50), IN `pTelefono` VARCHAR(9), IN `pIdEquipo` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spModificarJugador` (IN `pIdJugador` INT, IN `pIdEquipo` INT, IN `pNombre` VARCHAR(50), IN `pRol` VARCHAR(50), IN `pImagen` VARCHAR(200), IN `pTelefono` VARCHAR(9))  NO SQL
 UPDATE jugador
 SET jugador.nombre = pNombre, jugador.imagen = pImagen, jugador.rol = pRol, jugador.telefono = pTelefono, jugador.idEquipo = pIdEquipo
 WHERE jugador.idJugador = pIdJugador$$

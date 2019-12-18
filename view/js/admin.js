@@ -47,7 +47,7 @@ function iniciarJAdmin(){
 				 * el array equipos, en caso de no estar entra en el if y se añade al array el nombre del 
 				 * equipo sin espacios*/
 				if(!equipos.includes(equipoClass)){
-					ContenidoTablas+=`<div class="JugadoresEquiposTitulo paneles `+equipoClass+` " ><div class="titulo_boton"><div class="tituloEquipo"><h2>`+datosJugadores.objectEquipo.nombre+`</h2></div></div><div class="divTablaAdmin"><div class="insertButton" ><button type="button" >+NUEVOS JUGADORES</button></div><table class="rellenoAdminJugadoresEquipos"></table></div></div>`;
+					ContenidoTablas+=`<div class="JugadoresEquiposTitulo paneles `+equipoClass+` " ><div class="titulo_boton"><div class="tituloEquipo"><h2>`+datosJugadores.objectEquipo.nombre+`</h2></div></div><div class="divTablaAdmin scrollAuto"><div class="insertButton" ><button type="button" >+NUEVOS JUGADORES</button></div><table class="rellenoAdminJugadoresEquipos"></table></div></div>`;
 	 				equipos.push(equipoClass);//añadimos el nombre del equipo al array
 				}
 				/*LLAMADA A LA FUNCION PARA INSERTAR EN CUALQUIER TABLA LAS LINEAS QUE EL ADMINISTRADOR DESEE*/
@@ -346,7 +346,7 @@ function generarInserts(){
 			}
 			datosInsert=[];
 			datosInsert.push(obj);//añadimos al array creado anteriormente el objeto 
-			console.log(datosInsert);
+			//console.log(datosInsert);
 			//alert(minusculas+"<-carpeta Tabla->"+Tabla);
 				if(cantidadInsert>=1 &&LoopTimes!=cantidadInsert&&siguienteInsert==false&& datosEncontrados==null){	
 		//			console.log(LoopTimes+"LoopTimes y insertCantidad"+cantidadInsert);
@@ -362,7 +362,7 @@ function generarInserts(){
 				        data:{"datosInsert":datosInsert},
 				        url:"../controller/"+minusculas+"/cAniadir"+Tabla+".php",
 				        success: function(datos){
-				        	console.log(datos);
+				        	//console.log(datos);
 							$("#formularioInsert").html(`<input type="button" value="Volver a las tablas" class="volverTablas"></input>`);
 							$("#formularioInsert .volverTablas").click(function(){
 //								$(".divTablaAdmin").hide(800);
@@ -384,7 +384,7 @@ function generarInserts(){
 				}
 			}
 		}else{
-			console.log("id"+idModificar);
+			//console.log("id"+idModificar);
 			linea="id:"+idModificar+",";
 			var elements = document.getElementsByName( Tabla );
 			for(var i=0;i<elements.length;i++){
@@ -401,7 +401,7 @@ function generarInserts(){
 			}
 			datosInsert=[];
 			datosInsert.push(obj);//añadimos al array creado anteriormente el objeto 
-			console.log(datosInsert);
+			//console.log(datosInsert);
 			$("#tablas").hide(800);
 	
 				$.ajax({
@@ -409,7 +409,7 @@ function generarInserts(){
 			        data:{"datosInsert":datosInsert},
 			        url:"../controller/"+minusculas+"/cEditar"+Tabla+".php",
 			        success: function(datos){
-			        	console.log(datos);
+			        	//console.log(datos);
 			        	$("#formularioInsert").html(`<input type="button" value="Volver a las tablas" class="volverTablas"></input>`);
 						$("#formularioInsert .volverTablas").click(function(){
 //							$(".divTablaAdmin").hide(800);
@@ -629,14 +629,14 @@ function borrarElemento(id,tablita){
 	mayusculas=tablita.substring(0,1); //COGEMOS LA PRIMERA LETRA
 	mayusculas=mayusculas.toUpperCase(); //CAMBIAMOS EL TEXTO A MAYUSCULAS
 	Tabla=mayusculas+minusculas;
-	console.log(id+" <-id tablita-> "+tablita+" Tabla-> "+Tabla);
+	//console.log(id+" <-id tablita-> "+tablita+" Tabla-> "+Tabla);
 	
 	$.ajax({
         type:"POST",
         data:{"id":id},
         url:"../controller/"+tablita+"/cBorrar"+Tabla+".php",
         success: function(resultado){
-        	console.log(resultado);
+        	//console.log(resultado);
         },
         error: function(xhr){
             alert("An error occured: "+xhr.status+" "+xhr.statusText);
@@ -653,7 +653,7 @@ function editarElemento(id,tablita){
 	mayusculas=mayusculas.toUpperCase(); //CAMBIAMOS EL TEXTO A MAYUSCULAS
 	Tabla=mayusculas+minusculas;
 	minusculas=Tabla.toLowerCase();
-	console.log(id+" <-id tablita-> "+tablita+" Tabla-> "+Tabla);
+	//console.log(id+" <-id tablita-> "+tablita+" Tabla-> "+Tabla);
 	$.ajax({
       type:"POST",
       data:{"id":id},
@@ -663,10 +663,10 @@ function editarElemento(id,tablita){
     	ContenidoTablas="";
     	if(Tabla.endsWith("es")){
     		NombreTabla=Tabla.slice(0,-2); 
-        	console.log(NombreTabla);
+        	//console.log(NombreTabla);
     	}else if(Tabla.endsWith("s")){
     		NombreTabla=Tabla.slice(0,-1); 
-        	console.log(NombreTabla);
+        	//console.log(NombreTabla);
     	}else{
     		alert("NO SE PUEDE HACER EL MODIFICAR");
     	}
@@ -677,7 +677,7 @@ function editarElemento(id,tablita){
 
 			if(id==myVar){
 
-			console.log("id-> "+id+" MyVar-> "+myVar);
+			//console.log("id-> "+id+" MyVar-> "+myVar);
 			datosEncontrados=datos;
 			idModificar=id;
 			generarCodigoInsert();

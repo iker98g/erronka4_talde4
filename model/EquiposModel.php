@@ -105,12 +105,12 @@ class EquiposModel extends EquiposClass {
     public function editarEquipo() {
         $this->OpenConnect();
         
-        $idEquipo=$this->getIdEquipo();
-        $nombre=$this->getNombre();
-        $idCategoria=$this->getIdCategoria();
-        $logo=$this->getLogo();
+        $idEquipo=$this->idEquipo;
+        $nombre=$this->nombre;
+        $idCategoria=$this->idCategoria;
+        $logo=$this->logo;
         
-        $sql = "CALL spModificarEquipo('$idEquipo','$nombre', '$idCategoria', '$logo')";
+        $sql = "CALL spModificarEquipo($idEquipo,'$nombre', $idCategoria, '$logo')";
         
         if ($this->link->query($sql)>=1) { // aldatu egiten da
             return "El equipo se ha modificado con exito";
