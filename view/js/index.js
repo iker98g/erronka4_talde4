@@ -3,6 +3,8 @@ $(document).ready(function() {
 	
 	confirmarLetras();
 	
+	confirmarCorreo();
+	
 	activarRegistro();
 	
 	realizarRegistro();
@@ -49,14 +51,9 @@ function confirmarLetras() {
 	    var codigo=event.which;
 	    var codigoString=String.fromCharCode(codigo);
 	    
-	    alert(codigo);
-	    alert(codigoString);
-	    
 	    if ((codigo > 64 && codigo < 91) || (codigo > 96 && codigo < 123)) {
-	    	alert("Es una letra");
 	    	return true;
 	    }else {
-	    	alert("No es una letra");
 	        return false;
 	    }
 	});
@@ -84,9 +81,9 @@ function comprobarUsuario() {
 	    	success: function(result) {
 	    		console.log(result);
 	    		if (result==0) {
-	    			alert("El usuario esta libre");
+	    			return true;
 	    		}else {
-	    			alert("El usuario esta en uso");
+	    			return false;
 	    		}
 			},
 	       	error : function(xhr) {
@@ -106,13 +103,9 @@ function comprobarCorreo() {
 	       	dataType:"text",
 	    	success:function(result) {
 	    		if (result==0) {
-	    			alert("El correo esta libre");
+	    			return true;
 	    		}else {
-	    			alert("El correo esta en uso");
-	    			$("#nombreFormInsert").val("");
-	    	        $("#emailFormInsert").val("");
-	    	        $("#usuarioFormInsert").val("");
-	    	        $("#passwordFormInsert").val("");
+	    			return false;
 	    		}
 			},
 	       	error:function(xhr) {
@@ -125,12 +118,13 @@ function comprobarCorreo() {
 function realizarRegistro() {
 	//insertar usuario
     $("#btnRegistro").click(function() {
-    	confirmarCorreo();
+    	comprobarUsuario();
+    	comprobarCorreo();
     	
-		if(confirmarCorreo()) {
+		if(comprobarUsuario() && comprobarCorreo()) {
 			registrarUsuario();
 		}else {
-			alert("La dirección de email es incorrecta.");
+			alert("EL usuario o el correo ya está en uso.");
 		}
     });
 }
