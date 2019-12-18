@@ -1,6 +1,7 @@
 var EquipoN,NombreTabla,ContenidoTablas,cantidad,linea,Tabla,clase,datosEncontrados;
 var idModificar=-1;
 var roles=[];
+var elementosValidar="";
 var equiposInput=[];
 var categorias=[];
 var users=[];
@@ -471,7 +472,7 @@ function generarCodigoInsert(){
         	}
         	
         	if(Tabla==="Jugadores"||Tabla==="Entrenadores"){
-        		htmlCode=`<p>Telefono:</p><input type="number" id="telefono" name="`+Tabla+`" required><p>Equipo:</p><select id="equipo" name="`+Tabla+`" required></select>`;
+        		htmlCode=`<p>Telefono:</p><input type="number" id="telefono" name="`+Tabla+`" required onkeypress="return teclaPulsadaNum(event)"><p>Equipo:</p><select id="equipo" name="`+Tabla+`" required></select>`;
         		$("#FormInsert").append(htmlCode);
 	        	$.each(misDatosTabla,function(i,datos_tabla){
 	        		if(!equiposInput.includes(datos_tabla.objectEquipo.nombre)){
@@ -579,7 +580,7 @@ function generarCodigoInsert(){
 
         	if(datosEncontrados != null){
         		htmlCode=`<input type="button" id="cancelarModificar" value="CANCELAR" style="inline-block"></input>`;
-            	htmlCode+=`<input id="button" class="aceptarInsertMod" type="button" value="MODIFICAR" onclick="generarInserts()" style="inline-block">`;
+            	htmlCode+=`<input id="button" class="aceptarInsertMod" type="button" value="MODIFICAR" onclick="validaciones()" style="inline-block">`;
         		$("#formularioInsert #botonesInsertMod").html("");
 
         		$("#formularioInsert #botonesInsertMod").html(htmlCode);
@@ -589,7 +590,7 @@ function generarCodigoInsert(){
 	        	});
         		
         	}else{
-        		htmlCode=`<input id="button" type="button" value="INSERTAR"  class="aceptarInsertMod" onclick="generarInserts()">`;
+        		htmlCode=`<input id="button" type="button" value="INSERTAR"  class="aceptarInsertMod" onclick="validaciones()">`;
         		$("#formularioInsert #botonesInsertMod").html("");	
 
         		$("#formularioInsert #botonesInsertMod").html(htmlCode);	
@@ -688,7 +689,59 @@ function editarElemento(id,tablita){
       error: function(xhr){
           alert("An error occured: "+xhr.status+" "+xhr.statusText);
       }
-  });
+  });	
+}
+
+
+function teclaPulsadaNum(e){
+	 
+	 var teclanumero;
+	 var keychar;
+	 var longitud;
+	 teclanumero=e.which;
+	 keychar= String.fromCharCode(teclanumero);
+	 longitud= $("#telefono").val();
+	 console.log(longitud);
+	 if(longitud.length<9){
+		 if(keychar<"0" || keychar>"9"){
+			 return false;
+		 }else{
+			 return true;
+		 }
+	 }else{
+		 return false;
+	 }
+	
+}
+
+function validaciones(){
+	if(revisarInputs()){
+		alert("DATOS ENVIADOS CORRECTAMENTE");
+		generarInserts();
+		return true;
+		}else{
+			alert("DATOS NO ENVIADOS");
+			alert("INTRODUZCA EN LOS SIGUIENTES CAMPOS DATOS VALIDOS: "+elementosValidar);
+
+		return false;
+	}
+}
+function revisarInputs(){
+	elementosValidar="/";
+	var elements = document.getElementsByName( Tabla );
+	for(var i=0;i<elements.length;i++){
+		var input=elements[i];
+		var id = elements[i].getAttribute( 'id' );
+		var contenido = $("#"+id).val();
+		if(contenido==null||contenido==""){
+			elementosValidar+=id+"/";			
+		}
+	}
+	if(elementosValidar!="/"){
+		return false;
+	}else{
+		return true;
+	}
 	
 	
 }
