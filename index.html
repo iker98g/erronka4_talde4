@@ -22,7 +22,7 @@
 	<header>
   <!-- NAV -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="index.html"><img src="view/imagenes/logo_snitch.png"></a>
+      <a class="navbar-brand"><img src="view/imagenes/logo_snitch.png"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -32,7 +32,7 @@
             <a class="nav-link text-light" href="view/vPrincipal.php">Equipos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" data-toggle="modal" data-target="#examModal">Contáctanos</a>
+            <a class="nav-link text-light" href="#" data-toggle="modal" data-target="#examModal">Contáctanos</a>
           </li>
         </ul>
         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
@@ -42,7 +42,7 @@
           <div class="btn-group mr-2 sesion" role="group" aria-label="Second group">
             <button type="button" class="btn btn-light" data-toggle="modal" data-target="#sesionModal">Iniciar Sesión</button>
           </div>
-          <div id="nombreUsuario" class="btn-group mr-2 text-light dropdown dropleft" role="group" aria-label="Third group">
+          <div id="nombreUsuario" class="collapse navbar-collapse mr-2 text-light" role="group" aria-label="Third group">
           	<!-- AQUI VA EL CODIGO DE LOS BOTONES DE SESIÓN QUE SE CREAN EN EL INDEX.JS -->
           </div>
         </div>
@@ -109,8 +109,8 @@
                     <input type="text" class="form-control" id="nombreFormInsert" aria-describedby="nombreInsert" required name="insertarUsu">
                   </div>
                   <div class="col">
-                  	<label for="apellidoFormInsert">Email</label>
-                    <input type="text" class="form-control" id="emailFormInsert" aria-describedby="apellidoInsert" required name="insertarUsu">
+                  	<label for="emailFormInsert">Email</label>
+                    <input type="email" class="form-control" id="emailFormInsert" aria-describedby="emailInsert" required name="insertarUsu">
                   </div>
                 </div>
                 <div class="form-group">
@@ -119,12 +119,12 @@
                 </div>
                 <div class="form-group">
                     <label for="passwordFormInsert">Contraseña</label>
-                    <input type="text" class="form-control" id="passwordFormInsert" aria-describedby="passwordInsert" required name="insertarUsu">
+                    <input type="password" class="form-control" id="passwordFormInsert" aria-describedby="passwordInsert" required name="insertarUsu">
                 </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" id="btnRegistro" class="btn btn-secondary botonExecuteInsertUsers" data-dismiss="modal" disabled>Confirmar</button>
+            <button type="submit" id="btnRegistro" class="btn btn-secondary botonExecuteInsertUsers" data-dismiss="modal" disabled>Confirmar</button>
           </div>
         </div>
       </div>
