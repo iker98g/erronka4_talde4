@@ -7,7 +7,7 @@ $(document).ready(function() {
 	
 	activarRegistro();
 	
-	realizarRegistro();
+	comprobarUsuario();
 	
 	activarSesion();
 	
@@ -29,29 +29,12 @@ function modificarJumbotron() {
     });
 }
 
-function activarRegistro() {
-	//activar boton de registro
-    $('input[name = "insertarUsu"]').on('keyup', function() {
-        empty = false;
-
-        $('input[name = "insertarUsu"]').each(function() {
-            empty = $(this).val().length == 0;
-        });
-
-        if (empty) {
-            $('#btnRegistro').attr('disabled', 'disabled');
-        }else {
-            $('#btnRegistro').attr('disabled', false);
-        }     
-    });
-}
-
 function confirmarLetras() {
-	$( "#nombreFormInsert" ).keypress(function(event) {
+	$("#nombreFormInsert").keypress(function(event) {
 	    var codigo=event.which;
 	    var codigoString=String.fromCharCode(codigo);
 	    
-	    if ((codigo > 64 && codigo < 91) || (codigo > 96 && codigo < 123)) {
+	    if((codigo > 64 && codigo < 91) || (codigo > 96 && codigo < 123)) {
 	    	return true;
 	    }else {
 	        return false;
@@ -70,63 +53,65 @@ function confirmarCorreo() {
     }
 }
 
-function comprobarUsuario() {
-	$("#btnRegistro").click(function() {	
-		var username=$("#usuarioFormInsert").val();
+function activarRegistro() {
+	//activar boton de registro
+    $('input[name = "insertarUsu"]').on('keyup', function() {
+        empty = false;
 
+        $('input[name = "insertarUsu"]').each(function() {
+            empty = $(this).val().length == 0;
+        });
+
+        if (empty) {
+            $('#btnRegistro').attr('disabled', 'disabled');
+        }else {
+            $('#btnRegistro').attr('disabled', false);
+        }     
+    });
+}
+
+function comprobarUsuario() {
+	$("#btnRegistro").click(function() {
+		var username=$("#usuarioFormInsert").val();
+	
 		$.ajax({
 			data:{'username':username},
 	       	url: "controller/usuarios/cBuscarUsuario.php", 
 	       	dataType:"text",
-	    	success: function(result) {
+	    	success:function(result) {
 	    		console.log(result);
 	    		if (result==0) {
-	    			return true;
+	    			comprobarCorreo();
 	    		}else {
-	    			return false;
-	    		}
-			},
-	       	error : function(xhr) {
-	   			alert("An error occured: " + xhr.status + " " + xhr.statusText);
-	   		}
-		});
-    });
-}
-
-function comprobarCorreo() {
-	$("#btnRegistro").click(function() {	
-		var correo=$("#emailFormInsert").val();
-
-		$.ajax({
-			data:{'correo':correo},
-	       	url:"controller/usuarios/cBuscarCorreo.php", 
-	       	dataType:"text",
-	    	success:function(result) {
-	    		if (result==0) {
-	    			return true;
-	    		}else {
-	    			return false;
+	    			alert ("El usuario ya existe");
 	    		}
 			},
 	       	error:function(xhr) {
 	   			alert("An error occured: " + xhr.status + " " + xhr.statusText);
 	   		}
 		});
-    });
+	});
 }
 
-function realizarRegistro() {
-	//insertar usuario
-    $("#btnRegistro").click(function() {
-    	comprobarUsuario();
-    	comprobarCorreo();
-    	
-		if(comprobarUsuario() && comprobarCorreo()) {
-			registrarUsuario();
-		}else {
-			alert("EL usuario o el correo ya está en uso.");
-		}
-    });
+function comprobarCorreo() {	
+	var correo=$("#emailFormInsert").val();
+
+	$.ajax({
+		data:{'correo':correo},
+       	url:"controller/usuarios/cBuscarCorreo.php", 
+       	dataType:"text",
+    	success:function(result) {
+    		console.log(result);
+    		if (result==0) {
+    			registrarUsuario();
+    		}else {
+    			alert("El correo ya existe");
+    		}
+		},
+       	error:function(xhr) {
+   			alert("An error occured: " + xhr.status + " " + xhr.statusText);
+   		}
+	});
 }
 
 function registrarUsuario() {

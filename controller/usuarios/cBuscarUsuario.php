@@ -1,5 +1,5 @@
 <?php
-    require_once '../model/UsuariosModel.php';
+    require_once '../../model/UsuariosModel.php';
     
     $username=filter_input(INPUT_GET, "username");
     
