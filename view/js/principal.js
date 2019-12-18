@@ -95,8 +95,38 @@ var miApp=angular.module('miApp',[]);
       	   });
        }     
                 
-                
-                
+       
+       $scope.nuevaConsulta=function(){
+    	 //TODOS LOS USUARIOS SON ANONIMOS .DE MOMENTO
+    	 var consulta=$scope.miConsulta;
+    	 var usuario=100;
+    	 //alert(consulta);
+    	 misDatosInsert={
+    		consulta:$scope.miConsulta,
+    		usuario:"100"
+    	 }
+    	 
+    	 misDatosInsert=JSON.stringify(misDatosInsert);
+    	 alert(misDatosInsert);
+    	 
+    	   $http({url:'../controller/consultas/cInsertConsultaPrincipal.php',
+    		   method: "GET",
+    		   params:{datosInsert:misDatosInsert}}).then(function(data){
+    		   
+    			
+    			 
+    			   
+            
+              
+              
+             }).catch(function(response){
+          	   console.error('Error ocurred: ',response.status,response.data);
+          	   
+      	   }).finally(function(){
+      		   console.log("Consulta enviada.");
+      	   });
+       }
+     
                 
         }]);
 
