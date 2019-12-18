@@ -235,7 +235,7 @@ function sesionIniciada(result) {
 		if (result.admin==0) {
 			newRow+="<ul class='navbar-nav mr-auto'>";
 	        newRow+="<li class='nav-item'>";
-	        newRow+="<a class='nav-link text-light' id='panelAdmin' href='view/vAdmin.php'>Panel Admin</a>";
+	        newRow+="<a class='nav-link text-light' id='panelAdmin' href='view/vAdmin.html'>Panel Admin</a>";
 			newRow+="</li>";
 			newRow+="<li class='nav-item'>";
 			newRow+="<a class='nav-link text-light' id='usuario'>"+ result.usuario +" </a>";
