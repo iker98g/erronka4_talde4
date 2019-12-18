@@ -3,10 +3,10 @@ include_once ("../../model/UsuariosModel.php");
 
 $usuarios = new UsuariosModel();
 
-$idUsuario = filter_input(INPUT_GET, "idUsuario");
+$id=($_POST["id"]);
 
-if ($idUsuario != null) {
-    $usuarios -> setIdUsuario($idUsuario);
+if ($id != null) {
+    $usuarios -> setIdUsuario($id);
     $resultado = $usuarios -> borrarUsuario();
 } else {
     $resultado = "No se ha pasado la ID";

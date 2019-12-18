@@ -104,7 +104,7 @@ class EntrenadoresModel extends EntrenadoresClass {
         $this->CloseConnect();
     }
     
-    public function editarJugador() {
+    public function editarEntrenador() {
         $this->OpenConnect();
         
         $idEntrenador=$this->getIdEntrenador();
@@ -150,11 +150,7 @@ class EntrenadoresModel extends EntrenadoresClass {
         }
         mysqli_free_result($result);
         unset($equipo);
-        $this->CloseConnect();
-        
-        
-        
-        
+        $this->CloseConnect();     
     }
     
     function getListJsonString() {

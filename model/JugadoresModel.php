@@ -117,15 +117,14 @@ class JugadoresModel extends JugadoresClass {
     public function editarJugador() {
         $this->OpenConnect();
         
-        $idJugador=$this->getIdJugador();
-        $idEquipo=$this->getIdEquipo();
-        $nombre=$this->getNombre();
-        $rol=$this->getRol();
-        $imagen=$this->getImagen();
-        $telefono=$this->getTelefono();
+        $idJugador=$this->idJugador;
+        $idEquipo=$this->idEquipo;
+        $nombre=$this->nombre;
+        $rol=$this->rol;
+        $imagen=$this->imagen;
+        $telefono=$this->telefono;
         
-        $sql = "CALL spModificarJugador('$idJugador','$idEquipo', '$nombre', '$rol', '$imagen', '$telefono')";
-        
+        $sql = "CALL spModificarJugador($idJugador,$idEquipo, '$nombre', '$rol', '$imagen', '$telefono')";
         if ($this->link->query($sql)>=1) { // aldatu egiten da
             return "El jugador se ha modificado con exito";
         } else {
@@ -163,10 +162,6 @@ class JugadoresModel extends JugadoresClass {
         mysqli_free_result($result);
         unset($equipo);
         $this->CloseConnect();
-        
-        
-        
-        
     }
     
     

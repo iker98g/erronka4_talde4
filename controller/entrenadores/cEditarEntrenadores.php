@@ -1,37 +1,33 @@
 <?php
 include_once ("../../model/EntrenadoresModel.php");
-
-$entrenador = new EntrenadoresModel();
-
-$idEntrenador = filter_input(INPUT_GET, "idEntrenador");
-$nombre = filter_input(INPUT_GET, "nombre");
-$imagen = filter_input(INPUT_GET, "imagen");
-$telefono = filter_input(INPUT_GET, "telefono");
-$idEquipo = filter_input(INPUT_GET, "idEquipo");
-
-if ($idEntrenador != null) {
-    $entrenador -> setIdEntrenador($idEntrenador);
-
-    if ($nombre != null) {
-        $entrenador -> setNombre($nombre);
-    }
+include_once ("../../model/EquiposModel.php");
+$datosInsert=(count($_POST["datosInsert"]));
+for($i = 0; $i <$datosInsert ; $i++){
+    $id=($_POST["datosInsert"][$i]["id"]);
+    $nombre=($_POST["datosInsert"][$i]["nombre"]);
+    $imagen=($_POST["datosInsert"][$i]["imagen"]);
+    $telefono=($_POST["datosInsert"][$i]["telefono"]);
+    $equipo=($_POST["datosInsert"][$i]["equipo"]);
     
-    if ($imagen != null) {
-        $entrenador -> setImagen($imagen);
-    }
+    $entrenadorNuevo = new EntrenadoresModel();
+    
+    $entrenadorNuevo -> setIdEntrenador($id);
+    $entrenadorNuevo -> setNombre($nombre);
+    $entrenadorNuevo -> setImagen($imagen);
+    $entrenadorNuevo -> setTelefono($telefono);
+    
+    $equipoEntrenadorNuevo = new EquiposModel();
+    $equipoEntrenadorNuevo->setNombre($equipo);
+    
+    $equipoEntrenadorNuevo->buscarEquipoId();
+    $entrenadorNuevo -> setIdEquipo($equipoEntrenadorNuevo->getIdEquipo());
 
-    if ($telefono != null) {
-        $entrenador -> setTelefono($telefono);
-    }
-
-    if ($idEquipo != null) {
-        $entrenador -> setIdEquipo($idEquipo);
-    }
-
-    $resultado = $entrenador -> editarEntrenador();
-
-} else {
-    $resultado = "No se ha pasado la ID";
+    
+    $resultado=$entrenadorNuevo -> editarEntrenador();
+    
+    echo $resultado;
 }
-echo $resultado;
+
+$datosInsert=($_POST["datosInsert"]);
+
 ?>

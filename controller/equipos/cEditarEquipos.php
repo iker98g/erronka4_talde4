@@ -1,32 +1,31 @@
 <?php
+include_once ("../../model/CategoriasModel.php");
 include_once ("../../model/EquiposModel.php");
-
-$equipo = new EquiposModel();
-
-$idEquipo = filter_input(INPUT_GET, "idEquipo");
-$nombre = filter_input(INPUT_GET, "nombre");
-$idCategoria = filter_input(INPUT_GET, "idCategoria");
-$logo = filter_input(INPUT_GET, "logo");
-
-if ($idEquipo != null) {
-    $equipo -> setIdEquipo($idEquipo);
-
-    if ($nombre != null) {
-        $equipo -> setNombre($nombre);
-    }
+$datosInsert=(count($_POST["datosInsert"]));
+for($i = 0; $i <$datosInsert ; $i++){
+    $id=($_POST["datosInsert"][$i]["id"]);
+    $nombre=($_POST["datosInsert"][$i]["nombre"]);
+    $logo=($_POST["datosInsert"][$i]["logo"]);
+    $categoria=($_POST["datosInsert"][$i]["categoria"]);
     
-    if ($idCategoria != null) {
-        $equipo -> setIdCategoria($idCategoria);
-    }
-
-    if ($logo != null) {
-        $equipo -> setLogo($logo);
-    }
-
-    $resultado = $equipo -> editarEquipo();
-
-} else {
-    $resultado = "No se ha pasado la ID";
+    $equipoNuevo = new EquiposModel();
+    
+    $equipoNuevo -> setIdEquipo($id);
+    $equipoNuevo -> setNombre($nombre);
+    $equipoNuevo -> setLogo($logo);
+    
+    $categoriaEquipoNuevo = new CategoriasModel();
+    $categoriaEquipoNuevo->setNombre($categoria);
+    
+    $categoriaEquipoNuevo->buscarCategoriaId();
+    $equipoNuevo -> setIdCategoria($categoriaEquipoNuevo->getIdCategoria());
+    
+    
+    $resultado=$equipoNuevo -> editarEquipo();
+    
+    echo $resultado;
 }
-echo $resultado;
+
+$datosInsert=($_POST["datosInsert"]);
+
 ?>

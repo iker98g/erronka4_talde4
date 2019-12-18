@@ -107,7 +107,9 @@ padding: 0;
 .divTablaAdmin{
 	display:none;
 }
-
+.scrollAuto{
+	overflow:auto;
+}
 /*AQUI EMPIEZA EL CSS DE SELECCIONAR CANTIDAD DEL INSERT*/
 
 #formularioInsert{
@@ -139,8 +141,24 @@ padding: 0;
  		color:white;
  		font-size:20px;
 }
-/*AQUI TERMINA EL CSS DE SELECCIONAR CANTIDAD DEL INSERT*/
 
+/*AQUI TERMINA EL CSS DE SELECCIONAR CANTIDAD DEL INSERT*/
+#cancelarModificar{
+	background-color:red;
+ 		color:white;
+ 		font-size:20px;
+}
+.aceptarInsertMod{
+		background-color:green;
+ 		color:white;
+ 		font-size:20px;
+}
+.volverTablas{
+		margin-top:25px;
+		background-color:#5a80d8;
+ 		color:white;
+ 		font-size:20px;	
+}
 .footer_vAdmin>ul{
 	list-style: none;
 	display:flex;
@@ -163,6 +181,7 @@ padding: 0;
 .footer_vAdmin p{
 	color:rgba(255,255,255,.75);
 }
+
 /* MEDIA QUERY*/
 @media (max-width: 991px) { 
 	
@@ -172,7 +191,7 @@ padding: 0;
 /* 	} */
 	
 	td{
-		font-size: 30px;
+		font-size: 20px;
 	}
 	
 	a{		
@@ -184,6 +203,9 @@ padding: 0;
 
 /* FIN MEDIA QUERY*/
 
+     table {
+       overflow-x: scroll;
+     }
 
 
 

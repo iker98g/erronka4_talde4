@@ -3,10 +3,10 @@ include_once ("../../model/CategoriasModel.php");
 
 $categoria = new CategoriasModel();
 
-$idCategoria = filter_input(INPUT_GET, "idCategoria");
+$id=($_POST["id"]);
 
-if ($idCategoria != null) {
-    $categoria -> setIdCategoria($idCategoria);
+if ($id != null) {
+    $categoria -> setIdCategoria($id);
     $resultado = $categoria -> borrarCategoria();
 } else {
     $resultado = "No se ha pasado la ID";

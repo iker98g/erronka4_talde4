@@ -244,5 +244,53 @@
             mysqli_free_result($result);
             $this->CloseConnect();
         }
+
+        public function borrarUsuario() {
+            $this->OpenConnect();
+            
+            $idUsuario=$this->getIdUsuario();
+            
+            $sql = "CALL spBorrarUsuario('$idUsuario')";
+            
+            if ($this->link->query($sql)>=1) { // aldatu egiten da
+                return "El usuario se ha borrado con exito";
+            } else {
+                return "Fallo al borrar el usuario: (" . $this->link->errno . ") " . $this->link->error;
+            }
+            
+            $this->CloseConnect();
+        }
+        
+        public function editarUsuario() {
+            $this->OpenConnect();
+            $id=$this->idUsuario;
+            
+            $nombre=$this->nombre;
+            $tipo=$this->tipo;
+            $nombre=$this->nombre;
+            $correo=$this->correo;
+            $usuario=$this->usuario;
+            $contrasena=$this->contrasena;
+            if($tipo=="Administrador"){
+                $tipo="0";
+            }else if($tipo=="Entrenador"){
+                $tipo="1";
+            }else if($tipo=="Anonimo"){
+                $tipo="3";
+            }else{
+                $tipo="2";
+            }
+            $options=['cost'=>10];
+            $encriptedPass=password_hash ($contrasena,PASSWORD_BCRYPT,$options) ;
+            
+            $sql="call spModificarUsuario($id,'$usuario', '$encriptedPass', '$nombre', '$correo',$tipo)";
+            
+            if ($this->link->query($sql)>=1) { // aldatu egiten da
+                return "El usuario se ha modificado con exito";
+            } else {
+                return "Fallo al modificar el usuario: (" . $this->link->errno . ") " . $this->link->error;
+            }
+            $this->CloseConnect();
+        }
     }
 ?>

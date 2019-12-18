@@ -1,19 +1,16 @@
-var EquipoN;
+var EquipoN,NombreTabla,ContenidoTablas,cantidad,linea,Tabla,clase,datosEncontrados;
+var idModificar=-1;
 var roles=[];
 var equiposInput=[];
 var categorias=[];
 var users=[];
 var LoopTimes=0;
 var datosInsert=[];
-var cantidad;
 var cantidadInsert=-1;
 var obj = {};//creamos un objeto vacio
 var siguienteInsert=false;
-var linea;
-var Tabla;
 var midato= new Object();
 var equipos = [];
-var clase;
 var m;// variable utilizada en frontal para sacar los tipos
 $(document).ready(function(){
 	/*INICIO DE CREAR TABLAS */
@@ -43,31 +40,22 @@ function iniciarJAdmin(){
         success: function(datosJugadores){
         	
         	miDatosJugadores=JSON.parse(datosJugadores);
-        	
+        	ContenidoTablas="";
         	$.each(miDatosJugadores,function(i,datosJugadores){
 				var equipoClass=datosJugadores.objectEquipo.nombre.replace(/ /g, "");
 				/*recogemos los nombres de los equipos (y les quitamos los espacios) y comprobramos si están en 
 				 * el array equipos, en caso de no estar entra en el if y se añade al array el nombre del 
 				 * equipo sin espacios*/
 				if(!equipos.includes(equipoClass)){
-	
-						$("#JugadoresPorEquipos").append(`<div class="JugadoresEquiposTitulo paneles `+equipoClass+` " >
-	 				
-						<div class="titulo_boton"><div class="tituloEquipo"><h2>`+datosJugadores.objectEquipo.nombre+`</h2></div></div>
-						
-				        <div class="divTablaAdmin">
-							<div class="insertButton" ><button type="button" >+NUEVOS JUGADORES</button></div>
-							<table class="rellenoAdminJugadoresEquipos"><tr><th>IDJUGADOR</th><th>NOMBRE</th><th>IMAGEN</th><th>ROL</th><th>TELEFONO</th><th>EQUIPO</th><th>ACCION</th></tr></table>
-						</div>
-						
-					</div>`);
+					ContenidoTablas+=`<div class="JugadoresEquiposTitulo paneles `+equipoClass+` " ><div class="titulo_boton"><div class="tituloEquipo"><h2>`+datosJugadores.objectEquipo.nombre+`</h2></div></div><div class="divTablaAdmin scrollAuto"><div class="insertButton" ><button type="button" >+NUEVOS JUGADORES</button></div><table class="rellenoAdminJugadoresEquipos"></table></div></div>`;
 	 				equipos.push(equipoClass);//añadimos el nombre del equipo al array
 				}
 				/*LLAMADA A LA FUNCION PARA INSERTAR EN CUALQUIER TABLA LAS LINEAS QUE EL ADMINISTRADOR DESEE*/
-	        	botonInsertAdmin();//boton para insertar nuevas lineas en cualquiera de las tablas
 	        	/*LO PONEMOS AQUI PORQUE AQUI SE GENERA EL BOTON DE JUGADORES POR EQUIPOS(si no solo iria en las demas tablas)*/
         	});//AQUI TERMINA EL GENERADOR DE LOS TITULOS DE LOS EQUIPOS POR JUGADORES
- 		
+			$("#JugadoresPorEquipos").html(ContenidoTablas);
+        	botonInsertAdmin();//boton para insertar nuevas lineas en cualquiera de las tablas
+
 	 		for(var i=0;i<equipos.length;i++){
 	 			var equipo=equipos[i];
 	
@@ -91,22 +79,20 @@ function iniciarJAdmin(){
 	 	 				$(".panelJ .divTablaAdmin .rellenoAdminJugadoresEquipos").css({"margin-top":"50px", "margin-bottom": "50px"});
 	 	 				$(".panelJ .titulo_boton").css({"border-bottom":"1px solid black", "background-color":"gray"});
 	 				}
-	 				
-	 		    	$.each(miDatosJugadores,function(i,datosJugadores){
+	 				ContenidoTablas="<tr><th>IDJUGADOR</th><th>NOMBRE</th><th>IMAGEN</th><th>ROL</th><th>TELEFONO</th><th>EQUIPO</th><th>ACCION</th></tr>";
+	 	        	NombreTabla="jugadores";
+
+	 				$.each(miDatosJugadores,function(i,datosJugadores){
 	 					var equipoJugador=datosJugadores.objectEquipo.nombre.replace(/ /g, "");
 	 					//volvemos a recoger el nombre del equipo
 	 					 					
 	 		    		if(equipoJugador==EquipoN){//si son jugadores del equipo clickado, entra en el if
 	 		    			$(".JugadoresEquipos").css("background-color","white!important");
-	 		    			$("."+EquipoN+" .rellenoAdminJugadoresEquipos").append(`<tr class="JugadoresE">
-	 		           		<td>`+datosJugadores.idJugador+`</td><td>`+datosJugadores.nombre+`</td>
-	 		           		<td><img src="`+datosJugadores.imagen+`" style="width:100px; height:auto;"></td>
-	 		           		<td>`+datosJugadores.rol+`</td><td>`+datosJugadores.telefono+`</td>
-	 		           		<td>`+datosJugadores.objectEquipo.nombre+`</td><td><i class="fas fa-edit" value="`+datosJugadores.idJugador+`"></i>
-	 		           		<i class="fas fa-trash-alt" value="`+datosJugadores.idJugador+`"></i></td></tr>`);
+	 		    			ContenidoTablas+=`<tr class="JugadoresE"><td>`+datosJugadores.idJugador+`</td><td>`+datosJugadores.nombre+`</td><td><img src="`+datosJugadores.imagen+`" style="width:100px; height:auto;"></td><td>`+datosJugadores.rol+`</td><td>`+datosJugadores.telefono+`</td><td>`+datosJugadores.objectEquipo.nombre+`</td><td><div onclick="editarElemento(`+datosJugadores.idJugador+`,'`+NombreTabla+`')" style="display:inline-block" class="editar" id="`+datosJugadores.idJugador+`"><i class="fas fa-edit"></i></div><div onclick="borrarElemento(`+datosJugadores.idJugador+`,'`+NombreTabla+`')" style="display:inline-block" class="borrar" id="`+datosJugadores.idJugador+`"><i class="fas fa-trash-alt" ></i></div></td></tr>`;
+	 		    			
 	 		    		}
 	 		    	});
-
+	 		    	$("."+EquipoN+" .rellenoAdminJugadoresEquipos").html(ContenidoTablas);
 	 		    });//FIN DEL EVENTO DE CLICKAR EN LOS EQUIPOS DENTRO DE LA TABLA JUGADORES
 	 		}
         },
@@ -123,16 +109,13 @@ function iniciarEqAdmin(){
         success: function(datosEquipos){
 
         	miDatosEquipos=JSON.parse(datosEquipos);
-        	
+        	ContenidoTablas=`<tr><th>IDEQUIPO</th><th>NOMBRE</th><th>LOGO</th><th>CATEGORIA</th><th>ACCION</th></tr>`;
+        	NombreTabla="equipos";
         	$.each(miDatosEquipos,function(i,datosEquipo){
-				
- 				$(".panelEq .divTablaAdmin table").append(`<tr><td>`+datosEquipo.idEquipo+`</td>            		
- 		           		<td>`+datosEquipo.nombre+`</td><td><img src="`+datosEquipo.logo+`" style="width:100px; height:auto;"></td>
- 		           		<td>`+datosEquipo.objectCategoria.nombre+`</td><td><i class="fas fa-edit" value="`+datosEquipo.idEquipo+`"></i>
- 		           		<i class="fas fa-trash-alt" value="`+datosEquipo.idEquipo+`"></i></td></tr>`);
- 				
- 			});//FIN DE GENERAR LA TABLA DE EQUIPOS
-
+        		ContenidoTablas+=`<tr><td>`+datosEquipo.idEquipo+`</td><td>`+datosEquipo.nombre+`</td><td><img src="`+datosEquipo.logo+`" style="width:100px; height:auto;"></td><td>`+datosEquipo.objectCategoria.nombre+`</td><td><div onclick="editarElemento(`+datosEquipo.idEquipo+`,'`+NombreTabla+`')" style="display:inline-block" class="editar" id="`+datosEquipo.idEquipo+`"><i class="fas fa-edit"></i></div><div onclick="borrarElemento(`+datosEquipo.idEquipo+`,'`+NombreTabla+`')" style="display:inline-block" class="borrar" id="`+datosEquipo.idEquipo+`"><i class="fas fa-trash-alt" ></i></div></td></tr>`;
+ 			
+        	});//FIN DE GENERAR LA TABLA DE EQUIPOS
+        	$(".panelEq .divTablaAdmin table").html(ContenidoTablas);	
  		},
         error: function(xhr){
             alert("An error occured: "+xhr.status+" "+xhr.statusText);
@@ -147,17 +130,13 @@ function iniciarEnAdmin(){
         success: function(datosEntrenadores){
         	
         	miDatosEntrenadores=JSON.parse(datosEntrenadores);
-        	
+        	ContenidoTablas=`<tr><th>IDENTRENADOR</th><th>NOMBRE</th><th>IMAGEN</th><th>TELEFONO</th><th>EQUIPO</th><th>ACCION</th></tr>`;
+        	NombreTabla="entrenadores";
         	$.each(miDatosEntrenadores,function(i,datosEntrenador){
-				
- 				$(".panelEn .divTablaAdmin table").append(`<tr><td>`+datosEntrenador.idEntrenador+`</td>            		
- 		           		<td>`+datosEntrenador.nombre+`</td><td><img src="`+datosEntrenador.imagen+`" style="width:100px; height:auto;"></td>
- 		           		<td>`+datosEntrenador.telefono+`</td><td>`+datosEntrenador.objectEquipo.nombre+`</td>
- 		           		<td><i class="fas fa-edit" value="`+datosEntrenador.idEntrenador+`"></i>
- 		           		<i class="fas fa-trash-alt" value="`+datosEntrenador.idEntrenador+`"></i></td></tr>`);
- 				
- 			});//FIN DE GENERAR LA TABLA DE ENTRENADORES
+				ContenidoTablas+=`<tr><td>`+datosEntrenador.idEntrenador+`</td><td>`+datosEntrenador.nombre+`</td><td><img src="`+datosEntrenador.imagen+`" style="width:100px; height:auto;"></td><td>`+datosEntrenador.telefono+`</td><td>`+datosEntrenador.objectEquipo.nombre+`</td><td><div onclick="editarElemento(`+datosEntrenador.idEntrenador+`,'`+NombreTabla+`')" style="display:inline-block" class="editar" id="`+datosEntrenador.idEntrenador+`"><i class="fas fa-edit"></i></div><div onclick="borrarElemento(`+datosEntrenador.idEntrenador+`,'`+NombreTabla+`')" style="display:inline-block" class="borrar" id="`+datosEntrenador.idEntrenador+`"><i class="fas fa-trash-alt" ></i></div></td></tr>`;
 
+ 			});//FIN DE GENERAR LA TABLA DE ENTRENADORES
+        	$(".panelEn .divTablaAdmin table").html(ContenidoTablas);
        	},
         error: function(xhr){
             alert("An error occured: "+xhr.status+" "+xhr.statusText);
@@ -172,16 +151,13 @@ function iniciarCaAdmin(){
         success: function(datosCategorias){
         	
         	miDatosCategorias=JSON.parse(datosCategorias);
-        	
+        	ContenidoTablas=`<tr><th>IDCATEGORIA</th><th>NOMBRE</th><th>IMAGEN</th><th>ACCION</th></tr>`;
+        	NombreTabla="categorias";
         	$.each(miDatosCategorias,function(i,datosCategoria){
-				
- 				$(".panelCa .divTablaAdmin table").append(`<tr><td>`+datosCategoria.idCategoria+`</td>            		
- 		           		<td>`+datosCategoria.nombre+`</td><td><img src="`+datosCategoria.imagen+`" style="width:100px; height:auto;"></td>
- 		           		<td><i class="fas fa-edit" value="`+datosCategoria.idCategoria+`"></i>
- 		           		<i class="fas fa-trash-alt" value="`+datosCategoria.idCategoria+`"></i></td></tr>`);
+        		ContenidoTablas+=`<tr><td>`+datosCategoria.idCategoria+`</td><td>`+datosCategoria.nombre+`</td><td><img src="`+datosCategoria.imagen+`" style="width:100px; height:auto;"></td><td><div onclick="editarElemento(`+datosCategoria.idCategoria+`,'`+NombreTabla+`')" style="display:inline-block" class="editar" id="`+datosCategoria.idCategoria+`"><i class="fas fa-edit"></i></div><div onclick="borrarElemento(`+datosCategoria.idCategoria+`,'`+NombreTabla+`')" style="display:inline-block" class="borrar" id="`+datosCategoria.idCategoria+`"><i class="fas fa-trash-alt" ></i></div></td></tr>`;
  				
  			});//FIN DE GENERAR LA TABLA DE CATEGORIAS
-
+        	$(".panelCa .divTablaAdmin table").html(ContenidoTablas);
        	},
         error: function(xhr){
             alert("An error occured: "+xhr.status+" "+xhr.statusText);
@@ -196,16 +172,13 @@ function iniciarCoAdmin(){
         success: function(datosConsultas){
         	
         	miDatosConsultas=JSON.parse(datosConsultas);
-        	
+        	ContenidoTablas=`<tr><th>IDCONSULTA</th><th>CONSULTA</th><th>IDUSUARIO</th><th>ACCION</th></tr>`;
+        	NombreTabla="consultas";
         	$.each(miDatosConsultas,function(i,datosConsultas){
-
- 			$(".panelCo .divTablaAdmin table").append(`<tr><td>`+datosConsultas.idConsulta+`</td>            		
- 		           		<td>`+datosConsultas.consulta+`</td><td>`+datosConsultas.objectUsuario.usuario+`</td>
- 		           		<td><div onclick="editarElemento()" style="display:inline-block" class="editar" id="`+datosConsultas.idConsulta+`"><i class="fas fa-edit"></i></div>
- 		           		<div onclick="borrarElemento()" style="display:inline-block" data-tabla="consulta" class="borrar" id="`+datosConsultas.idConsulta+`"><i class="fas fa-trash-alt" ></i></div></td></tr>`);
+        		ContenidoTablas+=`<tr><td>`+datosConsultas.idConsulta+`</td><td>`+datosConsultas.consulta+`</td><td>`+datosConsultas.objectUsuario.usuario+`</td><td><div onclick="borrarElemento(`+datosConsultas.idConsulta+`,'`+NombreTabla+`')" style="display:inline-block" class="borrar" id="`+datosConsultas.idConsulta+`"><i class="fas fa-trash-alt" ></i></div></td></tr>`;
  				
  			});//FIN DE GENERAR LA TABLA DE CONSULTAS
-
+        	$(".panelCo .divTablaAdmin table").html(ContenidoTablas);
        	},
         error: function(xhr){
             alert("An error occured: "+xhr.status+" "+xhr.statusText);
@@ -221,18 +194,13 @@ function iniciarUAdmin(){
         	
         	miDatosUsuarios=JSON.parse(datosUsuarios);
 //        	console.log(miDatosUsuarios);
-        	
- 		$.each(miDatosUsuarios,function(i,datosUsuarios){
- 				$(".panelU .divTablaAdmin table").append(`<tr><td>`+datosUsuarios.idUsuario+`</td>            		
- 		           		<td>`+datosUsuarios.usuario+`</td><td>`+datosUsuarios.contrasena+`</td>
- 		           		<td>`+datosUsuarios.nombre+`</td><td>`+datosUsuarios.correo+`</td>
- 		           		<td>`+datosUsuarios.tipo+`</td><td><div onclick="editarElemento()" style="display:inline-block" class="editar" id="`+datosUsuarios.idUsuario+`"><i class="fas fa-edit"></i></div>
- 		           		<div onclick="borrarElemento()" style="display:inline-block" data-tabla="usuario" class="borrar" id="`+datosUsuarios.idUsuario+`"><i class="fas fa-trash-alt" ></i></div></td></tr>`);
- 				
- 			});//FIN DE GENERAR LA TABLA DE USUARIOS	
- 			
- 		
-		
+	    	ContenidoTablas=`<tr><th>IDUSUARIO</th><th>USUARIO</th><th>CONTRASENA</th><th>NOMBRE</th><th>CORREO</th><th>TIPO</th><th>ACCION</th></tr>`;
+	    	NombreTabla="usuarios";	
+	 		$.each(miDatosUsuarios,function(i,datosUsuarios){
+	 			ContenidoTablas+=`<tr><td>`+datosUsuarios.idUsuario+`</td><td>`+datosUsuarios.usuario+`</td><td>`+datosUsuarios.contrasena+`</td><td>`+datosUsuarios.nombre+`</td><td>`+datosUsuarios.correo+`</td><td>`+datosUsuarios.tipo+`</td><td><div onclick="editarElemento(`+datosUsuarios.idUsuario+`,'`+NombreTabla+`')" style="display:inline-block" class="editar" id="`+datosUsuarios.idUsuario+`"><i class="fas fa-edit"></i></div><div onclick="borrarElemento(`+datosUsuarios.idUsuario+`,'`+NombreTabla+`')" style="display:inline-block" class="borrar" id="`+datosUsuarios.idUsuario+`"><i class="fas fa-trash-alt" ></i></div></td></tr>`;
+	 				
+	 			});//FIN DE GENERAR LA TABLA DE USUARIOS	
+	 		$(".panelU .divTablaAdmin table").html(ContenidoTablas);
 		},
         error: function(xhr){
             alert("An error occured: "+xhr.status+" "+xhr.statusText);
@@ -303,7 +271,7 @@ function aparicionTablas(){
 function botonInsertAdmin(){//se le llama desde iniciarJAdmin()
 
 	$(".insertButton button").click(function(){
-	
+		
 		/*AQUI EMPIEZA EL RECOGER VALOR DE EL BOTON CLICK INSERTAR*/
 		$("#tablas").hide();
 		var TablaInsert=$(this).text();
@@ -330,7 +298,7 @@ function botonInsertAdmin(){//se le llama desde iniciarJAdmin()
 			$("#formularioInsert select").append(`<option id=`+i+`> `+i+` </option>`);	
 		}
 		/*AQUI TERMINA EL PREGUNTAR LA CANTIDAD DEL INSERT DESEADOS*/
-		
+		datosEncontrados=null;
 		$("#cancelarInsert").click(function(){
 			$(".divTablaAdmin").hide(800);
 			$(".divTablaAdmin").css("margin","0px");
@@ -360,51 +328,110 @@ function botonInsertAdmin(){//se le llama desde iniciarJAdmin()
 function generarInserts(){
 	/*Para meter la primera vez los datos le llamamos desde dentro de la funcion botonInsertAdmin()
 	 * despues le llamamos desde el boton del formulario con un myfunction=generarInserts()*/
-	if(cantidadInsert>=1 &&(LoopTimes==cantidadInsert||LoopTimes!=cantidadInsert)&&siguienteInsert==false){
-		var elements = document.getElementsByName( Tabla );
-		for(var i=0;i<elements.length;i++){
-			var input=elements[i];
-			var id = elements[i].getAttribute( 'id' );
-			var contenido = $("#"+id).val();
-			linea+=id+":"+contenido+",";	//añadimos 
-		}
-		
-		linea=linea.slice(0,-1);
-		var values = linea.split(",");//separamos las partes de nuestro futuro array
-		for(var i=0; i<values.length; i++) {
-		    var keyValue = values[i].split(":");//separamos cada parte de cada campo ya que es key:value
-		    obj[keyValue[0]] = keyValue[1];//asignamos que el key sea el que esta en la posicion principal y el value en la secundaria del objeto
-		}
-		datosInsert=[];
-		datosInsert.push(obj);//añadimos al array creado anteriormente el objeto 
-		console.log(datosInsert);
-		//alert(minusculas+"<-carpeta Tabla->"+Tabla);
+	if(datosEncontrados==null){
+		if(cantidadInsert>=1 &&(LoopTimes==cantidadInsert||LoopTimes!=cantidadInsert)&&siguienteInsert==false){
+			var elements = document.getElementsByName( Tabla );
+			for(var i=0;i<elements.length;i++){
+				var input=elements[i];
+				var id = elements[i].getAttribute( 'id' );
+				var contenido = $("#"+id).val();
+				linea+=id+"*/separar/*"+contenido+",";	//añadimos 
+			}
+			
+			linea=linea.slice(0,-1);
+			var values = linea.split(",");//separamos las partes de nuestro futuro array
+			for(var i=0; i<values.length; i++) {
+			    var keyValue = values[i].split("*/separar/*");//separamos cada parte de cada campo ya que es key:value
+			    obj[keyValue[0]] = keyValue[1];//asignamos que el key sea el que esta en la posicion principal y el value en la secundaria del objeto
+			}
+			datosInsert=[];
+			datosInsert.push(obj);//añadimos al array creado anteriormente el objeto 
+			//console.log(datosInsert);
+			//alert(minusculas+"<-carpeta Tabla->"+Tabla);
+				if(cantidadInsert>=1 &&LoopTimes!=cantidadInsert&&siguienteInsert==false&& datosEncontrados==null){	
+		//			console.log(LoopTimes+"LoopTimes y insertCantidad"+cantidadInsert);
+					siguienteInsert=generarCodigoInsert();//llamamos a una funcion donde generamos los inputs y devuelve un true cuando se han insertado
+					siguienteInsert=false;
+					LoopTimes+=1;//console.log(LoopTimes +"loop y siguiente"+siguienteInsert);
+				}
+				if((LoopTimes==cantidadInsert||LoopTimes!=cantidadInsert)&& datosEncontrados==null){
+					$("#tablas").hide();
 
-		if(cantidadInsert>=1 &&LoopTimes!=cantidadInsert&&siguienteInsert==false){	
-//			console.log(LoopTimes+"LoopTimes y insertCantidad"+cantidadInsert);
-			siguienteInsert=generarCodigoInsert();//llamamos a una funcion donde generamos los inputs y devuelve un true cuando se han insertado
-			siguienteInsert=false;
-			LoopTimes+=1;//console.log(LoopTimes +"loop y siguiente"+siguienteInsert);
+					$.ajax({
+				        type:"POST",
+				        data:{"datosInsert":datosInsert},
+				        url:"../controller/"+minusculas+"/cAniadir"+Tabla+".php",
+				        success: function(datos){
+				        	//console.log(datos);
+							$("#formularioInsert").html(`<input type="button" value="Volver a las tablas" class="volverTablas"></input>`);
+							$("#formularioInsert .volverTablas").click(function(){
+//								$(".divTablaAdmin").hide(800);
+//								$(".divTablaAdmin").css("margin","0px");
+//								$(".titulo_boton").css({"border-bottom":"0px","background-color":"white"});
+//								$("#JugadoresPorEquipos").hide(1200);
+//								$(".JugadoresEquiposTitulo .divTablaAdmin").hide();//Escondemos las tablas de jugadores por equipos (no los titulos)
+//								$("#tablas").show();
+//								$("#tablas .paneles").show();
+//								$("#formularioInsert").html("");
+							    location.reload();
+
+							});
+								},
+				        error: function(xhr){
+				            alert("An error occured: "+xhr.status+" "+xhr.statusText);
+				        }
+				    });
+				}
+			}
 		}else{
-			$("#formularioInsert").html("");
-		}
-		if(LoopTimes==cantidadInsert||LoopTimes!=cantidadInsert){
+			//console.log("id"+idModificar);
+			linea="id*/separar/*"+idModificar+",";
+			var elements = document.getElementsByName( Tabla );
+			for(var i=0;i<elements.length;i++){
+				var input=elements[i];
+				var id = elements[i].getAttribute( 'id' );
+				var contenido = $("#"+id).val();
+				linea+=id+"*/separar/*"+contenido+",";
+			}//añadimos 
+			linea=linea.slice(0,-1);
+			var values = linea.split(",");//separamos las partes de nuestro futuro array
+			for(var i=0; i<values.length; i++) {
+				    var keyValue = values[i].split("*/separar/*");//separamos cada parte de cada campo ya que es key:value
+				    obj[keyValue[0]] = keyValue[1];//asignamos que el key sea el que esta en la posicion principal y el value en la secundaria del objeto		    
+			}
+			datosInsert=[];
+			datosInsert.push(obj);//añadimos al array creado anteriormente el objeto 
+			//console.log(datosInsert);
+			$("#tablas").hide(800);
+	
+				$.ajax({
+			        type:"POST",
+			        data:{"datosInsert":datosInsert},
+			        url:"../controller/"+minusculas+"/cEditar"+Tabla+".php",
+			        success: function(datos){
+			        	console.log(datos);
+			        	$("#formularioInsert").html(`<input type="button" value="Volver a las tablas" class="volverTablas"></input>`);
+						$("#formularioInsert .volverTablas").click(function(){
+//							$(".divTablaAdmin").hide(800);
+//							$(".divTablaAdmin").css("margin","0px");
+//							$(".titulo_boton").css({"border-bottom":"0px","background-color":"white"});
+//							$("#JugadoresPorEquipos").hide(1200);
+//							$(".JugadoresEquiposTitulo .divTablaAdmin").hide();//Escondemos las tablas de jugadores por equipos (no los titulos)
+//							$("#tablas").show();
+//							$("#tablas .paneles").show();
+//							$("#formularioInsert").html("");
+						    location.reload();
 
-			$("#formularioInsert").html("");
-			$("#formularioInsert").html("YA HAS TERMINADO DE INSERTAR LO QUE QUERIAS ");
-			$.ajax({
-		        type:"POST",
-		        data:{"datosInsert":datosInsert},
-		        url:"../controller/"+minusculas+"/cAniadir"+Tabla+".php",
-		        success: function(datosUsuarios){
-		        	console.log(datosUsuarios);
-		        },
-		        error: function(xhr){
-		            alert("An error occured: "+xhr.status+" "+xhr.statusText);
-		        }
-		    });
+						});
+
+			        },
+			        error: function(xhr){
+			            alert("An error occured: "+xhr.status+" "+xhr.statusText);
+			        }
+			    });
+			
 		}
-	}
+	
 	
 }/*FIN DE LA FUNCION QUE ES PARA GENERAR LOS INSERTS Y PARA HACER INSERTS EN LA BASE DE DATOS*/
 
@@ -425,11 +452,22 @@ function generarCodigoInsert(){
         	if(Tabla==="Equipos"||Tabla==="Jugadores"||Tabla==="Categorias"||Tabla==="Entrenadores"||Tabla==="Usuarios"){
         		htmlCode=`<p>Nombre:</p><input type="text" id="nombre" name="`+Tabla+`" required>`;		
         		$("#FormInsert").append(htmlCode);
+        		if(datosEncontrados != null){ 
+            		$("#FormInsert #nombre").val(datosEncontrados.nombre);
+        		}else{
+            		$("#FormInsert #nombre").val("");
+        		};
+
         	}
         	
         	if(Tabla==="Jugadores"||Tabla==="Categorias"||Tabla==="Entrenadores"){
         		htmlCode=`<p>Imagen:</p><input type="text" name="`+Tabla+`" id="imagen"></input>`;
         		$("#FormInsert").append(htmlCode);
+        		if(datosEncontrados != null){ 
+            		$("#FormInsert #imagen").val(datosEncontrados.imagen);
+        		}else{
+            		$("#FormInsert #imagen").val("");
+        		};
         	}
         	
         	if(Tabla==="Jugadores"||Tabla==="Entrenadores"){
@@ -442,6 +480,14 @@ function generarCodigoInsert(){
 	        			}
 	        		});
 	        	
+	        	if(datosEncontrados != null){ 
+            		$("#FormInsert #telefono").val(datosEncontrados.telefono);
+            		$("#FormInsert #equipo").val(datosEncontrados.objectEquipo.nombre);
+        		}else{
+            		$("#FormInsert #telefono").val("");
+            		$("#FormInsert #equipo").val("");
+
+        		};
         	}
         	
         	if(Tabla==="Equipos"){
@@ -453,7 +499,14 @@ function generarCodigoInsert(){
      					categorias.push(datos_tabla.objectCategoria.nombre);
      				}
  				});        	
-	        }
+	        	if(datosEncontrados != null){ 
+            		$("#FormInsert #categoria").val(datosEncontrados.objectCategoria.nombre);
+            		$("#FormInsert #logo").val(datosEncontrados.logo);
+        		}else{
+            		$("#FormInsert #logo").val("");
+            		$("#FormInsert #categoria").val("");
+        		};
+        	}
         	
         	if(Tabla==="Jugadores"){
         		htmlCode=`<p>Rol:</p><select id="rol" name="`+Tabla+`" required></select>`;
@@ -464,7 +517,12 @@ function generarCodigoInsert(){
                 		roles.push(datos_tabla.rol);
      				}
      			});
-            }
+            	if(datosEncontrados != null){ 
+            		$("#FormInsert #rol").val(datosEncontrados.rol);
+        		}else{
+            		$("#FormInsert #rol").val("");
+        		};
+        	}
         	
         	if(Tabla==="Consultas"){
         		htmlCode=`<p>Consulta:</p><input type="text" id="consulta" name="`+Tabla+`"  required><p>Usuario:</p><select id="usuario" name="`+Tabla+`"  required></select>`;
@@ -475,6 +533,13 @@ function generarCodigoInsert(){
 						users.push(datos_tabla.objectUsuario.usuario);
      				}
      				});
+            	if(datosEncontrados != null){ 
+            		$("#FormInsert #consulta").val(datosEncontrados.consulta);
+            		$("#FormInsert #usuario").val(datosEncontrados.objectUsuario.nombre);
+        		}else{
+            		$("#FormInsert #consulta").val("");
+            		$("#FormInsert #usuario").val("");
+        		};
         	}
         	
         	if(Tabla==="Usuarios"){
@@ -483,14 +548,52 @@ function generarCodigoInsert(){
 //            	$.each(misDatosTabla,function(i,datos_tabla){
 //     				$("#tipo").append(`<option id="`+datos_tabla.objectTipo.nombre+`">`+datos_tabla.objectTipo.nombre+`</option>`);
 //     			});
-    			$("#tipo").append(`<option id="0">Administrador</option><option id="1">Entrenador</option><option id="2">Usuario Normal</option><option id="3">Anonimo</option>`);
+    			$("#tipo").append(`<option id="0">Administrador</option><option id="1">Entrenador</option><option id="2" selected>Usuario Normal</option><option id="3">Anonimo</option>`);
+            	if(datosEncontrados != null){ 
+            		
+            		 if(datosEncontrados.tipo=="0"){
+            			 datosEncontrados.tipo="Administrador";
+                     }else if(datosEncontrados.tipo=="1"){
+                    	 datosEncontrados.tipo="Entrenador";
+                     }else if(datosEncontrados.tipo=="2"){
+                    	 datosEncontrados.tipo="Usuario Normal";
+                     }else if(datosEncontrados.tipo=="3"){
+                    	 datosEncontrados.tipo="Anonimo";
+                     }
+            		$("#FormInsert #tipo").val(datosEncontrados.tipo);
+            		$("#FormInsert #contrasena").val(datosEncontrados.contrasena);
+            		$("#FormInsert #usuario").val(datosEncontrados.usuario);
+            		$("#FormInsert #correo").val(datosEncontrados.correo);
+        		}else{
+            		$("#FormInsert #contrasena").val("");
+            		$("#FormInsert #usuario").val("");
+            		$("#FormInsert #correo").val("");
+            		$("#FormInsert #tipo").val("");
+        		};
         	}
+        	
         	htmlCode=` </form>`;
         	$("#formularioInsert").append(htmlCode);
-
-        	htmlCode=`<input id="button" type="button" value="Submit" onclick="generarInserts()">`;
+        	htmlCode=`<div id="botonesInsertMod"></div>`;
         	$("#formularioInsert").append(htmlCode);
 
+        	if(datosEncontrados != null){
+        		htmlCode=`<input type="button" id="cancelarModificar" value="CANCELAR" style="inline-block"></input>`;
+            	htmlCode+=`<input id="button" class="aceptarInsertMod" type="button" value="MODIFICAR" onclick="generarInserts()" style="inline-block">`;
+        		$("#formularioInsert #botonesInsertMod").html("");
+
+        		$("#formularioInsert #botonesInsertMod").html(htmlCode);
+        		$("#cancelarModificar").click(function(){
+		        	$("#tablas .paneles").show();
+	        		$("#formularioInsert").html("");
+	        	});
+        		
+        	}else{
+        		htmlCode=`<input id="button" type="button" value="INSERTAR"  class="aceptarInsertMod" onclick="generarInserts()">`;
+        		$("#formularioInsert #botonesInsertMod").html("");	
+
+        		$("#formularioInsert #botonesInsertMod").html(htmlCode);	
+        	}
         	linea="";
         	
             $("#formularioInsert #FormInsert").css({"display":"grid", "grid-template-columns":"auto auto"});
@@ -520,28 +623,72 @@ function generarCodigoInsert(){
 	
 }
 /*FIN DE INSERTAR NUEVOS DATOS EN LAS TABLAS DESDE VADMIN */
-var ID=[];
-var TABLITA=[];
-var contador=0;
-function borrarElemento(){
-	$(".borrar").click(function(){
-		id=$(this).attr("id");
-		tablita=$(this).data("tabla");
-		contador+=1;
-		console.log(contador);
-		if(!ID.includes(id)&&(TABLITA.includes(tablita)||contador==1)){
-			ID.push(id);
-			if(!TABLITA.includes(tablita)){TABLITA.push(tablita);}
-			console.log(ID);
-			console.log(TABLITA);
-}else{
-		console.log("No no");
-	}
 
-	});	
+function borrarElemento(id,tablita){
+	minusculas=tablita.substring(1,tablita.length); //COGEMOS EL TEXTO EXCEPTO LA PRIMERA LETRA
+	mayusculas=tablita.substring(0,1); //COGEMOS LA PRIMERA LETRA
+	mayusculas=mayusculas.toUpperCase(); //CAMBIAMOS EL TEXTO A MAYUSCULAS
+	Tabla=mayusculas+minusculas;
+	//console.log(id+" <-id tablita-> "+tablita+" Tabla-> "+Tabla);
+	
+	$.ajax({
+        type:"POST",
+        data:{"id":id},
+        url:"../controller/"+tablita+"/cBorrar"+Tabla+".php",
+        success: function(resultado){
+        	//console.log(resultado);
+		    location.reload();
+        },
+        error: function(xhr){
+            alert("An error occured: "+xhr.status+" "+xhr.statusText);
+        }
+    });
 }
-function editarElemento(){
-	$(".fa-edit").click(function(){
-		alert("EDITAR EDITAR");
-	});
+function editarElemento(id,tablita){
+
+	
+		$("#tablas .paneles").hide();
+
+	minusculas=tablita.substring(1,tablita.length); //COGEMOS EL TEXTO EXCEPTO LA PRIMERA LETRA
+	mayusculas=tablita.substring(0,1); //COGEMOS LA PRIMERA LETRA
+	mayusculas=mayusculas.toUpperCase(); //CAMBIAMOS EL TEXTO A MAYUSCULAS
+	Tabla=mayusculas+minusculas;
+	minusculas=Tabla.toLowerCase();
+	//console.log(id+" <-id tablita-> "+tablita+" Tabla-> "+Tabla);
+	$.ajax({
+      type:"POST",
+      data:{"id":id},
+      url:"../controller/"+minusculas+"/cSeleccionar"+Tabla+".php",
+      success: function(datosTabla){
+      	miDatosTabla=JSON.parse(datosTabla);
+    	ContenidoTablas="";
+    	if(Tabla.endsWith("es")){
+    		NombreTabla=Tabla.slice(0,-2); 
+        	//console.log(NombreTabla);
+    	}else if(Tabla.endsWith("s")){
+    		NombreTabla=Tabla.slice(0,-1); 
+        	//console.log(NombreTabla);
+    	}else{
+    		alert("NO SE PUEDE HACER EL MODIFICAR");
+    	}
+    	
+    	$.each(miDatosTabla,function(i,datos){
+    	var myVar=eval("datos.id"+NombreTabla);
+    	//console.log({myVar});
+
+			if(id==myVar){
+
+			//console.log("id-> "+id+" MyVar-> "+myVar);
+			datosEncontrados=datos;
+			idModificar=id;
+			generarCodigoInsert();
+			}	
+    	});
+      },
+      error: function(xhr){
+          alert("An error occured: "+xhr.status+" "+xhr.statusText);
+      }
+  });
+	
+	
 }

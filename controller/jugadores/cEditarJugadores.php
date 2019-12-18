@@ -1,42 +1,38 @@
 <?php
 include_once ("../../model/JugadoresModel.php");
-
-$jugador = new JugadoresModel();
-
-$idJugador = filter_input(INPUT_GET, "idJugador");
-$idEquipo = filter_input(INPUT_GET, "idEquipo");
-$nombre = filter_input(INPUT_GET, "nombre");
-$rol = filter_input(INPUT_GET, "rol");
-$imagen = filter_input(INPUT_GET, "imagen");
-$telefono = filter_input(INPUT_GET, "telefono");
-
-if ($idJugador != null) {
-    $jugador -> setIdJugador($idJugador);
-
-    if ($idEquipo != null) {
-        $jugador -> setIdEquipo($idEquipo);
-    }
+include_once ("../../model/EquiposModel.php");
+$datosInsert=(count($_POST["datosInsert"]));
+for($i = 0; $i <$datosInsert ; $i++){
+    $id=($_POST["datosInsert"][$i]["id"]);
+    $nombre=($_POST["datosInsert"][$i]["nombre"]);
+    $imagen=($_POST["datosInsert"][$i]["imagen"]);
+    $telefono=($_POST["datosInsert"][$i]["telefono"]);
+    $equipo=($_POST["datosInsert"][$i]["equipo"]);
+    $rol=($_POST["datosInsert"][$i]["rol"]);
     
-    if ($nombre != null) {
-        $jugador -> setNombre($nombre);
-    }
+    $jugadorNuevo = new JugadoresModel();
+    
+    $jugadorNuevo -> setIdJugador($id);
+    $jugadorNuevo -> setNombre($nombre);
+    $jugadorNuevo -> setImagen($imagen);
+    $jugadorNuevo -> setRol($rol);
+    $jugadorNuevo -> setTelefono($telefono);
+    
+    $equipoJugadorNuevo = new EquiposModel();
+    $equipoJugadorNuevo->setNombre($equipo);
+    
+    $equipoJugadorNuevo->buscarEquipoId();
+    $jugadorNuevo -> setIdEquipo($equipoJugadorNuevo->getIdEquipo());
 
-    if ($rol != null) {
-        $jugador -> setRol($rol);
-    }
-
-    if ($imagen != null) {
-        $jugador -> setImagen($imagen);
-    }
-
-    if ($telefono != null) {
-        $jugador -> setTelefono($telefono);
-    }
-
-    $resultado = $jugador -> editarJugador();
-
-} else {
-    $resultado = "No se ha pasado la ID";
+    
+    $resultado=$jugadorNuevo -> editarJugador();
+    
+    echo $resultado;
 }
-echo $resultado;
+
+$datosInsert=($_POST["datosInsert"]);
+
+
+
+
 ?>
