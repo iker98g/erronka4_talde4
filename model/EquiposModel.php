@@ -2,7 +2,7 @@
 if($_SERVER['SERVER_NAME']=="grupo4.dominios.fpz1920.com"){
     include_once ("connect_data_remote.php");
 }else{
-    include_once ("connect_data_local.php");
+    include_once ("connect_data.php");
 }
 require_once 'EquiposClass.php';
 require_once 'CategoriasModel.php';
