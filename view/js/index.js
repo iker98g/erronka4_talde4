@@ -79,7 +79,6 @@ function comprobarUsuario() {
 	       	url: "controller/usuarios/cBuscarUsuario.php", 
 	       	dataType:"text",
 	    	success:function(result) {
-	    		console.log(result);
 	    		if (result==0) {
 	    			comprobarCorreo();
 	    		}else {
@@ -101,7 +100,6 @@ function comprobarCorreo() {
        	url:"controller/usuarios/cBuscarCorreo.php", 
        	dataType:"text",
     	success:function(result) {
-    		console.log(result);
     		if (result==0) {
     			registrarUsuario();
     		}else {
