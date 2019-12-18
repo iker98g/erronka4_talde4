@@ -1,7 +1,12 @@
 <?php
+if($_SERVER['SERVER_NAME']=="grupo4.dominios.fpz1920.com"){
+    include_once ("connect_data_remote.php");
+}else{
+    include_once ("connect_data_local.php");
+}
 require_once 'EntrenadoresClass.php';
 require_once 'EquiposModel.php';
-require_once 'connect_data.php';
+
 class EntrenadoresModel extends EntrenadoresClass {
     
     private $link;
