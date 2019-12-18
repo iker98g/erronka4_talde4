@@ -335,13 +335,13 @@ function generarInserts(){
 				var input=elements[i];
 				var id = elements[i].getAttribute( 'id' );
 				var contenido = $("#"+id).val();
-				linea+=id+":"+contenido+",";	//añadimos 
+				linea+=id+"*/separar/*"+contenido+",";	//añadimos 
 			}
 			
 			linea=linea.slice(0,-1);
 			var values = linea.split(",");//separamos las partes de nuestro futuro array
 			for(var i=0; i<values.length; i++) {
-			    var keyValue = values[i].split(":");//separamos cada parte de cada campo ya que es key:value
+			    var keyValue = values[i].split("*/separar/*");//separamos cada parte de cada campo ya que es key:value
 			    obj[keyValue[0]] = keyValue[1];//asignamos que el key sea el que esta en la posicion principal y el value en la secundaria del objeto
 			}
 			datosInsert=[];
@@ -385,19 +385,19 @@ function generarInserts(){
 			}
 		}else{
 			//console.log("id"+idModificar);
-			linea="id:"+idModificar+",";
+			linea="id*/separar/*"+idModificar+",";
 			var elements = document.getElementsByName( Tabla );
 			for(var i=0;i<elements.length;i++){
 				var input=elements[i];
 				var id = elements[i].getAttribute( 'id' );
 				var contenido = $("#"+id).val();
-				linea+=id+":"+contenido+",";
+				linea+=id+"*/separar/*"+contenido+",";
 			}//añadimos 
 			linea=linea.slice(0,-1);
 			var values = linea.split(",");//separamos las partes de nuestro futuro array
 			for(var i=0; i<values.length; i++) {
-			    var keyValue = values[i].split(":");//separamos cada parte de cada campo ya que es key:value
-			    obj[keyValue[0]] = keyValue[1];//asignamos que el key sea el que esta en la posicion principal y el value en la secundaria del objeto
+				    var keyValue = values[i].split("*/separar/*");//separamos cada parte de cada campo ya que es key:value
+				    obj[keyValue[0]] = keyValue[1];//asignamos que el key sea el que esta en la posicion principal y el value en la secundaria del objeto		    
 			}
 			datosInsert=[];
 			datosInsert.push(obj);//añadimos al array creado anteriormente el objeto 
@@ -409,7 +409,7 @@ function generarInserts(){
 			        data:{"datosInsert":datosInsert},
 			        url:"../controller/"+minusculas+"/cEditar"+Tabla+".php",
 			        success: function(datos){
-			        	//console.log(datos);
+			        	console.log(datos);
 			        	$("#formularioInsert").html(`<input type="button" value="Volver a las tablas" class="volverTablas"></input>`);
 						$("#formularioInsert .volverTablas").click(function(){
 //							$(".divTablaAdmin").hide(800);
@@ -637,6 +637,7 @@ function borrarElemento(id,tablita){
         url:"../controller/"+tablita+"/cBorrar"+Tabla+".php",
         success: function(resultado){
         	//console.log(resultado);
+		    location.reload();
         },
         error: function(xhr){
             alert("An error occured: "+xhr.status+" "+xhr.statusText);

@@ -111,7 +111,6 @@ class EquiposModel extends EquiposClass {
         $logo=$this->logo;
         
         $sql = "CALL spModificarEquipo($idEquipo,'$nombre', $idCategoria, '$logo')";
-        
         if ($this->link->query($sql)>=1) { // aldatu egiten da
             return "El equipo se ha modificado con exito";
         } else {
