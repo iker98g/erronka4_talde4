@@ -1,4 +1,22 @@
 $(document).ready(function() {
+	modificarJumbotron();
+	
+	confirmarLetras();
+	
+	activarRegistro();
+	
+	realizarRegistro();
+	
+	activarSesion();
+	
+	comprobarSesion();
+    
+	iniciarSesion();
+
+	cerrarSesion();
+});
+
+function modificarJumbotron() {
 	//cambio del texto del jumbotron
     $('.card').click(function(){
         titulo = $(this).find('h5').html();
@@ -7,8 +25,10 @@ $(document).ready(function() {
         $('.jumbotron').find('h1').html(titulo);
         $('.jumbotron').find('p').html(parrafo);
     });
-    
-    //activar boton de registro
+}
+
+function activarRegistro() {
+	//activar boton de registro
     $('input[name = "insertarUsu"]').on('keyup', function() {
         empty = false;
 
@@ -22,39 +42,131 @@ $(document).ready(function() {
             $('#btnRegistro').attr('disabled', false);
         }     
     });
+}
+
+function confirmarLetras() {
+	$( "#nombreFormInsert" ).keypress(function(event) {
+	    var codigo=event.which;
+	    var codigoString=String.fromCharCode(codigo);
+	    
+	    alert(codigo);
+	    alert(codigoString);
+	    
+	    if ((codigo > 64 && codigo < 91) || (codigo > 96 && codigo < 123)) {
+	    	alert("Es una letra");
+	    	return true;
+	    }else {
+	    	alert("No es una letra");
+	        return false;
+	    }
+	});
+}
+
+function confirmarCorreo() {
+    var emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
+    var correo=$("#emailFormInsert").val();
     
-    //insertar usuario
-    $("#btnRegistro").click(function() {	
-		var nombre=$("#nombreFormInsert").val();
-        var correo=$("#emailFormInsert").val();
-        var usuario=$("#usuarioFormInsert").val();
-        var contrasena=$("#passwordFormInsert").val();
+    if (emailRegex.test(correo)) {
+        return true
+    }else {
+        return false;
+    }
+}
+
+function comprobarUsuario() {
+	$("#btnRegistro").click(function() {	
+		var username=$("#usuarioFormInsert").val();
 
 		$.ajax({
-			type: "POST",
-			data:{'nombre':nombre,'correo':correo, 'usuario':usuario,'contrasena':contrasena},
-	       	url: "controller/usuarios/cInsertUsuarios.php", 
+			data:{'username':username},
+	       	url: "controller/usuarios/cBuscarUsuario.php", 
 	       	dataType:"text",
-	    	success: function(result) { 
-	       		alert("Usuario insertado");
-	       		
-	       		$("#nombreFormInsert").val("");
-	       		$("#emailFormInsert").val("");
-	       		$("#usuarioFormInsert").val("");
-	       		$("#passwordFormInsert").val("");
+	    	success: function(result) {
+	    		console.log(result);
+	    		if (result==0) {
+	    			alert("El usuario esta libre");
+	    		}else {
+	    			alert("El usuario esta en uso");
+	    		}
 			},
-	       	error: function(xhr) {
+	       	error : function(xhr) {
 	   			alert("An error occured: " + xhr.status + " " + xhr.statusText);
-	   			
-	   			$("#nombreFormInsert").val("");
-	       		$("#emailFormInsert").val("");
-	       		$("#usuarioFormInsert").val("");
-	       		$("#passwordFormInsert").val("");
 	   		}
 		});
     });
+}
 
-    //activar boton de login
+function comprobarCorreo() {
+	$("#btnRegistro").click(function() {	
+		var correo=$("#emailFormInsert").val();
+
+		$.ajax({
+			data:{'correo':correo},
+	       	url:"controller/usuarios/cBuscarCorreo.php", 
+	       	dataType:"text",
+	    	success:function(result) {
+	    		if (result==0) {
+	    			alert("El correo esta libre");
+	    		}else {
+	    			alert("El correo esta en uso");
+	    			$("#nombreFormInsert").val("");
+	    	        $("#emailFormInsert").val("");
+	    	        $("#usuarioFormInsert").val("");
+	    	        $("#passwordFormInsert").val("");
+	    		}
+			},
+	       	error:function(xhr) {
+	   			alert("An error occured: " + xhr.status + " " + xhr.statusText);
+	   		}
+		});
+    });
+}
+
+function realizarRegistro() {
+	//insertar usuario
+    $("#btnRegistro").click(function() {
+    	confirmarCorreo();
+    	
+		if(confirmarCorreo()) {
+			registrarUsuario();
+		}else {
+			alert("La dirección de email es incorrecta.");
+		}
+    });
+}
+
+function registrarUsuario() {
+	var nombre=$("#nombreFormInsert").val();
+	var correo=$("#emailFormInsert").val();
+	var usuario=$("#usuarioFormInsert").val();
+	var contrasena=$("#passwordFormInsert").val();
+	
+	$.ajax({
+		type:"POST",
+		data:{'nombre':nombre,'correo':correo, 'usuario':usuario,'contrasena':contrasena},
+	   	url:"controller/usuarios/cInsertUsuarios.php", 
+	   	dataType:"text",
+		success:function(result) { 
+	   		alert("Usuario insertado");
+	   		
+	   		$("#nombreFormInsert").val("");
+	   		$("#emailFormInsert").val("");
+	   		$("#usuarioFormInsert").val("");
+	   		$("#passwordFormInsert").val("");
+		},
+	   	error:function(xhr) {
+			alert("An error occured: " + xhr.status + " " + xhr.statusText);
+				
+			$("#nombreFormInsert").val("");
+	   		$("#emailFormInsert").val("");
+	   		$("#usuarioFormInsert").val("");
+	   		$("#passwordFormInsert").val("");
+		}
+	});
+}
+
+function activarSesion() {
+	//activar boton de login
     $('#customControlInline').click(function() {
         empty = false;
 
@@ -68,16 +180,15 @@ $(document).ready(function() {
         	alert("Hola");
         	if ($('#customControlInline').prop('checked')) {
         		$('#btnLogin').attr('disabled', false);
-        		alert("Hola1");
         	}else {
         		$('#btnLogin').attr('disabled', 'disabled');
-        		alert("Hola2");
-        	}
-            
+        	} 
         }     
     });
+}
 
-    //datos del login
+function iniciarSesion() {
+	//datos del login
     $("#btnLogin").click(function() {	
 		var username=$("#username").val();
         var password=$("#password").val();
@@ -87,50 +198,7 @@ $(document).ready(function() {
 	       	url: "controller/cSessionVars.php", 
 	       	dataType:"json",
 	    	success: function(result) {
-	    		console.log(result);
-	    		
-	       		if (result != 0) {
-	       			//generar botones de admin, registro y login
-	    			newRow="";
-	    			
-	    			newRow+="<button id='dropdownMenuButton' class='btn btn-dark' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>";
-	    				newRow+="<a>"+ result.usuario +" </a>";
-	    				newRow+="<i class='far fa-user-circle fa-lg'></i>";
-	    			newRow+="</button>";
-	    			
-	    			if (result.admin==1) {
-	    			newRow+="<div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>";
-	    				newRow+="<a class='dropdown-item' href='view/vAdmin.php'>";
-	    					newRow+="<i class='fas fa-users-cog'></i>";
-	    				newRow+=" Panel Admin</a>";
-	    				newRow+="<div class='dropdown-divider'></div>";
-	    				newRow+="<a class='dropdown-item' id='cerrarSesion' href='javascript:void(0);'>";
-	    					newRow+="<i class='fas fa-sign-out-alt'></i>";
-	    				newRow+=" Cerrar sesión</a>";
-	    			newRow+="</div>";
-	    			
-	    			}else {
-    				newRow+="<div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>";
-	    				newRow+="<a class='dropdown-item' id='cerrarSesion' href='javascript:void(0);'>";
-	    					newRow+="<i class='fas fa-sign-out-alt'></i>";
-	    				newRow+=" Cerrar sesión</a>";
-	    			newRow+="</div>";
-	    			}
-	    			
-	    			$("#nombreUsuario").append(newRow);
-	    			
-                    $('#nombreUsuario').show();
-                    $('.sesion').hide();
-                    
-                    $("#username").val("");
-                    
-                    cerrarSesion();
-	       		}else {
-	       			alert("No se ha iniciado sesión");
-	       			
-	       			$("#username").val("");
-	       			$("#password").val("");
-	       		}
+	    		sesionIniciada(result);
 			},
 	       	error : function(xhr) {
 	   			alert("An error occured: " + xhr.status + " " + xhr.statusText);
@@ -140,20 +208,78 @@ $(document).ready(function() {
 	   		}
 		});
     });
-});
+}
+
+function comprobarSesion() {
+	$.ajax({
+		data:{},
+       	url:"controller/cSessionVerVars.php", 
+       	dataType:"json",
+    	success:function(result) {
+    		sesionIniciada(result);
+		},
+       	error:function(xhr) {
+   			alert("An error occured: " + xhr.status + " " + xhr.statusText);
+   			
+   			$("#username").val("");
+   			$("#password").val("");
+   		}
+	});
+}
+
+function sesionIniciada(result) {
+	if (result != 0) {
+		//generar botones de admin, registro y login
+		newRow="";
+		
+		if (result.admin==0) {
+			newRow+="<ul class='navbar-nav mr-auto'>";
+	        newRow+="<li class='nav-item'>";
+	        newRow+="<a class='nav-link text-light' id='panelAdmin' href='view/vAdmin.php'>Panel Admin</a>";
+			newRow+="</li>";
+			newRow+="<li class='nav-item'>";
+			newRow+="<a class='nav-link text-light' id='usuario'>"+ result.usuario +" </a>";
+			newRow+="</li>";
+			newRow+="<li class='nav-item'>";
+			newRow+="<i class='text-light fas fa-sign-out-alt' id='cerrarSesion'></i>";
+			newRow+="</li>";
+			newRow+="</ul>";
+		}else {
+			newRow+="<ul class='navbar-nav mr-auto'>";
+			newRow+="<li class='nav-item'>";
+			newRow+="<a class='nav-link text-light' id='usuario'>"+ result.usuario +" </a>";
+			newRow+="</li>";
+			newRow+="<li class='nav-item'>";
+			newRow+="<i class='text-light fas fa-sign-out-alt' id='cerrarSesion'></i>";
+			newRow+="</li>";
+			newRow+="</ul>";
+		}
+		$("#nombreUsuario").html(newRow);
+		
+        $('#nombreUsuario').show();
+        $('.sesion').hide();
+        
+        $("#username").val("");
+        
+        cerrarSesion();
+	}else {	
+		$("#username").val("");
+		$("#password").val("");
+	}
+}
 
 function cerrarSesion() {
 	$("#cerrarSesion").click(function() {	
-    	$.ajax({
-	       	url: "controller/cSessionLogout.php", 
+		$.ajax({
+	       	url:"controller/cSessionLogout.php", 
 	       	dataType:"text",
-	    	success: function(result){  
+	    	success:function(result) {  
 	    		alert("Vuelve pronto :)");
 	    		window.location.href="index.html";
 			},
-	       	error : function(xhr) {
+	       	error:function(xhr) {
 	   			alert("An error occured: " + xhr.status + " " + xhr.statusText);
 	   		}
 		}); 
-    });
+	});
 }
