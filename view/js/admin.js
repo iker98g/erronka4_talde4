@@ -229,7 +229,7 @@ function iniciarCoAdmin(){
         success: function(datosConsultas){
         	
         	miDatosConsultas=JSON.parse(datosConsultas);
-        	ContenidoTablas=`<tr><th>IDCONSULTA</th><th>CONSULTA</th><th>IDUSUARIO</th><th>ACCION</th></tr>`;
+        	ContenidoTablas=`<tr><th>IDCONSULTA</th><th>CONSULTA</th><th>USUARIO</th><th>ACCION</th></tr>`;
         	NombreTabla="consultas";
         	$.each(miDatosConsultas,function(i,datosConsultas){
         		ContenidoTablas+=`<tr><td>`+datosConsultas.idConsulta+`</td><td>`+datosConsultas.consulta+`</td><td>`+datosConsultas.objectUsuario.usuario+`</td><td><div onclick="borrarElemento(`+datosConsultas.idConsulta+`,'`+NombreTabla+`')" style="display:inline-block" class="borrar" id="`+datosConsultas.idConsulta+`"><i class="fas fa-trash-alt" ></i></div></td></tr>`;
