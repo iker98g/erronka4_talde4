@@ -127,6 +127,7 @@ if($_SERVER['SERVER_NAME']=="grupo4.dominios.fpz1920.com"){
                 $passwordEncripted=$row['contrasena'];
                 
                 if(password_verify($this->getContrasena(), $passwordEncripted)) {
+                    $this->setIdUsuario($row['idUsuario']);
                     $this->setTipo($row['tipo']);
                     $userExists=true;
                 }

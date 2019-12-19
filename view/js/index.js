@@ -193,7 +193,13 @@ function comprobarSesion() {
        	url:"controller/cSessionVerVars.php", 
        	dataType:"json",
     	success:function(result) {
-    		sesionIniciada(result);
+    		if(result!=0) {
+    			sesionIniciada(result);
+        		insertarConsulta(result);
+    		}else {
+    			insertarConsultaSinSesion(result);
+    		}
+    		
 		},
        	error:function(xhr) {
    			alert("An error occured: " + xhr.status + " " + xhr.statusText);
@@ -253,6 +259,48 @@ function cerrarSesion() {
 	    	success:function(result) {  
 	    		alert("Vuelve pronto :)");
 	    		window.location.href="index.html";
+			},
+	       	error:function(xhr) {
+	   			alert("An error occured: " + xhr.status + " " + xhr.statusText);
+	   		}
+		}); 
+	});
+}
+
+function insertarConsulta(result) {
+	$("#btnConsulta").click(function() {
+		comprobarUsuario()
+		var idUsuario=result.idUsuario;
+        var textoConsulta=$("#textoConsulta").val();
+		
+		$.ajax({
+			type:"POST",
+			data:{'idUsuario':idUsuario,'textoConsulta':textoConsulta},
+	       	url:"controller/consultas/cNuevaConsulta.php", 
+	       	dataType:"text",
+	    	success:function(result) {  
+	    		alert("Consulta registrada :)");
+			},
+	       	error:function(xhr) {
+	   			alert("An error occured: " + xhr.status + " " + xhr.statusText);
+	   		}
+		}); 
+	});
+}
+
+function insertarConsultaSinSesion(result) {
+	$("#btnConsulta").click(function() {
+		comprobarUsuario()
+		var idUsuario=100;
+        var textoConsulta=$("#textoConsulta").val();
+		
+		$.ajax({
+			type:"POST",
+			data:{'idUsuario':idUsuario,'textoConsulta':textoConsulta},
+	       	url:"controller/consultas/cNuevaConsulta.php", 
+	       	dataType:"text",
+	    	success:function(result) {  
+	    		alert("Consulta registrada :)");
 			},
 	       	error:function(xhr) {
 	   			alert("An error occured: " + xhr.status + " " + xhr.statusText);

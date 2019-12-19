@@ -10,9 +10,12 @@
     
     if ($user->findUserByUsername()){
         session_start();
+        
+        $_SESSION['idUsuario']=$user->getIdUsuario();
         $_SESSION['usuario']=$username;
         $_SESSION['admin']=$user->getTipo();
         
+        $obj['idUsuario']=$_SESSION['idUsuario'];
         $obj['usuario']=$_SESSION['usuario'];
         $obj['admin']=$_SESSION['admin'];
         
