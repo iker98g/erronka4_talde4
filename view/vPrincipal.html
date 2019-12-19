@@ -210,7 +210,6 @@
               
                 <h5 class="card-title">{{dato.nombre}}</h5>
                 <img src="{{dato.imagen}}" class="card-img-top" height="270px" alt="..." >
-<!--                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
           
                 <a href="" style="margin-top:20px;" id="{{dato.idCategoria}}" ng-click="mostrarEquipos(dato.idCategoria)" class="btn btn-primary" >Ver equipos</a>
    	
@@ -230,6 +229,7 @@
                     </div>
                		<div ng-show="verEntrenadores=='si'" ng-repeat="entrenador in misEntrenadores " style="text-align: center">
                         	<h1 style="color:red">{{entrenador.nombre}}</h1>
+                        	<h2 ng-show="verTelefono=='true'">{{entrenador.telefono}}</h2>
                         	<img src="{{entrenador.imagen}}" width="200px" height="150px" alt="..." >
                         	
                     </div>
@@ -240,6 +240,7 @@
 				<div style="display:inline-block">
 					<img src="{{datos.imagen}}" width="200px" height="150px" alt="..." >
 					<h2>{{datos.nombre}}</h2>
+					<h2 ng-show="verTelefono=='true'">{{datos.telefono}}</h2>
 					<h3 style="color: blue">{{datos.rol}}</h3>
 				</div> 	
 			</div>

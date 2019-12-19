@@ -197,6 +197,7 @@ function iniciarSesion() {
 	       	dataType:"json",
 	    	success: function(result) {
 	    		sesionIniciada(result);
+	    		window.location.href="vPrincipal.html";
 			},
 	       	error : function(xhr) {
 	   			alert("An error occured: " + xhr.status + " " + xhr.statusText);
