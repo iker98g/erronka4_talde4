@@ -7,7 +7,7 @@ padding: 0;
 
 .encabezado_vAdmin{
 	border:2px solid #1c1c1c;
-	height:70px;
+	height:50px;
 	display:flex;
 	background-color:#292929;
 }
@@ -15,8 +15,6 @@ padding: 0;
 .encabezado_vAdmin>a{
 	text-decoration: none;
 	color:white;
-	font-weight: bold;
-	font-size: 20px;
 	margin-top: auto;
 	margin-bottom: auto;
 }
@@ -27,6 +25,13 @@ padding: 0;
 .link_Admin_vAdmin{
 	margin-left: auto;
 	margin-right: 2%;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.link_Admin_vAdmin>i,a{
+	color:white;	
+
 }
 .logo_vAdmin>img{
 	height:100%;

@@ -15,6 +15,9 @@ var equipos = [];
 var m;// variable utilizada en frontal para sacar los tipos
 $(document).ready(function(){
 	/*INICIO DE CREAR TABLAS */
+	comprobarSesion();
+	
+	
 	iniciarJAdmin(); //Mostrar datos de la tabla de jugadores por equipos
 
 	iniciarEqAdmin(); //Mostrar datos de la tabla de equipos
@@ -31,6 +34,59 @@ $(document).ready(function(){
     aparicionTablas();
 
 });//FIN DEL DOCUMENT READY
+
+function comprobarSesion() {
+	$.ajax({
+		data:{},
+       	url:"../controller/cSessionVerVars.php", 
+       	dataType:"json",
+    	success:function(result) {
+    		sesionIniciada(result);
+		},
+       	error:function(xhr) {
+   			alert("An error occured: " + xhr.status + " " + xhr.statusText);
+   		}
+	});
+}
+
+function sesionIniciada(result) {
+	if (result != 0) {
+		//generar botones de admin, registro y login
+		var newRow="";
+		
+		if (result.admin==0) {
+			newRow+="<a class='' id='usuario'>"+ result.usuario +" </a>";
+			newRow+="<i class='fas fa-sign-out-alt' id='cerrarSesion'></i>";
+
+		}else {
+
+			newRow+="<a class='' id='usuario'>"+ result.usuario +" </a>";
+			newRow+="<i class='fas fa-sign-out-alt' id='cerrarSesion'></i>";
+
+		}
+		$(".link_Admin_vAdmin").html(newRow);
+        
+        cerrarSesion();
+	}else {	
+		$(location).attr('href','../index.html');
+	}
+}
+
+function cerrarSesion() {
+	$("#cerrarSesion").click(function() {	
+		$.ajax({
+	       	url:"../controller/cSessionLogout.php", 
+	       	dataType:"text",
+	    	success:function(result) {  
+	    		alert("Vuelve pronto :)");
+	    		window.location.href="../index.html";
+			},
+	       	error:function(xhr) {
+	   			alert("An error occured: " + xhr.status + " " + xhr.statusText);
+	   		}
+		}); 
+	});
+}
 
 
 /*INICIO DE INICIAR LAS TABLAS EN LA VISTA ADMIN*/
@@ -742,6 +798,4 @@ function revisarInputs(){
 	}else{
 		return true;
 	}
-	
-	
 }
