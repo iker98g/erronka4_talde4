@@ -78,7 +78,6 @@ class EquiposModel extends EquiposClass {
         $logo=$this->logo;
         
         $sql="CALL spInsertarEquipo('$nombre','$logo',$idCategoria)";
-        //DELIMITER $$ CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarEquipo`(IN `pNombre` VARCHAR(50), IN `pLogo` VARCHAR(200),  IN `pIdCategoria` INT) NO SQL INSERT INTO `equipo`(`nombre`, `logo`, `idCategoria`) VALUES (pNombre,pLogo,pIdCategoria)$$ DELIMITER ;
         $numFilas=$this->link->query($sql);
         
         if ($numFilas>=1) {
@@ -127,16 +126,11 @@ class EquiposModel extends EquiposClass {
     
     
     public function findEquipoById() {
-
         $this->OpenConnect();
         $idEquipo=$this->idEquipo;
         $sql = "CALL spSeleccionarEquipoPorId($idEquipo)";
         $result= $this->link->query($sql);
-//         DELIMITER $$
-//         CREATE DEFINER=`root`@`localhost` PROCEDURE `spSeleccionarEquipoPorId`(IN `pIdEquipo` INT)
-//         NO SQL
-//         select * from equipo where equipo.idEquipo=pIdEquipo$$
-//         DELIMITER ;
+        
         if ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
         {
             $this->setIdCategoria($row['idCategoria']);
@@ -148,25 +142,17 @@ class EquiposModel extends EquiposClass {
             array_push($this->list, $this);
         }
         mysqli_free_result($result);
-        $this->CloseConnect();
-        
-        
-        
+        $this->CloseConnect();   
     }
-    public function buscarEquipoId() {
-        
+    
+    public function buscarEquipoId() {       
         $this->OpenConnect();
         $nombre=$this->nombre;
         $sql = "CALL spBuscarEquipoId('$nombre')";
         $result= $this->link->query($sql);
-/*         DELIMITER $$
-        CREATE DEFINER=`root`@`localhost` PROCEDURE `spBuscarEquipoId`(IN `pNombre` VARCHAR(42))
-        NO SQL
-        select * from equipo where equipo.nombre=pNombre$$
-        DELIMITER ; */
+        
         if ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-        {
-            
+        {  
             $this->setIdCategoria($row['idCategoria']);
             $this->setIdEquipo($row['idEquipo']);
             $this->setNombre($row['nombre']);
@@ -189,8 +175,7 @@ class EquiposModel extends EquiposClass {
         return json_encode($arr);
     }
     
-    function getListJsonStringObject() {
-        
+    function getListJsonStringObject() {        
         // returns the list of objects in a srting with JSON format
         $arr=array();
         
@@ -205,8 +190,7 @@ class EquiposModel extends EquiposClass {
         return json_encode($arr);
     } 
     
-    public function findEquiposByIdCategoria() {
-        
+    public function findEquiposByIdCategoria() {   
         $this->OpenConnect();
         $idCategoria=$this->idCategoria;
         $sql = "CALL spEquiposPorCategoria($idCategoria)";

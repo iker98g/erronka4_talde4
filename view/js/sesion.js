@@ -1,6 +1,4 @@
-$(document).ready(function() {
-	modificarJumbotron();
-	
+$(document).ready(function() {	
 	activarConsulta();
 	
 	confirmarLetras();
@@ -22,21 +20,10 @@ $(document).ready(function() {
 	cerrarSesion();
 });
 
-function modificarJumbotron() {
-	//cambio del texto del jumbotron
-    $('.card').click(function(){
-        titulo = $(this).find('h5').html();
-        parrafo = $(this).find('.hidden').html();
-
-        $('.jumbotron').find('h1').html(titulo);
-        $('.jumbotron').find('p').html(parrafo);
-    });
-}
-
 function activarConsulta() {
 	//activar boton de registro
-	$('#textoConsulta').keyup(function() {
-		if ($("#textoConsulta").val()=="" || $("#textoConsulta").lenght ==0) {
+	$('#exampleFormControlTextarea1').keyup(function() {
+		if ($("#exampleFormControlTextarea1").val()=="" || $("#exampleFormControlTextarea1").lenght ==0) {
 			$('#btnConsulta').attr('disabled', 'disabled');
 		}else {
 			$('#btnConsulta').attr('disabled', false);
@@ -93,7 +80,7 @@ function comprobarUsuario() {
 	
 		$.ajax({
 			data:{'username':username},
-	       	url: "controller/usuarios/cBuscarUsuario.php", 
+	       	url: "../controller/usuarios/cBuscarUsuario.php", 
 	       	dataType:"text",
 	    	success:function(result) {
 	    		if (result==0) {
@@ -114,7 +101,7 @@ function comprobarCorreo() {
 
 	$.ajax({
 		data:{'correo':correo},
-       	url:"controller/usuarios/cBuscarCorreo.php", 
+       	url:"../controller/usuarios/cBuscarCorreo.php", 
        	dataType:"text",
     	success:function(result) {
     		if (result==0) {
@@ -138,7 +125,7 @@ function registrarUsuario() {
 	$.ajax({
 		type:"POST",
 		data:{'nombre':nombre,'correo':correo, 'usuario':usuario,'contrasena':contrasena},
-	   	url:"controller/usuarios/cInsertUsuarios.php", 
+	   	url:"../controller/usuarios/cInsertUsuarios.php", 
 	   	dataType:"text",
 		success:function(result) { 
 	   		alert("Usuario insertado");
@@ -206,13 +193,12 @@ function iniciarSesion() {
 
 		$.ajax({
 			data:{'username':username,'password':password},
-	       	url:"controller/cSessionVars.php", 
+	       	url: "../controller/cSessionVars.php", 
 	       	dataType:"json",
-	    	success:function(result) {
+	    	success: function(result) {
 	    		sesionIniciada(result);
-	    		window.location.href="index.html";
 			},
-	       	error:function(xhr) {
+	       	error : function(xhr) {
 	   			alert("An error occured: " + xhr.status + " " + xhr.statusText);
 	   			
 	   			$("#username").val("");
@@ -225,15 +211,11 @@ function iniciarSesion() {
 function comprobarSesion() {
 	$.ajax({
 		data:{},
-       	url:"controller/cSessionVerVars.php", 
+       	url:"../controller/cSessionVerVars.php", 
        	dataType:"json",
     	success:function(result) {
-    		console.log(result);
     		if(result!=100) {
     			sesionIniciada(result);
-        		insertarConsulta(result);
-    		}else {
-    			insertarConsultaSinSesion(result);
     		}
 		},
        	error:function(xhr) {
@@ -253,7 +235,7 @@ function sesionIniciada(result) {
 		if (result.admin==0) {
 			newRow+="<ul class='navbar-nav mr-auto'>";
 	        newRow+="<li class='nav-item'>";
-	        newRow+="<a class='nav-link text-light' id='panelAdmin' href='view/vAdmin.html'>Panel Admin</a>";
+	        newRow+="<a class='nav-link text-light' id='panelAdmin' href='vAdmin.html'>Panel Admin</a>";
 			newRow+="</li>";
 			newRow+="<li class='nav-item'>";
 			newRow+="<a class='nav-link text-light' id='usuario'>"+ result.usuario +" </a>";
@@ -289,53 +271,11 @@ function sesionIniciada(result) {
 function cerrarSesion() {
 	$("#cerrarSesion").click(function() {	
 		$.ajax({
-	       	url:"controller/cSessionLogout.php", 
+	       	url:"../controller/cSessionLogout.php", 
 	       	dataType:"text",
 	    	success:function(result) {  
 	    		alert("Vuelve pronto :)");
-	    		window.location.href="index.html";
-			},
-	       	error:function(xhr) {
-	   			alert("An error occured: " + xhr.status + " " + xhr.statusText);
-	   		}
-		}); 
-	});
-}
-
-function insertarConsulta(result) {
-	$("#btnConsulta").click(function() {
-		comprobarUsuario()
-		var idUsuario=result.idUsuario;
-        var textoConsulta=$("#textoConsulta").val();
-		
-		$.ajax({
-			type:"POST",
-			data:{'idUsuario':idUsuario,'textoConsulta':textoConsulta},
-	       	url:"controller/consultas/cNuevaConsulta.php", 
-	       	dataType:"text",
-	    	success:function(result) {  
-	    		alert("Consulta registrada :)");
-			},
-	       	error:function(xhr) {
-	   			alert("An error occured: " + xhr.status + " " + xhr.statusText);
-	   		}
-		}); 
-	});
-}
-
-function insertarConsultaSinSesion(result) {
-	$("#btnConsulta").click(function() {
-		comprobarUsuario()
-		var idUsuario=100;
-        var textoConsulta=$("#textoConsulta").val();
-		
-		$.ajax({
-			type:"POST",
-			data:{'idUsuario':idUsuario,'textoConsulta':textoConsulta},
-	       	url:"controller/consultas/cNuevaConsulta.php", 
-	       	dataType:"text",
-	    	success:function(result) {  
-	    		alert("Consulta registrada :)");
+	    		window.location.href="vPrincipal.html";
 			},
 	       	error:function(xhr) {
 	   			alert("An error occured: " + xhr.status + " " + xhr.statusText);
