@@ -420,19 +420,14 @@ function generarInserts(){
 				        url:"../controller/"+minusculas+"/cAniadir"+Tabla+".php",
 				        success: function(datos){
 				        	//console.log(datos);
-							$("#formularioInsert").html(`<input type="button" value="Volver a las tablas" class="volverTablas"></input>`);
-							$("#formularioInsert .volverTablas").click(function(){
-//								$(".divTablaAdmin").hide(800);
-//								$(".divTablaAdmin").css("margin","0px");
-//								$(".titulo_boton").css({"border-bottom":"0px","background-color":"white"});
-//								$("#JugadoresPorEquipos").hide(1200);
-//								$(".JugadoresEquiposTitulo .divTablaAdmin").hide();//Escondemos las tablas de jugadores por equipos (no los titulos)
-//								$("#tablas").show();
-//								$("#tablas .paneles").show();
-//								$("#formularioInsert").html("");
-							    location.reload();
+							if(LoopTimes==cantidadInsert){
+					        	$("#formularioInsert").html(`<input type="button" value="Volver a las tablas" class="volverTablas"></input>`);
+								$("#formularioInsert .volverTablas").click(function(){
+								    location.reload();
 
-							});
+								});					
+							}
+
 								},
 				        error: function(xhr){
 				            alert("An error occured: "+xhr.status+" "+xhr.statusText);
