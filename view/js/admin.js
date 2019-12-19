@@ -55,12 +55,12 @@ function sesionIniciada(result) {
 		var newRow="";
 		
 		if (result.admin==0) {
-			newRow+="<a class='' id='usuario'>"+ result.usuario +" </a>";
+			newRow+="<a class='' id='usu'>"+ result.usuario +" </a>";
 			newRow+="<i class='fas fa-sign-out-alt' id='cerrarSesion'></i>";
 
 		}else {
 
-			newRow+="<a class='' id='usuario'>"+ result.usuario +" </a>";
+			newRow+="<a class='' id='usu'>"+ result.usuario +" </a>";
 			newRow+="<i class='fas fa-sign-out-alt' id='cerrarSesion'></i>";
 
 		}

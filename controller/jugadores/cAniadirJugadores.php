@@ -1,7 +1,9 @@
 <?php
 include_once ("../../model/JugadoresModel.php");
 include_once ("../../model/EquiposModel.php");
+
 $datosInsert=(count($_POST["datosInsert"]));
+
 for($i = 0; $i <$datosInsert ; $i++){
     $nombre=($_POST["datosInsert"][$i]["nombre"]);
     $imagen=($_POST["datosInsert"][$i]["imagen"]);
@@ -29,8 +31,5 @@ for($i = 0; $i <$datosInsert ; $i++){
 }
 
 $datosInsert=($_POST["datosInsert"]);
-
-
-
 
 ?>

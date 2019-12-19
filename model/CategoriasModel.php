@@ -63,7 +63,6 @@ class CategoriasModel extends CategoriasClass {
         $imagen=$this->imagen;
         
         $sql="CALL spInsertarCategoria('$nombre','$imagen')";
-        //         DELIMITER $$ CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarCategoria`(IN `pNombre` VARCHAR(50), IN `pImagen` VARCHAR(200)) NO SQL INSERT INTO `categoria`(`nombre`, `imagen`) VALUES (pNombre,pImagen)$$ DELIMITER ;
         $numFilas=$this->link->query($sql);
         
         if ($numFilas>=1) {
@@ -113,11 +112,6 @@ class CategoriasModel extends CategoriasClass {
         $idCategoria=$this->idCategoria;
         $sql = "CALL spSeleccionarCategoriaPorId($idCategoria)";
         $result= $this->link->query($sql);
-//         DELIMITER $$
-//         CREATE DEFINER=`root`@`localhost` PROCEDURE `spSeleccionarCategoriaPorId`(IN `pIdCategoria` INT)
-//         NO SQL
-//         select * from categoria where categoria.idCategoria=pIdCategoria$$
-//         DELIMITER ;
         if ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
         {
             $this->setIdCategoria($row['idCategoria']);
@@ -137,14 +131,8 @@ class CategoriasModel extends CategoriasClass {
         $nombre=$this->nombre;
         $sql = "CALL spBuscarCategoriaId('$nombre')";
         $result= $this->link->query($sql);
-        /*         DELIMITER $$
-         CREATE DEFINER=`root`@`localhost` PROCEDURE `spBuscarCategoriaId`(IN `pNombre` VARCHAR(42))
-         NO SQL
-         select * from categoria where categoria.nombre=pNombre$$
-         DELIMITER ; */
         if ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-        {
-            
+        { 
             $this->setIdCategoria($row['idCategoria']);
             $this->setNombre($row['nombre']);
             $this->setImagen($row['imagen']);

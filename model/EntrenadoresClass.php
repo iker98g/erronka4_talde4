@@ -94,3 +94,4 @@ class EntrenadoresClass {
         return  $vars;
     }
 }
+?>

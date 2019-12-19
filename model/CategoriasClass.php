@@ -51,3 +51,4 @@ class CategoriasClass {
         return  $vars;
     }
 }
+?>
