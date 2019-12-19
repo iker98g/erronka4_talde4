@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-12-2019 a las 09:28:49
--- Versión del servidor: 10.4.10-MariaDB
--- Versión de PHP: 7.2.25
+-- Tiempo de generación: 19-12-2019 a las 13:34:12
+-- Versión del servidor: 10.4.6-MariaDB
+-- Versión de PHP: 7.3.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -127,12 +127,12 @@ WHERE entrenador.idEntrenador = pIdEntrenador$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spModificarEquipo` (IN `pIdEquipo` INT, IN `pNombre` VARCHAR(50), IN `pIdCategoria` INT, IN `pLogo` VARCHAR(200))  NO SQL
 UPDATE equipo
-SET equipo.nombre = pNombre, equipo.logo = pLogo, equipo.idCategoria = pIdCategoria
+SET equipo.nombre = pNombre, equipo.idCategoria = pIdCategoria, equipo.logo = pLogo
 WHERE equipo.idEquipo = pIdEquipo$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spModificarJugador` (IN `pIdJugador` INT, IN `pIdEquipo` INT, IN `pNombre` VARCHAR(50), IN `pRol` VARCHAR(50), IN `pImagen` VARCHAR(200), IN `pTelefono` VARCHAR(9))  NO SQL
 UPDATE jugador
-SET jugador.nombre = pNombre, jugador.imagen = pImagen, jugador.rol = pRol, jugador.telefono = pTelefono, jugador.idEquipo = pIdEquipo
+SET jugador.idEquipo = pIdEquipo, jugador.nombre = pNombre, jugador.rol = pRol, jugador.imagen = pImagen, jugador.telefono = pTelefono
 WHERE jugador.idJugador = pIdJugador$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spModificarUsuario` (IN `pId` INT, IN `pUsuario` VARCHAR(50), IN `pContrasena` VARCHAR(50), IN `pNombre` VARCHAR(50), IN `pCorreo` VARCHAR(50), IN `pTipo` TINYINT(1))  NO SQL
@@ -145,6 +145,9 @@ select * from categoria where categoria.idCategoria=pIdCategoria$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spSeleccionarEquipoPorId` (IN `pIdEquipo` INT)  NO SQL
 select * from equipo where equipo.idEquipo=pIdEquipo$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spSeleccionarUsuarioPorCorreo` (IN `pCorreo` VARCHAR(50))  NO SQL
+SELECT * FROM `usuario` WHERE usuario.correo = pCorreo$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spSeleccionarUsuarioPorId` (IN `pIdUsuario` INT)  NO SQL
 select * from usuario where usuario.idUsuario=pIdUsuario$$
@@ -183,7 +186,7 @@ INSERT INTO `categoria` (`idCategoria`, `nombre`, `imagen`) VALUES
 
 CREATE TABLE `consulta` (
   `idConsulta` int(11) NOT NULL,
-  `consulta` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `consulta` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
   `idUsuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -192,8 +195,15 @@ CREATE TABLE `consulta` (
 --
 
 INSERT INTO `consulta` (`idConsulta`, `consulta`, `idUsuario`) VALUES
-(1, 'eukene crack', 1),
-(2, 'gwivubcaifjq', 2);
+(1, 'Prueba anónimo index.', 100),
+(2, 'Prueba Markel index.', 100),
+(3, 'Prueba 2 Markel index.', 2),
+(4, 'Prueba Iker equipos.', 100),
+(5, 'Prueba 2 Iker equipos.', 1),
+(6, 'Prueba Eder equipos.', 4),
+(7, 'Prueba 2 Eder equipos.', 4),
+(8, 'Prueba anónimo equipos.', 100),
+(9, 'Prueba 2 anónimo index.', 100);
 
 -- --------------------------------------------------------
 
@@ -317,9 +327,11 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`idUsuario`, `usuario`, `contrasena`, `nombre`, `correo`, `tipo`) VALUES
-(1, 'iker', '1234', 'Iker', 'iker@gmail.com', 0),
-(2, 'markel', '1234', 'Markel', 'markel@gmail.com', 1),
-(3, 'markel', 'markel@gmail.com', 'Markel', '$2y$10$m4rVgfmsQsjb43kFjFBi2.RAIJdtZm6A38/bv..Sigk', 2);
+(1, 'iker', '$2y$10$e980GZZcaWQJ8Bn6CVX/qOl9NkI30hERzfHq9PnGkv2oD.VnHuega', 'Iker', 'iker@gmail.com', 1),
+(2, 'markel', '$2y$10$G.yW1YVh/QQDVy51VtroAO3AWTxLvZ/tSjSwxfmkuYzkMJWVWkhw6', 'Markel', 'markel@gmail.com', 2),
+(3, 'eukene', '$2y$10$cjtSb9ZH5XYwYLYNIXDvgO5C/Q3rEJDkGpt.lwDruruQ1vIQyBXfy', 'Eukene', 'eukene@gmail.com', 0),
+(4, 'eder', '$2y$10$OdU/6Ab4wVmnRWAoWhdyjunWMdEuNCXvD3BE5B8bfU/T.HfjBhgOu', 'Eder', 'eder@gmail.com', 2),
+(100, 'anonimo', '$2y$10$rSaeNyz4m29fP/lyqAcEjOvzkDZnsIoQQEwU/wD.A7ALvwhcyofTW', 'anonimo', 'anonimo@gmail.com', 3);
 
 --
 -- Índices para tablas volcadas
@@ -373,37 +385,37 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `idCategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idCategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `consulta`
 --
 ALTER TABLE `consulta`
-  MODIFY `idConsulta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idConsulta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `entrenador`
 --
 ALTER TABLE `entrenador`
-  MODIFY `idEntrenador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idEntrenador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `equipo`
 --
 ALTER TABLE `equipo`
-  MODIFY `idEquipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idEquipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `jugador`
 --
 ALTER TABLE `jugador`
-  MODIFY `idJugador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `idJugador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 
 --
 -- Restricciones para tablas volcadas
