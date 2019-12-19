@@ -77,3 +77,4 @@ class EquiposClass {
         return  $vars;
     }
 }
+?>

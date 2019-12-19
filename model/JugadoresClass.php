@@ -111,3 +111,4 @@ class JugadoresClass {
         return  $vars;
     }
 }
+?>

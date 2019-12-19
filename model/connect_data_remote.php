@@ -1,6 +1,4 @@
 <?php
-
-
 class connect_data
 {
     public $host='localhost';
@@ -8,4 +6,4 @@ class connect_data
     public $passbbdd='HarryPotter123!';
     public $ddbbname='bbdd_grupo4';
 }
-
+?>

@@ -53,8 +53,7 @@ if($_SERVER['SERVER_NAME']=="grupo4.dominios.fpz1920.com"){
             }
             mysqli_free_result($result);
             $this->CloseConnect();
-        }
-        
+        }     
         
         public function findUsuarioById() { 
             $this->OpenConnect();

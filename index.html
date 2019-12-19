@@ -14,15 +14,15 @@
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  
   <script src="view/js/index.js"></script>
 </head>
 <body>
 	<header>
   <!-- NAV -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand"><img src="view/imagenes/logo_snitch.png"></a>
+      <a class="navbar-brand" href="index.html"><img src="view/imagenes/logo_snitch.png" style="width: 50px; height: 50px"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -42,7 +42,7 @@
           <div class="btn-group mr-2 sesion" role="group" aria-label="Second group">
             <button type="button" class="btn btn-light" data-toggle="modal" data-target="#sesionModal">Iniciar Sesión</button>
           </div>
-          <div id="nombreUsuario" class="collapse navbar-collapse mr-2 text-light" role="group" aria-label="Third group">
+          <div id="nombreUsuario" class="btn-group mr-2 text-light dropdown dropleft" role="group" aria-label="Third group">
           	<!-- AQUI VA EL CODIGO DE LOS BOTONES DE SESIÓN QUE SE CREAN EN EL INDEX.JS -->
           </div>
         </div>
@@ -69,7 +69,7 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" id="btnConsulta" data-dismiss="modal">Enviar consulta</button>
+					<button type="button" class="btn btn-secondary" id="btnConsulta" data-dismiss="modal" disabled>Enviar consulta</button>
 				</div>
 			</div>
 		</div>
@@ -91,20 +91,20 @@
             	<div class="row form-group">
                   <div class="col">
                     <label for="nombreFormInsert">Nombre</label> 
-                    <input type="text" class="form-control" id="nombreFormInsert" aria-describedby="nombreInsert" required name="insertarUsu">
+                    <input type="text" class="form-control datoRegistro" id="nombreFormInsert" aria-describedby="nombreInsert">
                   </div>
                   <div class="col">
                   	<label for="emailFormInsert">Email</label>
-                    <input type="email" class="form-control" id="emailFormInsert" aria-describedby="emailInsert" required name="insertarUsu">
+                    <input type="email" class="form-control datoRegistro" id="emailFormInsert" aria-describedby="emailInsert">
                   </div>
                 </div>
                 <div class="form-group">
                     <label for="usuarioFormInsert">Usuario</label>
-                    <input type="text" class="form-control" id="usuarioFormInsert" aria-describedby="usuarioInsert" required name="insertarUsu">
+                    <input type="text" class="form-control datoRegistro" id="usuarioFormInsert" aria-describedby="usuarioInsert">
                 </div>
                 <div class="form-group">
                     <label for="passwordFormInsert">Contraseña</label>
-                    <input type="password" class="form-control" id="passwordFormInsert" aria-describedby="passwordInsert" required name="insertarUsu">
+                    <input type="password" class="form-control datoRegistro" id="passwordFormInsert" aria-describedby="passwordInsert">
                 </div>
             </form>
           </div>
@@ -133,17 +133,17 @@
                 	<div class="input-group-append">
 						<span class="iconoSesion input-group-text rounded-left"><i class="fas fa-user"></i></span>
 					</div>
-                  	<input type="text" class="form-control" id="username" placeholder="Usuario" name="loginInput" required> 
+                  	<input type="text" class="form-control datoSesion" id="username" placeholder="Usuario"> 
                 </div>
                 <div class="form-group input-group">
                 	<div class="input-group-append">
 						<span class="iconoSesion input-group-text rounded-left"><i class="fas fa-key"></i></span>
 					</div>
-                  	<input type="password" class="form-control" id="password" aria-describedby="passHelp" placeholder="Contraseña" name="loginInput" required>
+                  	<input type="password" class="form-control datoSesion" id="password" aria-describedby="passHelp" placeholder="Contraseña">
                 </div>
                 <div>
 					<div class="custom-control custom-checkbox">
-						<input type="checkbox" class="custom-control-input" id="customControlInline">
+						<input type="checkbox" class="custom-control-input datoSesion" id="customControlInline">
 						<label class="custom-control-label" for="customControlInline">No soy un Muggle</label>
 					</div>
 				</div>

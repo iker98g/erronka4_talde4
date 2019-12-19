@@ -60,3 +60,4 @@ class ConsultasClass {
         return  $vars;
     }
 }
+?>
