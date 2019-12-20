@@ -89,7 +89,7 @@ var miApp=angular.module('miApp',[]);
     	 var usuario;
     	 $http.get('../controller/cSessionVerVars.php').then(function(data) {
     		 console.log(data.data);
-    		 if(data.data!=100) {
+    		 if(data.data!=0) {
     		 usuario=data.data.idUsuario;
         	 misDatosInsert={
         		consulta:$scope.miConsulta,

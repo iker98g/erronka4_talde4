@@ -10,6 +10,6 @@
         
         echo $objJson;         // ver var session
     } else{
-        echo 100;
+        echo 0;
     }
 ?>

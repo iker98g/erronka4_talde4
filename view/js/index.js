@@ -229,7 +229,7 @@ function comprobarSesion() {
        	dataType:"json",
     	success:function(result) {
     		console.log(result);
-    		if(result!=100) {
+    		if(result!=0) {
     			sesionIniciada(result);
         		insertarConsulta(result);
     		}else {
